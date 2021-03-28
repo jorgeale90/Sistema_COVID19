@@ -22,21 +22,14 @@ class AppExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInt
             'provincia' => $this->em->getRepository('App:Provincia')->findAll(),
             'municipio' => $this->em->getRepository('App:Municipio')->findAll(),
             'nacionalidad' => $this->em->getRepository('App:Nacionalidad')->findAll(),
-            'institucion' => $this->em->getRepository('App:Institucion')->findAll(),
-            'cargo' => $this->em->getRepository('App:Cargo')->findAll(),
-            'especialidad' => $this->em->getRepository('App:Especialidad')->findAll(),
-            'politica' => $this->em->getRepository('App:OrganizacionPolitica')->findAll(),
-            'docente' => $this->em->getRepository('App:CategoriaDocente')->findAll(),
-            'cientifica' => $this->em->getRepository('App:CategoriaCientifica')->findAll(),
-            'contable' => $this->em->getRepository('App:SistemaContable')->findAll(),
-            'modulo' => $this->em->getRepository('App:SistemaModulo')->findAll(),
-            'marca' => $this->em->getRepository('App:Marca')->findAll(),
-            'modelo' => $this->em->getRepository('App:Modelo')->findAll(),
-            'tipomedio' => $this->em->getRepository('App:TipoMedio')->findAll(),
-            'contratocorreo' => $this->em->getRepository('App:ContratoCorreo')->findAll(),
-            'contratoanclaje' => $this->em->getRepository('App:ContratoAnclaje')->findAll(),
-            'contratointernet' => $this->em->getRepository('App:ContratoInternet')->findAll(),
-            'contratotecnologia' => $this->em->getRepository('App:MedioTecnologico')->findAll()
+            'hospital' => $this->em->getRepository('App:HospitalIngreso')->findAll(),
+            'areasalud' => $this->em->getRepository('App:AreaSalud')->findAll(),
+            'categoriaviajero' => $this->em->getRepository('App:CategoriaViajero')->findAll(),
+            'categoriapaciente' => $this->em->getRepository('App:CategoriaPaciente')->findAll(),
+            'consejopopular' => $this->em->getRepository('App:ConsejoPopular')->findAll(),
+            'estadoingreso' => $this->em->getRepository('App:EstadoIngreso')->findAll(),
+            'sintomasingreso' => $this->em->getRepository('App:SintomasIngreso')->findAll(),
+            'resultado' => $this->em->getRepository('App:Resultado')->findAll()
         );
     }
 

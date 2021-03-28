@@ -19,20 +19,20 @@ class Municipio
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
      * @var string
-     * @ORM\Column(name="nombre", type="string",  nullable=false, length=30, unique=true)
+     * @ORM\Column(name="nombremunicipio", type="string",  nullable=false, length=80, unique=true)
      * @Assert\NotBlank(message="No debe estar vacío")
      * @Assert\Regex(
-     *     pattern="/^[a-zA-Z ]*$/",
+     *     pattern="/^[a-zA-ZÑñÓÚáéÍÁÉíóúü ]*$/",
      *     message="Debe de contener solo letras"
      * )
-     * @Assert\Length(min=2, max=30, minMessage="Debe contener al menos {{ limit }} letras", maxMessage="Debe contener a lo sumo {{ limit }} letras")
+     * @Assert\Length(min=2, max=80, minMessage="Debe contener al menos {{ limit }} letras", maxMessage="Debe contener a lo sumo {{ limit }} letras")
      */
     private $nombre;
 
@@ -44,13 +44,31 @@ class Municipio
     protected $provincia;
 
     /**
-     * @ORM\OneToMany(targetEntity="Institucion", mappedBy="municipio")
+     * @ORM\OneToMany(targetEntity="HospitalIngreso", mappedBy="municipio")
      */
-    protected $institucion;
+    protected $hospitalingreso;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AreaSalud", mappedBy="municipio")
+     */
+    protected $area_salud;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Personal", mappedBy="municipio")
+     */
+    protected $personal;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ConsejoPopular", mappedBy="municipio")
+     */
+    protected $consejopopular;
 
     public function __construct()
     {
-        $this->institucion = new ArrayCollection();
+        $this->hospitalingreso = new ArrayCollection();
+        $this->area_salud = new ArrayCollection();
+        $this->personal = new ArrayCollection();
+        $this->consejopopular = new ArrayCollection();
     }
 
     public function __toString() {
@@ -89,30 +107,123 @@ class Municipio
     }
 
     /**
-     * @return Collection|Institucion[]
+     * @return Collection|HospitalIngreso[]
      */
-    public function getInstitucion(): Collection
+    public function getHospitalingreso(): Collection
     {
-        return $this->institucion;
+        return $this->hospitalingreso;
     }
 
-    public function addInstitucion(Institucion $institucion): self
+    public function addHospitalingreso(HospitalIngreso $hospitalingreso): self
     {
-        if (!$this->institucion->contains($institucion)) {
-            $this->institucion[] = $institucion;
-            $institucion->setMunicipio($this);
+        if (!$this->hospitalingreso->contains($hospitalingreso)) {
+            $this->hospitalingreso[] = $hospitalingreso;
+            $hospitalingreso->setMunicipio($this);
         }
 
         return $this;
     }
 
-    public function removeInstitucion(Institucion $institucion): self
+    public function removeHospitalingreso(HospitalIngreso $hospitalingreso): self
     {
-        if ($this->institucion->contains($institucion)) {
-            $this->institucion->removeElement($institucion);
+        if ($this->hospitalingreso->contains($hospitalingreso)) {
+            $this->hospitalingreso->removeElement($hospitalingreso);
             // set the owning side to null (unless already changed)
-            if ($institucion->getMunicipio() === $this) {
-                $institucion->setMunicipio(null);
+            if ($hospitalingreso->getMunicipio() === $this) {
+                $hospitalingreso->setMunicipio(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AreaSalud[]
+     */
+    public function getAreaSalud(): Collection
+    {
+        return $this->area_salud;
+    }
+
+    public function addAreaSalud(AreaSalud $areaSalud): self
+    {
+        if (!$this->area_salud->contains($areaSalud)) {
+            $this->area_salud[] = $areaSalud;
+            $areaSalud->setMunicipio($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAreaSalud(AreaSalud $areaSalud): self
+    {
+        if ($this->area_salud->contains($areaSalud)) {
+            $this->area_salud->removeElement($areaSalud);
+            // set the owning side to null (unless already changed)
+            if ($areaSalud->getMunicipio() === $this) {
+                $areaSalud->setMunicipio(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Personal[]
+     */
+    public function getPersonal(): Collection
+    {
+        return $this->personal;
+    }
+
+    public function addPersonal(Personal $personal): self
+    {
+        if (!$this->personal->contains($personal)) {
+            $this->personal[] = $personal;
+            $personal->setMunicipio($this);
+        }
+
+        return $this;
+    }
+
+    public function removePersonal(Personal $personal): self
+    {
+        if ($this->personal->contains($personal)) {
+            $this->personal->removeElement($personal);
+            // set the owning side to null (unless already changed)
+            if ($personal->getMunicipio() === $this) {
+                $personal->setMunicipio(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ConsejoPopular[]
+     */
+    public function getConsejopopular(): Collection
+    {
+        return $this->consejopopular;
+    }
+
+    public function addConsejopopular(ConsejoPopular $consejopopular): self
+    {
+        if (!$this->consejopopular->contains($consejopopular)) {
+            $this->consejopopular[] = $consejopopular;
+            $consejopopular->setMunicipio($this);
+        }
+
+        return $this;
+    }
+
+    public function removeConsejopopular(ConsejoPopular $consejopopular): self
+    {
+        if ($this->consejopopular->contains($consejopopular)) {
+            $this->consejopopular->removeElement($consejopopular);
+            // set the owning side to null (unless already changed)
+            if ($consejopopular->getMunicipio() === $this) {
+                $consejopopular->setMunicipio(null);
             }
         }
 

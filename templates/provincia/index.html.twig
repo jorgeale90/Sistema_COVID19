@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>LOCALIZACIÓN</h1>
+                    <h1>LOCALIZACIÓN - GENERAL</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -26,7 +26,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table id="example1" class="table table-bordered table-striped">
+                    <table id="example2" class="table table-bordered table-striped">
                         <thead>
                         <tr>
                             <th>#</th>
@@ -80,7 +80,11 @@
         </a>
 
         <a class="btn btn-small btn-primary" href="#"><i
-                    class="fa fa-archive"></i> <strong>Exportar</strong> Provincia
+                    class="fa fa-archive"></i> <strong>Exportar</strong> Provincias (PDF)
+        </a>
+
+        <a class="btn btn-small btn-primary" href="{{ path('exportarprovincia_excel') }}"><i
+                    class="fa fa-file-excel"></i> <strong>Exportar</strong> Provincias (Excel)
         </a>
     </ul>
 {% endblock %}
@@ -91,7 +95,7 @@ $(function () {
     {% set session_var = 'app_' ~ notice_level %}
     {% if app.session.flashbag.has(session_var) %}
     {% for flash in app.session.flashbag.get(session_var) %}
-    var n = noty({
+    noty({
         text: '{{ flash }}',
         progressBar : true,
         layout      : 'topRight',
@@ -115,7 +119,6 @@ $(function () {
 
 $(document).ready(function(){
     $('.btn-delete-entity').click(function(e){
-
         e.preventDefault();
         var url = $(this).prop('href');
         if(confirm('Estas seguro de eliminar esta Provincia?')){

@@ -1,0 +1,23 @@
+dh_doctrine_audit:
+    # Configuration reference available at:
+    # https://github.com/DamienHarper/DoctrineAuditBundle#configuration
+    #enabled: true                   # auditing is globally enabled
+    timezone: 'America/Havana'
+    table_prefix: ''
+    table_suffix: '_audit'
+    #ignored_columns:
+    #    - createdAt
+    #    - updatedAt
+    entities:
+        App\Entity\Personal: ~
+        App\Entity\Sexo: ~
+        App\Entity\Pais: ~
+        App\Entity\Provincia: ~
+        App\Entity\Municipio: ~
+        App\Entity\ContratoCorreo: ~
+        App\Entity\ContratoAnclaje: ~
+#        MyBundle\Entity\MyAuditedEntity1: null   # all MyAuditedEntity1 properties are audited
+#        MyBundle\Entity\MyAuditedEntity2:
+#            ignored_columns:                  # MyAuditedEntity2 properties to be ignored by the audit process
+#                - createdAt
+#                - updatedAt

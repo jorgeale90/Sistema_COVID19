@@ -2,99 +2,99 @@
 
 namespace App\Controller;
 
-use App\Entity\Provincia;
-use App\Form\ProvinciaType;
-use App\Repository\ProvinciaRepository;
+use App\Entity\CategoriaPaciente;
+use App\Form\CategoriaPacienteType;
+use App\Repository\CategoriaPacienteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/user/provincia")
+ * @Route("/user/categoriapaciente")
  */
-class ProvinciaController extends AbstractController
+class CategoriaPacienteController extends AbstractController
 {
     /**
-     * @Route("/", name="provincia_index", methods={"GET"})
+     * @Route("/", name="categoriapaciente_index", methods={"GET"})
      */
-    public function index(ProvinciaRepository $provinciaRepository): Response
+    public function index(CategoriaPacienteRepository $categoriaPacienteRepository): Response
     {
-        return $this->render('provincia/index.html.twig', [
-            'provincias' => $provinciaRepository->findAll(),
+        return $this->render('categoriapaciente/index.html.twig', [
+            'categoriapaciente' => $categoriaPacienteRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/new", name="provincia_new", methods={"GET","POST"})
+     * @Route("/new", name="categoriapaciente_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
-        $provincium = new Provincia();
-        $form = $this->createForm(ProvinciaType::class, $provincium);
+        $categoria = new CategoriaPaciente();
+        $form = $this->createForm(CategoriaPacienteType::class, $categoria);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($provincium);
+            $entityManager->persist($categoria);
             $entityManager->flush();
 
             $flashBag = $this->get('session')->getFlashBag();
-            $flashBag->add('app_success','Se ha creado una Provincia satisfactoriamente!!!');
-            $flashBag->add('app_success', sprintf('Provincia: %s', $provincium->getNombre()));
+            $flashBag->add('app_success','Se ha creado una Categoría de Paciente satisfactoriamente!!!');
+            $flashBag->add('app_success', sprintf('Categoría de Paciente: %s', $categoria->getNombre()));
 
-            return $this->redirectToRoute('provincia_index');
+            return $this->redirectToRoute('categoriapaciente_index');
         }
 
-        return $this->render('provincia/new.html.twig', [
-            'provincium' => $provincium,
+        return $this->render('categoriapaciente/new.html.twig', [
+            'categoria' => $categoria,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="provincia_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="categoriapaciente_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Provincia $provincium): Response
+    public function edit(Request $request, CategoriaPaciente $categoriaPaciente): Response
     {
-        $form = $this->createForm(ProvinciaType::class, $provincium);
+        $form = $this->createForm(CategoriaPacienteType::class, $categoriaPaciente);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
             $flashBag = $this->get('session')->getFlashBag();
-            $flashBag->add('app_warning','Se ha actualizado una Provincia satisfactoriamente!!!');
-            $flashBag->add('app_warning', sprintf('Provincia: %s', $provincium->getNombre()));
+            $flashBag->add('app_warning','Se ha actualizado una Categoría de Paciente satisfactoriamente!!!');
+            $flashBag->add('app_warning', sprintf('Categoría de Paciente: %s', $categoriaPaciente->getNombre()));
 
-            return $this->redirectToRoute('provincia_index');
+            return $this->redirectToRoute('categoriapaciente_index');
         }
 
-        return $this->render('provincia/edit.html.twig', [
-            'provincium' => $provincium,
+        return $this->render('categoriapaciente/edit.html.twig', [
+            'categoria' => $categoriaPaciente,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("provincia/remove/{id}", name="removerprovincia")
+     * @Route("categoriapaciente/remove/{id}", name="removercategoriapaciente")
      */
     public function remove(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository(Provincia::class)->find($id);
+        $entity = $em->getRepository(CategoriaPaciente::class)->find($id);
 
         if (!$entity) {
             $flashBag = $this->get('session')->getFlashBag();
-            $flashBag->add('app_warning','No se encuentra esta Provincia!!!');
+            $flashBag->add('app_warning','No se encuentra esta Categoría de Paciente!!!');
         } else {
             $em->remove($entity);
             $em->flush();
 
             $flashBag = $this->get('session')->getFlashBag();
-            $flashBag->add('app_error','Se ha eliminado una Provincia satisfactoriamente!!!');
+            $flashBag->add('app_error','Se ha eliminado una Categoría de Paciente satisfactoriamente!!!');
         }
 
-        return $this->redirectToRoute('provincia_index');
+        return $this->redirectToRoute('categoriapaciente_index');
     }
 }

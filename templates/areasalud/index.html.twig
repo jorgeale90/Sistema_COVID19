@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block titlepage %}Hospital{% endblock %}
+{% block titlepage %}Area de Salud{% endblock %}
 {% block page_header %}
     <section class="content-header">
         <div class="container-fluid">
@@ -10,7 +10,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item">Centro Salud</li>
-                        <li class="breadcrumb-item active">Listado Hospital</li>
+                        <li class="breadcrumb-item active">Listado Area de Salud</li>
                     </ol>
                 </div>
             </div>
@@ -22,42 +22,42 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h5><strong>Listado</strong> de Hospitales</h5>
+                    <h5><strong>Listado</strong> de Areas de Salud</h5>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table id="example1" class="table table-bordered table-striped">
+                    <table id="example2" class="table table-bordered table-striped">
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Hospital</th>
+                            <th>Area de Salud</th>
                             <th>Municipio</th>
                             <th>Provincia</th>
                             <th>Acción</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for hospitales in hospital %}
+                        {% for areassalud in areasalud %}
                             <tr>
-                                <td>{{ hospitales.id }}</td>
-                                <td>{{ hospitales.nombre }}</td>
-                                <td>{{ hospitales.municipio }}</td>
-                                <td>{{ hospitales.municipio.provincia }}</td>
+                                <td>{{ areassalud.id }}</td>
+                                <td>{{ areassalud.nombre }}</td>
+                                <td>{{ areassalud.municipio }}</td>
+                                <td>{{ areassalud.provincia }}</td>
                                 <td>
-                                    <a class="btn btn-small btn-warning" href="{{ path('hospital_edit', {'id': hospitales.id}) }}">Editar</a>
-                                    <a class="btn btn-small btn-danger btn-delete-entity" href="{{ path('removerhospital', {'id' : hospitales.id}) }}">Eliminar</a>
+                                    <a class="btn btn-small btn-warning" href="{{ path('areasalud_edit', {'id': areassalud.id}) }}">Editar</a>
+                                    <a class="btn btn-small btn-danger btn-delete-entity" href="{{ path('removerareasalud', {'id' : areassalud.id}) }}">Eliminar</a>
                                 </td>
                             </tr>
                         {% else %}
                             <tr>
-                                <td colspan="3"><center>No hay Hospitales almacenados</center></td>
+                                <td colspan="3"><center>No hay Areas de Salud almacenados</center></td>
                             </tr>
                         {% endfor %}
                         </tbody>
                         <tfoot>
                         <tr>
                             <th>#</th>
-                            <th>Hospital</th>
+                            <th>Area de Salud</th>
                             <th>Municipio</th>
                             <th>Provincia</th>
                             <th>Acción</th>
@@ -72,18 +72,18 @@
     </div>
 
     <ul>
-        <a class="btn btn-small btn-success" href="{{ path('hospital_new') }}">
-            <i class="fa fa-plus"></i> <strong>Añadir</strong> Hospital
+        <a class="btn btn-small btn-success" href="{{ path('areasalud_new') }}">
+            <i class="fa fa-plus"></i> <strong>Añadir</strong> Area Salud
         </a>
 
-        <a href="{{ path('hospital_index') }}">
+        <a href="{{ path('areasalud_index') }}">
             <button type="button" name="reset-filter" id="btn-reset-filtros" class="btn btn-warning"><i
                         class="fa fa-database"></i> Refrescar
             </button>
         </a>
 
         <a class="btn btn-small btn-primary" href="#"><i
-                    class="fa fa-archive"></i> <strong>Exportar</strong> Hospital
+                    class="fa fa-archive"></i> <strong>Exportar</strong> Area Salud
         </a>
     </ul>
 {% endblock %}
@@ -94,7 +94,7 @@ $(function () {
     {% set session_var = 'app_' ~ notice_level %}
     {% if app.session.flashbag.has(session_var) %}
     {% for flash in app.session.flashbag.get(session_var) %}
-    var n = noty({
+    noty({
         text: '{{ flash }}',
         progressBar : true,
         layout      : 'topRight',
@@ -118,10 +118,9 @@ $(function () {
 
 $(document).ready(function(){
     $('.btn-delete-entity').click(function(e){
-
         e.preventDefault();
         var url = $(this).prop('href');
-        if(confirm('Estas seguro de eliminar este Hospital?')){
+        if(confirm('Estas seguro de eliminar este Area de Salud?')){
             window.location = url;
         }
     })

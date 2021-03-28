@@ -19,6 +19,14 @@ class ConsultorioMedicoRepository extends ServiceEntityRepository
         parent::__construct($registry, ConsultorioMedico::class);
     }
 
+    public function findByAreaS($areasalud_id)
+    {
+        $em = $this->getEntityManager();
+        $consulta = $em->createQuery('SELECT m FROM App:ConsultorioMedico m WHERE m.areasalud = :areasalud_id');
+        $consulta->setParameter('areasalud_id', $areasalud_id);
+        return $consulta->getArrayResult();
+    }
+
     // /**
     //  * @return ConsultorioMedico[] Returns an array of ConsultorioMedico objects
     //  */

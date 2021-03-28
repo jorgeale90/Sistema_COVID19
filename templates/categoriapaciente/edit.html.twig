@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
-{% block titlepage %}Editar Provincia{% endblock %}
+{% block titlepage %}Editar Categoría Paciente{% endblock %}
 {% block page_header %}
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>LOCALIZACIÓN</h1>
+                    <h1>ADMIN - PERSONAL</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item">Localización</li>
-                        <li class="breadcrumb-item">Listado Provincia</li>
-                        <li class="breadcrumb-item active">Editar Provincia</li>
+                        <li class="breadcrumb-item">Personal</li>
+                        <li class="breadcrumb-item">Listado Categoría Paciente</li>
+                        <li class="breadcrumb-item active">Editar Categoría Paciente</li>
                     </ol>
                 </div>
             </div>
@@ -23,9 +23,9 @@
         <!-- SELECT2 EXAMPLE -->
         <div class="card card-default">
             <div class="card-header">
-                <h3 class="card-title"><strong>Actualizar</strong> Provincia</h3>
+                <h3 class="card-title"><strong>Actualizar</strong> Categoría de Paciente</h3>
             </div>
-            {{ include('provincia/_form.html.twig', {'button_label': 'Actualizar Provincia'}) }}
+            {{ include('categoriapaciente/_form.html.twig', {'button_label': 'Actualizar Categoría Paciente'}) }}
         </div>
     </div>
 {% endblock %}

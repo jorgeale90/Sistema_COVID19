@@ -31,4 +31,4 @@ security:
     - { path: ^/register, roles: [ROLE_USER, ROLE_ADMIN, ROLE_SUPER_ADMIN] }
     - { path: ^/resetting, roles: [ROLE_USER, ROLE_ADMIN, ROLE_SUPER_ADMIN] }
     - { path: ^/admin, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }
-    - { path: ^/, roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN, ROLE_SUPER_ADMIN] }
+    - { path: ^/*, roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN, ROLE_SUPER_ADMIN, ROLE_USER, ROLE_DOCTOR, ROLE_ESTADISTICO] }

@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
-{% block titlepage %}Municipio{% endblock %}
+{% block titlepage %}Síntoma Ingreso{% endblock %}
 {% block page_header %}
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>LOCALIZACIÓN</h1>
+                    <h1>CENTRO SALUD</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item">Localización</li>
-                        <li class="breadcrumb-item active">Listado Municipio</li>
+                        <li class="breadcrumb-item">Centro Salud</li>
+                        <li class="breadcrumb-item active">Listado Síntoma Ingreso</li>
                     </ol>
                 </div>
             </div>
@@ -22,44 +22,38 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h5><strong>Listado</strong> de Municipios</h5>
+                    <h5><strong>Listado</strong> de Síntomas de Ingreso</h5>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table id="example1" class="table table-bordered table-striped">
+                    <table id="example2" class="table table-bordered table-striped">
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Municipio</th>
-                            <th>Provincia</th>
-                            <th>País</th>
+                            <th>Síntoma de Ingreso</th>
                             <th>Acción</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for municipios in municipio %}
+                        {% for sintomas in sintomasingreso %}
                             <tr>
-                                <td>{{ municipios.id }}</td>
-                                <td>{{ municipios.nombre }}</td>
-                                <td>{{ municipios.provincia }}</td>
-                                <td>{{ municipios.provincia.pais }}</td>
+                                <td>{{ sintomas.id }}</td>
+                                <td>{{ sintomas.nombre }}</td>
                                 <td>
-                                    <a class="btn btn-small btn-warning" href="{{ path('municipio_edit', {'id': municipios.id}) }}">Editar</a>
-                                    <a class="btn btn-small btn-danger btn-delete-entity" href="{{ path('removermunicipio', {'id' : municipios.id}) }}">Eliminar</a>
+                                    <a class="btn btn-small btn-warning" href="{{ path('sintomaingreso_edit', {'id': sintomas.id}) }}">Editar</a>
+                                    <a class="btn btn-small btn-danger btn-delete-entity" href="{{ path('removersintomaingreso', {'id' : sintomas.id}) }}">Eliminar</a>
                                 </td>
                             </tr>
                         {% else %}
                             <tr>
-                                <td colspan="3"><center>No hay Municipios almacenados</center></td>
+                                <td colspan="3"><center>No hay Síntomas de Ingreso almacenados</center></td>
                             </tr>
                         {% endfor %}
                         </tbody>
                         <tfoot>
                         <tr>
                             <th>#</th>
-                            <th>Municipio</th>
-                            <th>Provincia</th>
-                            <th>País</th>
+                            <th>Síntoma de Ingreso</th>
                             <th>Acción</th>
                         </tr>
                         </tfoot>
@@ -72,18 +66,18 @@
     </div>
 
     <ul>
-        <a class="btn btn-small btn-success" href="{{ path('municipio_new') }}">
-            <i class="fa fa-plus"></i> <strong>Añadir</strong> Municipio
+        <a class="btn btn-small btn-success" href="{{ path('sintomaingreso_new') }}">
+            <i class="fa fa-plus"></i> <strong>Añadir</strong> Síntoma Ingreso
         </a>
 
-        <a href="{{ path('municipio_index') }}">
+        <a href="{{ path('sintomaingreso_index') }}">
             <button type="button" name="reset-filter" id="btn-reset-filtros" class="btn btn-warning"><i
                         class="fa fa-database"></i> Refrescar
             </button>
         </a>
 
         <a class="btn btn-small btn-primary" href="#"><i
-                    class="fa fa-archive"></i> <strong>Exportar</strong> Municipio
+                    class="fa fa-archive"></i> <strong>Exportar</strong> Síntoma Ingreso
         </a>
     </ul>
 {% endblock %}
@@ -94,7 +88,7 @@ $(function () {
     {% set session_var = 'app_' ~ notice_level %}
     {% if app.session.flashbag.has(session_var) %}
     {% for flash in app.session.flashbag.get(session_var) %}
-    var n = noty({
+    noty({
         text: '{{ flash }}',
         progressBar : true,
         layout      : 'topRight',
@@ -118,10 +112,9 @@ $(function () {
 
 $(document).ready(function(){
     $('.btn-delete-entity').click(function(e){
-
         e.preventDefault();
         var url = $(this).prop('href');
-        if(confirm('Estas seguro de eliminar este Municipio?')){
+        if(confirm('Estas seguro de eliminar este Síntoma de Ingreso?')){
             window.location = url;
         }
     })

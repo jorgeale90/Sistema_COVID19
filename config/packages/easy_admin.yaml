@@ -1,0 +1,370 @@
+imports:
+  - { resource: easy_admin/ }
+#    entities:
+#        Personal:
+#          class: App\Entity\Personal
+#          list:
+#            title: "Listado del Personal"
+#            item_permission: ['ROLE_SUPER_ADMIN']
+#            fields: [{ property: 'image', type: 'image', base_path: '%app.path.personal_images%' },{ property: 'ci', label: 'C.I.' }, { property: 'noregistro', label: 'No. Registro' }, { property: 'NombreCompleto', label: 'Nombre y Apellidos' }, { property: 'cargo', label: 'Cargo' }, { property: 'especialidad', label: 'Especialidad' }]
+#            actions: ['show']
+#            max_results: 10
+#          new:
+#            title:  'Añadir Personal'
+#          show:
+#            fields:
+#            - { property: 'image', type: 'image', base_path: '%app.path.personal_images%' }
+#            - { property: 'ci', label: 'C.I.'}
+#            - { property: 'noregistro', label: 'No. Registro' }
+#            - { property: 'NombreCompleto', label: 'Nombre y Apellidos' }
+#            - { property: 'sexo', label: 'Sexo' }
+#            - { property: 'autobliografia', label: 'Autobiografia' }
+#            - { property: 'direccionparticular', label: 'Direccion Particular' }
+#            - { property: 'telefonofijo', label: 'Telefono Fijo' }
+#            - { property: 'movil', label: 'Telefono Movil' }
+#            - { property: 'email', type: 'email', type_options: { trim: true }, label: 'Email' }
+#            - { property: 'nacionalidad', label: 'Nacionalidad' }
+#            - { property: 'cargo', label: 'Cargo' }
+#            - { property: 'especialidad', label: 'Especialidad' }
+#            - { property: 'organizacionpolitica', label: 'Organizacion Politica' }
+#            - { property: 'categoriadocente', label: 'Categoria Docente' }
+#            - { property: 'categoriacientifica', label: 'Categoria Cientifica' }
+#            - { property: 'mision',label: 'Mision' }
+#          form:
+#            fields:
+#            - { type: 'tab', label: 'Información Personal', icon: 'user'}
+#            - { property: 'imageFile', type: 'vich_image' }
+#            - { property: 'ci', label: 'C.I.' }
+#            - { property: 'noregistro', label: 'No. Registro' }
+#            - { property: 'nombre', label: 'Nombre' }
+#            - { property: 'apellidos', label: 'Apellidos' }
+#            - { property: 'sexo', label: 'Sexo' }
+#            - { property: 'autobliografia', label: 'Autobiografia' }
+#            - { type: 'tab', label: 'Información Contacto' , icon: 'phone'}
+#            - { property: 'direccionparticular', label: 'Direccion Particular' }
+#            - { property: 'telefonofijo', label: 'Telefono Fijo' }
+#            - { property: 'movil', label: 'Telefono Movil' }
+#            - { property: 'email', type: 'email', type_options: { trim: true }, label: 'Email' }
+#            - { property: 'nacionalidad', label: 'Nacionalidad' }
+#            - { type: 'tab', label: 'Infomación Laboral' , icon: 'file'}
+#            - { property: 'cargo', label: 'Cargo' }
+#            - { property: 'especialidad', label: 'Especialidad' }
+#            - { property: 'organizacionpolitica', type_options: { expanded: true, multiple: true }, label: 'Organizacion Politica' }
+#            - { property: 'categoriadocente', label: 'Categoria Docente' }
+#            - { property: 'categoriacientifica', label: 'Categoria Cientifica' }
+#            - { property: 'mision',label: 'Mision', type: choice, type_options: { expanded: true, choices: '%mision%' }}
+#        Sexo:
+#          class: App\Entity\Sexo
+#          list:
+#            title: "Listado de Sexo"
+#            item_permission: ['ROLE_SUPER_ADMIN']
+#            fields: [{ property: 'nombre', label: 'Sexo' }]
+#            actions: ['-show']
+#            max_results: 10
+#          new:
+#            title:  'Añadir Sexo'
+#          form:
+#            fields:
+#            - { property: 'nombre', label: 'Sexo' }
+#        Pais:
+#          class: App\Entity\Pais
+#          label: 'País'
+#          list:
+#            title: "Listado de Paises"
+#            item_permission: ['ROLE_SUPER_ADMIN']
+#            fields: [{ property: 'nombre', label: 'País' }]
+#            actions: ['-show']
+#            max_results: 10
+#          form:
+#            fields:
+#            - { property: 'nombre', label: 'País', type_options: { required: true } }
+#        Provincia:
+#          class: App\Entity\Provincia
+#          label: 'Provincia'
+#          list:
+#            title: "Listado de Provincias"
+#            item_permission: ['ROLE_SUPER_ADMIN']
+#            fields: [{ property: 'nombre', label: 'Provincia' }, { property: 'pais', label: 'País' }]
+#            actions: ['-show']
+#            max_results: 10
+#          form:
+#            fields:
+#            - { property: 'nombre', label: 'Provincia', type_options: { required: true } }
+#            - { property: 'pais', label: 'País', type_options: { required: true } }
+#        Municipio:
+#          class: App\Entity\Municipio
+#          label: 'Municipio'
+#          list:
+#            title: "Listado de Municipios"
+#            item_permission: ['ROLE_SUPER_ADMIN']
+#            fields: [{ property: 'nombre', label: 'Municipio' }, { property: 'provincia', label: 'Provincia' }]
+#            actions: ['-show']
+#            max_results: 10
+#          form:
+#            fields:
+#            - { property: 'nombre', label: 'Municipio', type_options: { required: true } }
+#            - { property: 'provincia', label: 'Provincia', type_options: { required: true } }
+#        Nacionalidad:
+#          class: App\Entity\Nacionalidad
+#          list:
+#            title: "Listado de Nacionalidades"
+#            item_permission: ['ROLE_SUPER_ADMIN']
+#            fields: [{ property: 'nombre', label: 'Nacionalidad' }, { property: 'personal', label: 'Personal' }]
+#            actions: ['show']
+#            max_results: 10
+#          new:
+#            title:  'Añadir Nacionalidad'
+#          form:
+#            fields:
+#            - { property: 'nombre', label: 'Nacionalidad' }
+#        Institucion:
+#          class: App\Entity\Institucion
+#          list:
+#            title: "Listado de Instituciones"
+#            item_permission: ['ROLE_SUPER_ADMIN']
+#            fields: [{ property: 'nombre', label: 'Institucion' }, { property: 'municipio', label: 'Municipio' }, { property: 'telefono', label: 'Telefono' }]
+#            actions: ['show']
+#            max_results: 10
+#          new:
+#            title:  'Añadir Institucion'
+#          show:
+#            fields:
+#            - { property: 'nombre', label: 'Institucion' }
+#            - { property: 'codpostal', label: 'Codigo Postal' }
+#            - { property: 'telefono', label: 'Telefono' }
+#            - { property: 'direccion', label: 'Direccion' }
+#            - { property: 'municipio', label: 'Municipio' }
+#          form:
+#            fields:
+#            - { property: 'nombre', label: 'Institucion' }
+#            - { property: 'codpostal', label: 'Codigo Postal' }
+#            - { property: 'telefono', label: 'Telefono' }
+#            - { property: 'direccion', label: 'Direccion' }
+#            - { property: 'municipio', label: 'Municipio' }
+#        Cargo:
+#          class: App\Entity\Cargo
+#          label: 'Cargo'
+#          list:
+#            title: "Listado de Cargos u Ocupaciones"
+#            item_permission: ['ROLE_SUPER_ADMIN']
+#            fields: [{ property: 'nombre', label: 'Cargo' }, { property: 'personal', label: 'Personal' }]
+#            actions: ['-show']
+#            max_results: 10
+#          form:
+#            fields:
+#            - { property: 'nombre', label: 'Cargo', type_options: { required: true } }
+#        Especialidad:
+#          class: App\Entity\Especialidad
+#          label: 'Especialidad'
+#          list:
+#            title: "Listado de Especialidades"
+#            item_permission: ['ROLE_SUPER_ADMIN']
+#            fields: [{ property: 'nombre', label: 'Especialidad' }, { property: 'cargo', label: 'Cargo' }, { property: 'personal', label: 'Personal' }]
+#            actions: ['-show']
+#            max_results: 10
+#          form:
+#            fields:
+#            - { property: 'nombre', label: 'Especialidad', type_options: { required: true } }
+#            - { property: 'cargo', label: 'Cargo', type_options: { required: true } }
+#        CategoriaDocente:
+#          class: App\Entity\CategoriaDocente
+#          label: 'Categoría Docente'
+#          list:
+#            title: "Listado de Categorias Docentes"
+#            item_permission: ['ROLE_SUPER_ADMIN']
+#            fields: [{ property: 'nombre', label: 'Categoría Docente' }, { property: 'personal', label: 'Personal' }]
+#            actions: ['-show']
+#            max_results: 10
+#          form:
+#            fields:
+#            - { property: 'nombre', label: 'Categoría Docente', type_options: { required: true } }
+#        CategoriaCientifica:
+#          class: App\Entity\CategoriaCientifica
+#          label: 'Categoría Científica'
+#          list:
+#            title: "Listado de Categorias Cientificas"
+#            item_permission: ['ROLE_SUPER_ADMIN']
+#            fields: [{ property: 'nombre', label: 'Categoría Científica' }, { property: 'personal', label: 'Personal' }]
+#            actions: ['-show']
+#            max_results: 10
+#          form:
+#            fields:
+#            - { property: 'nombre', label: 'Categoría Científica', type_options: { required: true } }
+#        OrganizacionPolitica:
+#          class: App\Entity\OrganizacionPolitica
+#          label: 'Organización Política'
+#          list:
+#            title: "Listado de Organizaciones Politicas"
+#            item_permission: ['ROLE_SUPER_ADMIN']
+#            fields: [{ property: 'nombre', label: 'Organización Política' }]
+#            actions: ['-show']
+#            max_results: 10
+#          form:
+#            fields:
+#            - { property: 'nombre', label: 'Organización Política', type_options: { required: true } }
+#        SistemaContable:
+#          class: App\Entity\SistemaContable
+#          label: 'Sistema Contable'
+#          list:
+#            title: "Listado de Sistemas Contables"
+#            item_permission: ['ROLE_SUPER_ADMIN']
+#            fields: [{ property: 'perdonal', label: 'Personal' }, { property: 'nombre', label: 'Sistema Contable' }, { property: 'permisos', label: 'Permisos' }]
+#            actions: ['-show']
+#            max_results: 10
+#          form:
+#            fields:
+#            - { property: 'personal', label: 'Perosnal', type_options: { required: true } }
+#            - { property: 'sistemamodulo', label: 'Sistema Módulo', type_options: { required: true } }
+#            - { property: 'permisos', type: choice, type_options: { expanded: true, choices: '%permisos%' }}
+#        SistemaModulo:
+#          class: App\Entity\SistemaModulo
+#          list:
+#            title: "Listado de Sistemas Modulos"
+#            item_permission: ['ROLE_SUPER_ADMIN']
+#            fields: [{ property: 'nombre', label: 'Mòdulo' }, { property: 'sistemacontable', label: 'Sistema Contable' }]
+#            actions: ['-show']
+#            max_results: 10
+#          new:
+#            title:  'Añadir Sistema Módulo'
+#          form:
+#            fields:
+#            - { property: 'nombre', label: 'Sistema Mòdulo' }
+#        Marca:
+#          class: App\Entity\Marca
+#          list:
+#            title: "Listado de Marcas"
+#            item_permission: ['ROLE_SUPER_ADMIN']
+#            fields: [{ property: 'nombre', label: 'Marca' }, { property: 'modelo', label: 'Modelo' }, { property: 'mediotecnologico', label: 'Medio Tecnológico' }]
+#            actions: ['-show']
+#            max_results: 10
+#          new:
+#            title:  'Añadir Marca'
+#          form:
+#            fields:
+#            - { property: 'nombre', label: 'Marca' }
+#        Modelo:
+#          class: App\Entity\Modelo
+#          list:
+#            title: "Listado de Modelos"
+#            item_permission: ['ROLE_SUPER_ADMIN']
+#            fields: [{ property: 'nombre', label: 'Modelo' }, { property: 'marca', label: 'Marca' }, { property: 'mediotecnologico', label: 'Medio Tecnológico' }]
+#            actions: ['-show']
+#            max_results: 10
+#          new:
+#            title:  'Añadir Modelo'
+#          form:
+#            fields:
+#            - { property: 'nombre', label: 'Modelo' }
+#            - { property: 'marca', label: 'Marca' }
+#        TipoMedio:
+#          class: App\Entity\TipoMedio
+#          list:
+#            title: "Listado de Tipos de Medios"
+#            item_permission: ['ROLE_SUPER_ADMIN']
+#            fields: [{ property: 'nombre', label: 'Tipo Medio' }, { property: 'mediotecnologico', label: 'Medio Tecnológico' }]
+#            actions: ['-show']
+#            max_results: 10
+#          new:
+#            title:  'Añadir Tipo Medio'
+#          form:
+#            fields:
+#            - { property: 'nombre', label: 'Tipo Medio' }
+#        ContratoCorreo:
+#          class: App\Entity\ContratoCorreo
+#          list:
+#            title: "Listado de Contrato Correo"
+#            item_permission: ['ROLE_SUPER_ADMIN', 'ROLE_ADMIN']
+#            fields: [{ property: 'codigo', label: 'Codigo' }, { property: 'fecha', type: 'date', label: 'Fecha' }, { property: 'personal1', label: 'Personal' }, { property: 'login', label: 'Login' }]
+#            actions: ['show']
+#            max_results: 10
+#          new:
+#            title:  'Añadir Contrato Correo'
+#          edit:
+#            title:  'Modificar Contrato Correo'
+#          form:
+#            fields:
+#            - { property: 'codigo', label: 'Codigo' }
+#            - { property: 'fecha', type: 'date', label: 'Fecha' }
+#            - { property: 'institucion', label: 'Institucion' }
+#            - { property: 'personal1', label: 'Personal' }
+#            - { property: 'login', label: 'Login' }
+#            - { property: 'accesotelefonico', label: 'Acceso Telefonico', type: choice, type_options: { expanded: true, choices: '%accesotelefonico%' }}
+#            - { property: 'salidainternacional', label: 'Salida Internacional', type: choice, type_options: { expanded: true, choices: '%salidainternacional%' }}
+#            - { property: 'internet', label: 'Internet', type: choice, type_options: { expanded: true, choices: '%internet%' }}
+#        ContratoAnclaje:
+#          class: App\Entity\ContratoAnclaje
+#          list:
+#            title: "Listado de Contrato Anclaje"
+#            item_permission: ['ROLE_SUPER_ADMIN', 'ROLE_ADMIN']
+#            fields: [{ property: 'codigo', label: 'Codigo' }, { property: 'fecha', type: 'date', label: 'Fecha' }, { property: 'personal', label: 'Personal' }, { property: 'login', label: 'Login' }]
+#            actions: ['show']
+#            max_results: 10
+#          new:
+#            title:  'Añadir Contrato Anclaje'
+#          edit:
+#            title:  'Modificar Contrato Anclaje'
+#          form:
+#            fields:
+#            - { property: 'codigo', label: 'Codigo' }
+#            - { property: 'fecha', type: 'date', label: 'Fecha' }
+#            - { property: 'institucion', label: 'Institucion' }
+#            - { property: 'personal', label: 'Personal' }
+#            - { property: 'login', label: 'Login' }
+#            - { property: 'contrasena', label: 'Contraseña' }
+#            - { property: 'accesotelefonico', label: 'No. Acceso Telefonico' }
+#        ContratoInternet:
+#          class: App\Entity\ContratoInternet
+#          list:
+#            title: "Listado de Contrato Anclaje"
+#            item_permission: ['ROLE_SUPER_ADMIN', 'ROLE_ADMIN']
+#            fields: [{ property: 'folio', label: 'Folio' }, { property: 'fecha', type: 'date', label: 'Fecha' }, { property: 'personal1', label: 'Personal' }, { property: 'login', label: 'Login' }]
+#            actions: ['-show']
+#            max_results: 10
+#          new:
+#            title:  'Añadir Contrato Internet'
+#          edit:
+#            title:  'Modificar Contrato Internet'
+#          form:
+#            fields:
+#            - { property: 'folio', label: 'Folio' }
+#            - { property: 'fecha', type: 'date', label: 'Fecha' }
+#            - { property: 'institucion', label: 'Institucion' }
+#            - { property: 'personal1', label: 'Personal' }
+#            - { property: 'login', label: 'Login' }
+#            - { property: 'pass', label: 'Password' }
+#            - { property: 'serviciocorreo', type: choice, type_options: { expanded: true, choices: '%serviciocorreo%' }}
+#            - { property: 'accesoredes', type: choice, type_options: { expanded: true, choices: '%accesoredes%' }}
+#            - { property: 'login', label: 'Login' }
+#            - { property: 'pass', label: 'Password' }
+#        MedioTecnologico:
+#          class: App\Entity\MedioTecnologico
+#          list:
+#            title: "Listado de Medios Tecnicos"
+#            item_permission: ['ROLE_SUPER_ADMIN']
+#            fields: [{ property: 'personal1', label: 'Personal' }, { property: 'tipomedio', label: 'Tipo Medio' }, { property: 'marca', label: 'Marca' }, { property: 'modelo', label: 'Modelo' }, { property: 'serie', label: 'Serie' }]
+#            actions: ['show']
+#            max_results: 10
+#          new:
+#            title:  'Añadir Medio Tecnologico'
+#          show:
+#            fields:
+#            - { property: 'personal1', label: 'Personal' }
+#            - { property: 'tipomedio', label: 'Tipo Medio' }
+#            - { property: 'marca', label: 'Marca' }
+#            - { property: 'modelo', label: 'Modelo' }
+#            - { property: 'mac', label: 'Mac address' }
+#            - { property: 'serie', label: 'Serie' }
+#            - { property: 'fecha', label: 'Fecha', type: 'date' }
+#            - { property: 'personal2', label: 'Responsable Admin' }
+#            - { property: 'descripcion', label: 'Descripcion' }
+#          form:
+#            fields:
+#            - { property: 'personal1', label: 'Personal' }
+#            - { property: 'tipomedio', label: 'Tipo Medio' }
+#            - { property: 'marca', label: 'Marca' }
+#            - { property: 'modelo', label: 'Modelo' }
+#            - { property: 'mac', label: 'Mac address' }
+#            - { property: 'serie', label: 'Serie' }
+#            - { property: 'fecha', label: 'Fecha', type: 'date' }
+#            - { property: 'personal2', label: 'Responsable Admin' }
+#            - { property: 'descripcion', label: 'Descripcion' }

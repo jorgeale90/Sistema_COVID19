@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\HospitalIngreso;
-use App\Form\HospitalType;
-use App\Repository\HospitalIngresoRepository;
+use App\Entity\SintomasIngreso;
+use App\Form\SintomasIngresoType;
+use App\Repository\SintomasIngresoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,101 +12,90 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/user/hospital")
+ * @Route("/user/sintomaingreso")
  */
-class HospitalController extends AbstractController
+class SintomaIngresoController extends AbstractController
 {
     /**
-     * @Route("/", name="hospital_index", methods={"GET"})
+     * @Route("/", name="sintomaingreso_index", methods={"GET"})
      */
-    public function index(HospitalIngresoRepository $hospitalIngresoRepository): Response
+    public function index(SintomasIngresoRepository $sintomasIngresoRepository): Response
     {
-        return $this->render('hospital/index.html.twig', [
-            'hospital' => $hospitalIngresoRepository->findAll(),
+        return $this->render('sintomaingreso/index.html.twig', [
+            'sintomasingreso' => $sintomasIngresoRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/new", name="hospital_new", methods={"GET","POST"})
+     * @Route("/new", name="sintomaingreso_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
-        $hospital = new HospitalIngreso();
-        $form = $this->createForm(HospitalType::class, $hospital);
+        $sintomaingreso = new SintomasIngreso();
+        $form = $this->createForm(SintomasIngresoType::class, $sintomaingreso);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($hospital);
+            $entityManager->persist($sintomaingreso);
             $entityManager->flush();
 
             $flashBag = $this->get('session')->getFlashBag();
-            $flashBag->add('app_success','Se ha creado un Hospital satisfactoriamente!!!');
-            $flashBag->add('app_success', sprintf('Hospital: %s', $hospital->getNombre()));
+            $flashBag->add('app_success','Se ha creado un Síntoma de Ingreso satisfactoriamente!!!');
+            $flashBag->add('app_success', sprintf('Síntoma de Ingreso: %s', $sintomaingreso->getNombre()));
 
-            return $this->redirectToRoute('hospital_index');
+            return $this->redirectToRoute('sintomaingreso_index');
         }
 
-        return $this->render('hospital/new.html.twig', [
-            'hospital' => $hospital,
+        return $this->render('sintomaingreso/new.html.twig', [
+            'sintomaingreso' => $sintomaingreso,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="hospital_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="sintomaingreso_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, HospitalIngreso $hospital): Response
+    public function edit(Request $request, SintomasIngreso $sintomasIngreso): Response
     {
-        $form = $this->createForm(HospitalType::class, $hospital);
+        $form = $this->createForm(SintomasIngresoType::class, $sintomasIngreso);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
             $flashBag = $this->get('session')->getFlashBag();
-            $flashBag->add('app_warning','Se ha actualizado un Hospital satisfactoriamente!!!');
-            $flashBag->add('app_warning', sprintf('Hospital: %s', $hospital->getNombre()));
+            $flashBag->add('app_warning','Se ha actualizado un Síntoma de Ingreso satisfactoriamente!!!');
+            $flashBag->add('app_warning', sprintf('Síntoma de Ingreso: %s', $sintomasIngreso->getNombre()));
 
-            return $this->redirectToRoute('hospital_index');
+            return $this->redirectToRoute('sintomaingreso_index');
         }
 
-        return $this->render('hospital/edit.html.twig', [
-            'hospital' => $hospital,
+        return $this->render('sintomaingreso/edit.html.twig', [
+            'sintomaingreso' => $sintomasIngreso,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("hospital/remove/{id}", name="removerhospital")
+     * @Route("sintomaingreso/remove/{id}", name="removersintomaingreso")
      */
     public function remove(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository(HospitalIngreso::class)->find($id);
+        $entity = $em->getRepository(SintomasIngreso::class)->find($id);
 
         if (!$entity) {
             $flashBag = $this->get('session')->getFlashBag();
-            $flashBag->add('app_warning','No se encuentra este Hospital!!!');
+            $flashBag->add('app_warning','No se encuentra este Síntoma de Ingreso!!!');
         } else {
             $em->remove($entity);
             $em->flush();
 
             $flashBag = $this->get('session')->getFlashBag();
-            $flashBag->add('app_error','Se ha eliminado un Hospital satisfactoriamente!!!');
+            $flashBag->add('app_error','Se ha eliminado un Síntoma de Ingreso satisfactoriamente!!!');
         }
 
-        return $this->redirectToRoute('hospital_index');
-    }
-
-    /**
-     * @Route("/getmunicipioixprovinciai", name="municipioi_x_provinciai", methods={"GET","POST"})
-     */
-    public function getMunicipioixProvinciai(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $provincia_id = $request->get('provincia_id');
-        $muni = $em->getRepository('App:Municipio')->findByProvinciai($provincia_id);
-        return new JsonResponse($muni);
+        return $this->redirectToRoute('sintomaingreso_index');
     }
 }

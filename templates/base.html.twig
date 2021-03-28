@@ -3,14 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Sabio | {% block titlepage %} Home {% endblock %}</title>
+    <title>Sistema ~ COVID19 | {% block titlepage %} Home {% endblock %}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <link rel="icon" type="image/png" href="{{ asset('login/img/icono.png') }}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('page/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="{{ asset('page/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('page/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <!-- DataTables -->
     <link rel="stylesheet" href="{{ asset('page/plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
     <!-- Select2 -->
@@ -23,7 +24,7 @@
     <!-- Notifications -->
     <link rel="stylesheet" type="text/css" href="{{ asset('page/noty/animate/animate.css') }}"/>
     <!-- daterange picker -->
-    <link rel="stylesheet" href="{{ asset('page/plugins/daterangepicker/daterangepicker.css') }}">
+{#    <link rel="stylesheet" href="{{ asset('page/plugins/daterangepicker/daterangepicker.css') }}">#}
     <!-- generador de password -->
     {#<link rel="stylesheet" href="{{ asset('page/plugins/niceStyle.css') }}">#}
     <!-- fullCalendar -->
@@ -31,6 +32,14 @@
     <link rel="stylesheet" href="{{ asset('page/plugins/fullcalendar-daygrid/main.min.css') }}">
     <link rel="stylesheet" href="{{ asset('page/plugins/fullcalendar-timegrid/main.min.css') }}">
     <link rel="stylesheet" href="{{ asset('page/plugins/fullcalendar-bootstrap/main.min.css') }}">
+    <!-- Date Picker -->
+    <link rel="stylesheet" href="{{ asset('js/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
+    {% block head %}
+
+    {% endblock %}
+    {% block stylesheets %}
+
+    {% endblock %}
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -66,8 +75,7 @@
         <div class="float-right d-none d-sm-block">
             <b>Versión</b> 1.2.5.4
         </div>
-        <strong>Copyright &copy; 2019-2020 <a href="#">SabioLTE ~ NODO</a>.</strong> All rights
-        reserved.
+        <strong>Copyright &copy; 2020-2020 <a href="#">Sistema ~ COVID19</a>.</strong> Todos los derechos reservados.
     </footer>
 
     <!-- Control Sidebar -->
@@ -88,8 +96,10 @@
     <!-- Bootstrap 4 -->
     <script src="{{ asset('page/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- DataTables -->
-    <script src="{{ asset('page/plugins/datatables/jquery.dataTables.js') }}"></script>
-    <script src="{{ asset('page/plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
+    <script src="{{ asset('page/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('page/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('page/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('page/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
     <!-- overlayScrollbars -->
     <script src="{{ asset('page/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
     <!-- Select2 -->
@@ -103,9 +113,9 @@
     <!-- jQuery Notification Plugin 2.2.7 -->
     <script type="text/javascript" src="{{ asset('page/noty/animate/jquery.noty.packaged.js') }}"></script>
     <!-- date-range-picker -->
-    <script src="{{ asset('page/plugins/daterangepicker/daterangepicker.js') }}"></script>
-    <script src="{{ asset('page/plugins/inputmask/min/jquery.inputmask.bundle.min.js') }}"></script>
-    <script src="{{ asset('page/memory-stas/memory-stats.js') }}"></script>
+{#    <script src="{{ asset('page/plugins/daterangepicker/daterangepicker.js') }}"></script>#}
+{#    <script src="{{ asset('page/plugins/inputmask/min/jquery.inputmask.bundle.min.js') }}"></script>#}
+{#    <script src="{{ asset('page/memory-stas/memory-stats.js') }}"></script>#}
     <!-- fullCalendar 2.2.5 -->
     <script src="{{ asset('page/plugins/moment/moment.min.js') }}"></script>
     <script src="{{ asset('page/plugins/fullcalendar/main.min.js') }}"></script>
@@ -113,26 +123,11 @@
     <script src="{{ asset('page/plugins/fullcalendar-timegrid/main.min.js') }}"></script>
     <script src="{{ asset('page/plugins/fullcalendar-interaction/main.min.js') }}"></script>
     <script src="{{ asset('page/plugins/fullcalendar-bootstrap/main.min.js') }}"></script>
-{% if is_granted('ROLE_SUPER_ADMIN') %}
-    <script>
-
-        // add the monitor into our page and update it on a rAF loop
-
-        var stats = new MemoryStats();
-        stats.domElement.style.position	= 'fixed';
-        stats.domElement.style.right		= '0px';
-        stats.domElement.style.bottom		= '0px';
-        document.body.appendChild( stats.domElement );
-
-
-        requestAnimationFrame(function rAFloop(){
-            stats.update();
-            requestAnimationFrame(rAFloop);
-        });
-        //# sourceURL=updateStats.js
-
-    </script>
-{% endif %}
+    <!-- datepicker -->
+    <script src="{{ asset('js/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-datepicker/dist/locales/bootstrap-datepicker.es.min.js') }}"></script>
+    <!-- Bootstrap Switch -->
+    <script src="{{ asset('page/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}"></script>
 <script>
     $(function () {
         //Initialize Select2 Elements
@@ -143,14 +138,24 @@
             theme: 'bootstrap4'
         });
 
-        $("#example1").DataTable();
+        $('.datepicker').datepicker({
+            autoclose: true,
+            format: 'yyyy-mm-dd',
+            language: 'es'
+        });
+
+        $("#example1").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+        });
         $('#example2').DataTable({
             "paging": true,
-            "lengthChange": false,
-            "searching": false,
+            "lengthChange": true,
+            "searching": true,
             "ordering": true,
             "info": true,
-            "autoWidth": false,
+            "autoWidth": true,
+            "responsive": true,
         });
 
         {% for n in usuario %}

@@ -19,20 +19,20 @@ class Pais
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
      * @var string
-     * @ORM\Column(name="nombre", type="string",  nullable=false, length=30, unique=true)
+     * @ORM\Column(name="nombrepais", type="string",  nullable=false, length=100, unique=true)
      * @Assert\NotBlank(message="No debe estar vacío")
      * @Assert\Regex(
-     *     pattern="/^[a-zA-Z ]*$/",
+     *     pattern="/^[a-zA-ZÑñÓÚáéÍÁÉíóúü ]*$/",
      *     message="Debe de contener solo letras"
      * )
-     * @Assert\Length(min=2, max=30, minMessage="Debe contener al menos {{ limit }} letras", maxMessage="Debe contener a lo sumo {{ limit }} letras")
+     * @Assert\Length(min=2, max=100, minMessage="Debe contener al menos {{ limit }} letras", maxMessage="Debe contener a lo sumo {{ limit }} letras")
      */
     private $nombre;
 
@@ -41,9 +41,15 @@ class Pais
      */
     protected $provincia;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Personal", mappedBy="paisprocedencia")
+     */
+    protected $personalprecedencia;
+
     public function __construct()
     {
         $this->provincia = new ArrayCollection();
+        $this->personalprecedencia = new ArrayCollection();
     }
 
     public function __toString() {
@@ -100,4 +106,34 @@ class Pais
         return $this;
     }
 
+    /**
+     * @return Collection|Personal[]
+     */
+    public function getPersonalprecedencia(): Collection
+    {
+        return $this->personalprecedencia;
+    }
+
+    public function addPersonalprecedencium(Personal $personalprecedencium): self
+    {
+        if (!$this->personalprecedencia->contains($personalprecedencium)) {
+            $this->personalprecedencia[] = $personalprecedencium;
+            $personalprecedencium->setPaisprocedencia($this);
+        }
+
+        return $this;
+    }
+
+    public function removePersonalprecedencium(Personal $personalprecedencium): self
+    {
+        if ($this->personalprecedencia->contains($personalprecedencium)) {
+            $this->personalprecedencia->removeElement($personalprecedencium);
+            // set the owning side to null (unless already changed)
+            if ($personalprecedencium->getPaisprocedencia() === $this) {
+                $personalprecedencium->setPaisprocedencia(null);
+            }
+        }
+
+        return $this;
+    }
 }

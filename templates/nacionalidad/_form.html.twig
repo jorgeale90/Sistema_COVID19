@@ -1,4 +1,4 @@
-{{ form_start(form) }}
+{{ form_start(form, { 'attr': { 'class': 'form-horizontal', 'role': 'form' } }) }}
 <div class="card-body">
     <div class="row">
         <div class="col-md-6">
@@ -9,14 +9,14 @@
                         <strong>{{ form_errors(form.nombre) }}</strong>
                     </div>
                 {% endif %}
-                <label>{{ form_label(form.nombre, 'Nacionalidad (*):') }}</label>
-                {{ form_widget(form.nombre, { 'attr': { 'class': 'form-control' } }) }}
+                <label for="ejemplo">{{ form_label(form.nombre, 'Nacionalidad (*):') }}</label>
+                {{ form_widget(form.nombre, { 'attr': { 'class': 'form-control', 'name': 'nacional', 'required': 'true', 'id': 'micampo' } }) }}
             </div>
         </div>
     </div>
 </div>
 <ul>
-    <button class="btn btn-success"><i class="fa fa-plus"></i> {{ button_label|default('Añadir Nacionalidad') }}</button>
+    <button id="crearentidad" class="btn btn-success"><i class="fa fa-plus"></i> {{ button_label|default('Añadir Nacionalidad') }}</button>
     <button class="btn btn-outline-info"><i class="icofont icofont-exchange"></i><a href="{{ path('nacionalidad_index') }}">Volver al Listado</a></button>
 </ul>
 {{ form_end(form) }}

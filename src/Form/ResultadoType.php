@@ -2,12 +2,12 @@
 
 namespace App\Form;
 
-use App\Entity\Pais;
+use App\Entity\Resultado;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PaisType extends AbstractType
+class ResultadoType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -19,7 +19,7 @@ class PaisType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Pais::class,
+            'data_class' => Resultado::class,
         ]);
     }
 
@@ -28,6 +28,6 @@ class PaisType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'app_pais';
+        return 'app_resultado';
     }
 }

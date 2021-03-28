@@ -2,99 +2,99 @@
 
 namespace App\Controller;
 
-use App\Entity\Pais;
-use App\Form\PaisType;
-use App\Repository\PaisRepository;
+use App\Entity\EstadoIngreso;
+use App\Form\EstadoIngresoType;
+use App\Repository\EstadoIngresoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/user/pais")
+ * @Route("/user/estadoingreso")
  */
-class PaisController extends AbstractController
+class EstadoIngresoController extends AbstractController
 {
     /**
-     * @Route("/", name="pais_index", methods={"GET"})
+     * @Route("/", name="estadoingreso_index", methods={"GET"})
      */
-    public function index(PaisRepository $paisRepository): Response
+    public function index(EstadoIngresoRepository $estadoIngresoRepository): Response
     {
-        return $this->render('pais/index.html.twig', [
-            'pais' => $paisRepository->findAll(),
+        return $this->render('estadoingreso/index.html.twig', [
+            'estadoingreso' => $estadoIngresoRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/new", name="pais_new", methods={"GET","POST"})
+     * @Route("/new", name="estadoingreso_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
-        $pais = new Pais();
-        $form = $this->createForm(PaisType::class, $pais);
+        $estadoingreso = new EstadoIngreso();
+        $form = $this->createForm(EstadoIngresoType::class, $estadoingreso);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($pais);
+            $entityManager->persist($estadoingreso);
             $entityManager->flush();
 
             $flashBag = $this->get('session')->getFlashBag();
-            $flashBag->add('app_success','Se ha creado un País satisfactoriamente!!!');
-            $flashBag->add('app_success', sprintf('País: %s', $pais->getNombre()));
+            $flashBag->add('app_success','Se ha creado un Estado de Ingreso satisfactoriamente!!!');
+            $flashBag->add('app_success', sprintf('Estado de Ingreso: %s', $estadoingreso->getNombre()));
 
-            return $this->redirectToRoute('pais_index');
+            return $this->redirectToRoute('estadoingreso_index');
         }
 
-        return $this->render('pais/new.html.twig', [
-            'pais' => $pais,
+        return $this->render('estadoingreso/new.html.twig', [
+            'estadoingreso' => $estadoingreso,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="pais_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="estadoingreso_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Pais $pais): Response
+    public function edit(Request $request, EstadoIngreso $estadoIngreso): Response
     {
-        $form = $this->createForm(PaisType::class, $pais);
+        $form = $this->createForm(EstadoIngresoType::class, $estadoIngreso);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
             $flashBag = $this->get('session')->getFlashBag();
-            $flashBag->add('app_warning','Se ha actualizado un País satisfactoriamente!!!');
-            $flashBag->add('app_warning', sprintf('País: %s', $pais->getNombre()));
+            $flashBag->add('app_warning','Se ha actualizado un Estado de Ingreso satisfactoriamente!!!');
+            $flashBag->add('app_warning', sprintf('Estado de Ingreso: %s', $estadoIngreso->getNombre()));
 
-            return $this->redirectToRoute('pais_index');
+            return $this->redirectToRoute('estadoingreso_index');
         }
 
-        return $this->render('pais/edit.html.twig', [
-            'pais' => $pais,
+        return $this->render('estadoingreso/edit.html.twig', [
+            'estadoingreso' => $estadoIngreso,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("pais/remove/{id}", name="removerpais")
+     * @Route("estadoingreso/remove/{id}", name="removerestadoingreso")
      */
     public function remove(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository(Pais::class)->find($id);
+        $entity = $em->getRepository(EstadoIngreso::class)->find($id);
 
         if (!$entity) {
             $flashBag = $this->get('session')->getFlashBag();
-            $flashBag->add('app_warning','No se encuentra este País!!!');
+            $flashBag->add('app_warning','No se encuentra este Estado de Ingreso!!!');
         } else {
             $em->remove($entity);
             $em->flush();
 
             $flashBag = $this->get('session')->getFlashBag();
-            $flashBag->add('app_error','Se ha eliminado un País satisfactoriamente!!!');
+            $flashBag->add('app_error','Se ha eliminado un Estado de Ingreso satisfactoriamente!!!');
         }
 
-        return $this->redirectToRoute('pais_index');
+        return $this->redirectToRoute('estadoingreso_index');
     }
 }

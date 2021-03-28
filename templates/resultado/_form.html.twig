@@ -9,14 +9,14 @@
                         <strong>{{ form_errors(form.nombre) }}</strong>
                     </div>
                 {% endif %}
-                <label>{{ form_label(form.nombre, 'País (*):') }}</label>
+                <label>{{ form_label(form.nombre, 'Resultado (*):') }}</label>
                 {{ form_widget(form.nombre, { 'attr': { 'class': 'form-control' } }) }}
             </div>
         </div>
     </div>
 </div>
 <ul>
-    <button class="btn btn-success"><i class="fa fa-plus"></i> {{ button_label|default('Añadir País') }}</button>
-    <button class="btn btn-outline-info"><i class="icofont icofont-exchange"></i><a href="{{ path('pais_index') }}">Volver al Listado</a></button>
+    <button class="btn btn-success"><i class="fa fa-plus"></i> {{ button_label|default('Añadir Resultado') }}</button>
+    <button class="btn btn-outline-info"><i class="icofont icofont-exchange"></i><a href="{{ path('resultado_index') }}">Volver al Listado</a></button>
 </ul>
 {{ form_end(form) }}

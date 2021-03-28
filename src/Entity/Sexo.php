@@ -19,17 +19,17 @@ class Sexo
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
      * @var string
-     * @ORM\Column(name="nombre", type="string",  nullable=false, length=25, unique=true)
+     * @ORM\Column(name="nombresexo", type="string",  nullable=false, length=25, unique=true)
      * @Assert\NotBlank(message="No debe estar vacío")
      * @Assert\Regex(
-     *     pattern="/^[a-zA-Z ]*$/",
+     *     pattern="/^[a-zA-ZÑñÓÚáéÍÁÉíóúü ]*$/",
      *     message="Debe de contener solo letras"
      * )
      * @Assert\Length(min=2, max=20, minMessage="Debe contener al menos {{ limit }} letras", maxMessage="Debe contener a lo sumo {{ limit }} letras")

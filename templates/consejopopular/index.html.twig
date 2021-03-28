@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
-{% block titlepage %}Alojamiento{% endblock %}
+{% block titlepage %}Consejo Popular{% endblock %}
 {% block page_header %}
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>VIAJERO</h1>
+                    <h1>LOCALIZACIÓN - GENERAL</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item">Categoría Viajero</li>
-                        <li class="breadcrumb-item active">Listado Alojamiento</li>
+                        <li class="breadcrumb-item">General</li>
+                        <li class="breadcrumb-item active">Listado Consejo Popular</li>
                     </ol>
                 </div>
             </div>
@@ -22,42 +22,42 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h5><strong>Listado</strong> de Hoteles o Villas</h5>
+                    <h5><strong>Listado</strong> de Consejos Populares</h5>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table id="example1" class="table table-bordered table-striped">
+                    <table id="example2" class="table table-bordered table-striped">
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Hotel o Villa</th>
+                            <th>Consejo Popular</th>
                             <th>Municipio</th>
                             <th>Provincia</th>
                             <th>Acción</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for alojamientos in alojamiento %}
+                        {% for consejo in consejopopular %}
                             <tr>
-                                <td>{{ alojamientos.id }}</td>
-                                <td>{{ alojamientos.nombre }}</td>
-                                <td>{{ alojamientos.municipio }}</td>
-                                <td>{{ alojamientos.municipio.provincia }}</td>
+                                <td>{{ consejo.id }}</td>
+                                <td>{{ consejo.nombre }}</td>
+                                <td>{{ consejo.municipio }}</td>
+                                <td>{{ consejo.provincia }}</td>
                                 <td>
-                                    <a class="btn btn-small btn-warning" href="{{ path('alojamiento_edit', {'id': alojamientos.id}) }}">Editar</a>
-                                    <a class="btn btn-small btn-danger btn-delete-entity" href="{{ path('removeralojamiento', {'id' : alojamientos.id}) }}">Eliminar</a>
+                                    <a class="btn btn-small btn-warning" href="{{ path('consejopopular_edit', {'id': consejo.id}) }}">Editar</a>
+                                    <a class="btn btn-small btn-danger btn-delete-entity" href="{{ path('removerconsejopopular', {'id' : consejo.id}) }}">Eliminar</a>
                                 </td>
                             </tr>
                         {% else %}
                             <tr>
-                                <td colspan="3"><center>No hay Hoteles o Villas almacenados</center></td>
+                                <td colspan="3"><center>No hay Consejos Populares almacenados</center></td>
                             </tr>
                         {% endfor %}
                         </tbody>
                         <tfoot>
                         <tr>
                             <th>#</th>
-                            <th>Hospital</th>
+                            <th>Consejo Popular</th>
                             <th>Municipio</th>
                             <th>Provincia</th>
                             <th>Acción</th>
@@ -72,18 +72,18 @@
     </div>
 
     <ul>
-        <a class="btn btn-small btn-success" href="{{ path('alojamiento_new') }}">
-            <i class="fa fa-plus"></i> <strong>Añadir</strong> Alojamiento
+        <a class="btn btn-small btn-success" href="{{ path('consejopopular_new') }}">
+            <i class="fa fa-plus"></i> <strong>Añadir</strong> Consejo Popular
         </a>
 
-        <a href="{{ path('alojamiento_index') }}">
+        <a href="{{ path('consejopopular_index') }}">
             <button type="button" name="reset-filter" id="btn-reset-filtros" class="btn btn-warning"><i
                         class="fa fa-database"></i> Refrescar
             </button>
         </a>
 
         <a class="btn btn-small btn-primary" href="#"><i
-                    class="fa fa-archive"></i> <strong>Exportar</strong> Alojamiento
+                    class="fa fa-archive"></i> <strong>Exportar</strong> Consejo Popular
         </a>
     </ul>
 {% endblock %}
@@ -94,7 +94,7 @@ $(function () {
     {% set session_var = 'app_' ~ notice_level %}
     {% if app.session.flashbag.has(session_var) %}
     {% for flash in app.session.flashbag.get(session_var) %}
-    var n = noty({
+    noty({
         text: '{{ flash }}',
         progressBar : true,
         layout      : 'topRight',
@@ -121,7 +121,7 @@ $(document).ready(function(){
 
         e.preventDefault();
         var url = $(this).prop('href');
-        if(confirm('Estas seguro de eliminar este Alojamiento?')){
+        if(confirm('Estas seguro de eliminar este Consejo Popular?')){
             window.location = url;
         }
     })

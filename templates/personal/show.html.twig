@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
-{% block titlepage %}Mostrar Personal{% endblock %}
+{% block titlepage %}Mostrar Paciente{% endblock %}
 {% block page_header %}
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>ADMIN - PERSONAL</h1>
+                    <h1>ADMIN - PACIENTE</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item">Personal</li>
-                        <li class="breadcrumb-item">Listado Personal</li>
-                        <li class="breadcrumb-item active">Mostrar Personal</li>
+                        <li class="breadcrumb-item">Paciente</li>
+                        <li class="breadcrumb-item">Listado Paciente</li>
+                        <li class="breadcrumb-item active">Mostrar Paciente</li>
                     </ol>
                 </div>
             </div>
@@ -23,117 +23,476 @@
         <!-- SELECT2 EXAMPLE -->
         <div class="card card-default">
             <div class="card-header">
-                <h3 class="card-title"><strong>Mostrar</strong> Personal</h3>
+                <h3 class="card-title"><strong>Añadir</strong> Paciente</h3>
+            </div>
+            <div class="card-header p-2">
+                <ul class="nav nav-pills">
+                    <li class="nav-item"><a class="nav-link active" href="#informacion" data-toggle="tab">Información Personal</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#localizacion" data-toggle="tab">Localización Personal</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#viajero" data-toggle="tab">Datos Viajeros</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#consulta" data-toggle="tab">Consulta Medica</a></li>
+                </ul>
             </div>
             <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>{{ form_label(form.ci, 'CI (*):') }}</label>
-                            {{ form_widget(form.ci, { 'attr': { 'class': 'form-control', 'disabled':'disabled' } }) }}
+                <div class="tab-content">
+                    <div class="active tab-pane" id="informacion">
+                        <div class="form-group row">
+                            {% if(form_errors(form.numero)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.numero) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.numero, 'No. *:') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.numero, { 'attr': { 'class': 'form-control', 'readonly':'disabled' } }) }}
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <label>{{ form_label(form.nombre, 'Nombre (*):') }}</label>
-                            {{ form_widget(form.nombre, { 'attr': { 'class': 'form-control', 'disabled':'disabled' } }) }}
+                        <div class="form-group row">
+                            {% if(form_errors(form.ci)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.ci) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.ci, 'CI *:') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.ci, { 'attr': { 'class': 'form-control', 'readonly':'disabled' } }) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            {% if(form_errors(form.nombre)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.nombre) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.nombre, 'Nombre *:') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.nombre, { 'attr': { 'class': 'form-control', 'readonly':'disabled' } }) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            {% if(form_errors(form.apellidos)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.apellidos) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.apellidos, 'Apellidos *:') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.apellidos, { 'attr': { 'class': 'form-control', 'readonly':'disabled' } }) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            {% if(form_errors(form.edad)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.edad) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.edad, 'Edad :') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.edad, { 'attr': { 'class': 'form-control', 'readonly':'disabled' } }) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            {% if(form_errors(form.sexo)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.sexo) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.sexo, 'Sexo *:') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.sexo, { 'attr': { 'class': 'form-control', 'readonly':'disabled', 'disabled':'disabled' } }) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            {% if(form_errors(form.hc)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.hc) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.hc, 'Historia Clínica :') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.hc, { 'attr': { 'class': 'form-control', 'readonly':'disabled' } }) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            {% if(form_errors(form.imageFile)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.imageFile) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.imageFile, 'Imagen :') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.imageFile, { 'attr': { 'class': 'form-control', 'type': 'file' } }) }}
+                            </div>
                         </div>
                     </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>{{ form_label(form.noregistro, 'No. Registro (*):') }}</label>
-                            {{ form_widget(form.noregistro, { 'attr': { 'class': 'form-control', 'disabled':'disabled' } }) }}
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="localizacion">
+                        <div class="form-group row">
+                            {% if(form_errors(form.provincia)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.provincia) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.provincia, 'Provincia *:') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.provincia, { 'attr': { 'class': 'form-control', 'readonly':'disabled', 'disabled':'disabled' } }) }}
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <label>{{ form_label(form.apellidos, 'Apellidos (*):') }}</label>
-                            {{ form_widget(form.apellidos, { 'attr': { 'class': 'form-control', 'disabled':'disabled' } }) }}
+                        <div class="form-group row">
+                            {% if(form_errors(form.municipio)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.municipio) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.municipio, 'Municipio *:') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.municipio, { 'attr': { 'class': 'form-control', 'readonly':'disabled', 'disabled':'disabled' } }) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            {% if(form_errors(form.nacionalidad)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.nacionalidad) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.nacionalidad, 'Nacionalidad :') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.nacionalidad, { 'attr': { 'class': 'form-control', 'readonly':'disabled', 'disabled':'disabled' } }) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            {% if(form_errors(form.direccioncarnet)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.direccioncarnet) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.direccioncarnet, 'Dirección Particular :') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.direccioncarnet, { 'attr': { 'class': 'form-control', 'readonly':'disabled', 'disabled':'disabled' } }) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            {% if(form_errors(form.categoriapaciente)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.categoriapaciente) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.categoriapaciente, 'Categoría del Paciente :') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.categoriapaciente, { 'attr': { 'class': 'form-control', 'readonly':'disabled', 'disabled':'disabled' } }) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            {% if(form_errors(form.areasalud)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.areasalud) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.areasalud, 'Area de Salud *:') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.areasalud, { 'attr': { 'class': 'form-control', 'readonly':'disabled', 'disabled':'disabled' } }) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            {% if(form_errors(form.consejopopular)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.consejopopular) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.consejopopular, 'Consejo Popular *:') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.consejopopular, { 'attr': { 'class': 'form-control', 'readonly':'disabled', 'disabled':'disabled' } }) }}
+                            </div>
                         </div>
                     </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>{{ form_label(form.sexo, 'Sexo (*):') }}</label>
-                            {{ form_widget(form.sexo, { 'attr': { 'class': 'form-control select2', 'disabled':'disabled' } }) }}
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="viajero">
+                        <div class="form-group row">
+                            {% if(form_errors(form.categoriaviajero)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.categoriaviajero) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.categoriaviajero, 'Categoría del Viajero (Condición):') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.categoriaviajero, { 'attr': { 'class': 'form-control', 'readonly':'disabled', 'disabled':'disabled' } }) }}
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <label>{{ form_label(form.autobliografia, 'Autobiografía:') }}</label>
-                            {{ form_widget(form.autobliografia, { 'attr': { 'class': 'form-control', 'disabled':'disabled' } }) }}
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>{{ form_label(form.telefonofijo, 'Telefono Fijo:') }}</label>
-                            {{ form_widget(form.telefonofijo, { 'attr': { 'class': 'form-control', 'disabled':'disabled' } }) }}
-                        </div>
-
-                        <div class="form-group">
-                            <label>{{ form_label(form.direccionparticular, 'Dirección Particular:') }}</label>
-                            {{ form_widget(form.direccionparticular, { 'attr': { 'class': 'form-control', 'disabled':'disabled' } }) }}
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>{{ form_label(form.movil, 'Móvil:') }}</label>
-                            {{ form_widget(form.movil, { 'attr': { 'class': 'form-control', 'disabled':'disabled' } }) }}
+                        <div class="form-group row">
+                            {% if(form_errors(form.paisprocedencia)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.paisprocedencia) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.paisprocedencia, 'País de Procedencia :') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.paisprocedencia, { 'attr': { 'class': 'form-control', 'readonly':'disabled', 'disabled':'disabled' } }) }}
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <label>{{ form_label(form.email, 'Email:') }}</label>
-                            {{ form_widget(form.email, { 'attr': { 'class': 'form-control', 'disabled':'disabled' } }) }}
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>{{ form_label(form.nacionalidad, 'Nacionalidad (*):') }}</label>
-                            {{ form_widget(form.nacionalidad, { 'attr': { 'class': 'form-control select2', 'disabled':'disabled' } }) }}
-                        </div>
-
-                        <div class="form-group">
-                            <label>{{ form_label(form.cargo, 'Cargo (*):') }}</label>
-                            {{ form_widget(form.cargo, { 'attr': { 'class': 'form-control select2', 'disabled':'disabled' } }) }}
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>{{ form_label(form.especialidad, 'Especialidad (*):') }}</label>
-                            {{ form_widget(form.especialidad, { 'attr': { 'class': 'form-control select2', 'disabled':'disabled' } }) }}
+                        <div class="form-group row">
+                            {% if(form_errors(form.fechaentrada)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.fechaentrada) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.fechaentrada, 'Fecha de Arribo :') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.fechaentrada, { 'attr': { 'class': 'form-control', 'readonly':'disabled', 'disabled':'disabled' } }) }}
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <label>{{ form_label(form.organizacionpolitica, 'Organización Política (*):') }}</label>
-                            {{ form_widget(form.organizacionpolitica, { 'attr': { 'class': 'form-control select2', 'multiple': 'multiple', 'disabled':'disabled' } }) }}
+                        <div class="form-group row">
+                            {% if(form_errors(form.provinciaentrada)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.provinciaentrada) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.provinciaentrada, 'Provincia de Arribo :') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.provinciaentrada, { 'attr': { 'class': 'form-control', 'readonly':'disabled', 'disabled':'disabled' } }) }}
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>{{ form_label(form.categoriadocente, 'Categoría Docente (*):') }}</label>
-                            {{ form_widget(form.categoriadocente, { 'attr': { 'class': 'form-control select2', 'disabled':'disabled' } }) }}
-                        </div>
-
-                        <div class="form-group">
-                            <label>{{ form_label(form.categoriacientifica, 'Categoría Científica (*):') }}</label>
-                            {{ form_widget(form.categoriacientifica, { 'attr': { 'class': 'form-control select2', 'disabled':'disabled' } }) }}
+                        <div class="form-group row">
+                            {% if(form_errors(form.observaciones)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.direccionresidencia) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.observaciones, 'Observaciones :') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.observaciones, { 'attr': { 'class': 'form-control', 'readonly':'disabled', 'disabled':'disabled' } }) }}
+                            </div>
                         </div>
                     </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>{{ form_label(form.mision, 'Misión (*):') }}</label>
-                            {{ form_widget(form.mision, { 'attr': { 'class': 'form-control icheck-success d-inline', 'disabled':'disabled' } }) }}
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="consulta">
+                        <div class="form-group row">
+                            {% if(form_errors(form.fechaconsulta)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.fechaconsulta) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.fechaconsulta, 'Fecha de Consulta o Entrada :') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.fechaconsulta, { 'attr': { 'class': 'form-control', 'readonly':'disabled', 'disabled':'disabled' } }) }}
+                            </div>
                         </div>
+
+                        <div class="form-group row">
+                            {% if(form_errors(form.fechatomamuestra)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.fechatomamuestra) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.fechatomamuestra, 'Fecha Toma de Muestra (FTM) :') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.fechatomamuestra, { 'attr': { 'class': 'form-control', 'readonly':'disabled', 'disabled':'disabled' } }) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            {% if(form_errors(form.estadoingreso)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.estadoingreso) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.estadoingreso, 'Estado de Ingreso (Categoría) *:') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.estadoingreso, { 'attr': { 'class': 'form-control', 'readonly':'disabled', 'disabled':'disabled' } }) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            {% if(form_errors(form.sintomaingreso)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.sintomaingreso) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.sintomaingreso, 'Sintomas de Ingreso (Diagnóstico) *:') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.sintomaingreso, { 'attr': { 'class': 'form-control select2', 'readonly':'disabled', 'disabled':'disabled', 'multiple': 'multiple' } }) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            {% if(form_errors(form.tipomuestra)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.tipomuestra) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.tipomuestra, 'Tipo de Muestra * :') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.tipomuestra, { 'attr': { 'class': 'form-control', 'readonly':'disabled', 'disabled':'disabled' } }) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            {% if(form_errors(form.centroprocemuestra)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.centroprocemuestra) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.centroprocemuestra, 'Centro de Procedencia de la Muestra *:') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.centroprocemuestra, { 'attr': { 'class': 'form-control', 'readonly':'disabled', 'disabled':'disabled' } }) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            {% if(form_errors(form.provinciaprocedenmuestra)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.provinciaprocedenmuestra) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.provinciaprocedenmuestra, 'Provincia de Procedencia de la Muestra *:') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.provinciaprocedenmuestra, { 'attr': { 'class': 'form-control', 'readonly':'disabled', 'disabled':'disabled' } }) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            {% if(form_errors(form.fis)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.fis) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.fis, 'Fecha de Primeros Sintomas (FPS):') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.fis, { 'attr': { 'class': 'form-control', 'readonly':'disabled', 'disabled':'disabled' } }) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            {% if(form_errors(form.fechaingreso)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.fechaingreso) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.fechaingreso, 'Fecha de Ingreso :') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.fechaingreso, { 'attr': { 'class': 'form-control', 'readonly':'disabled', 'disabled':'disabled' } }) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            {% if(form_errors(form.hospitalingreso)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.hospitalingreso) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.hospitalingreso, 'Lugar u Hospital de Ingreso :') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.hospitalingreso, { 'attr': { 'class': 'form-control', 'readonly':'disabled', 'disabled':'disabled' } }) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            {% if(form_errors(form.fechaenviomuestra)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.fechaenviomuestra) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.fechaenviomuestra, 'Fecha envío de Muestra :') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.fechaenviomuestra, { 'attr': { 'class': 'form-control', 'readonly':'disabled', 'disabled':'disabled' } }) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            {% if(form_errors(form.resultado)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.resultado) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.resultado, 'Resultado :') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.resultado, { 'attr': { 'class': 'form-control', 'readonly':'disabled', 'disabled':'disabled' } }) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            {% if(form_errors(form.fecharesultado)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.fecharesultado) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.fecharesultado, 'Fecha Resultado :') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.fecharesultado, { 'attr': { 'class': 'form-control', 'readonly':'disabled', 'disabled':'disabled' } }) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            {% if(form_errors(form.fechaalta)) %}
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ form_errors(form.fechaalta) }}</strong>
+                                </div>
+                            {% endif %}
+                            <label class="col-sm-2 col-form-label">{{ form_label(form.fechaalta, 'Fecha de Alta :') }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.fechaalta, { 'attr': { 'class': 'form-control', 'readonly':'disabled', 'disabled':'disabled' } }) }}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.tab-pane -->
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-10"></label>
+                    <div class="col-sm-12">
+                        <a class="btn btn-outline-info" href="{{ path('personal_index') }}"><i class="icofont icofont-exchange"></i>Volver al Listado</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <ul>
-        <button class="btn btn-outline-info"><i class="icofont icofont-exchange"></i><a href="{{ path('personal_index') }}">Volver al Listado</a></button>
-    </ul>
 {% endblock %}

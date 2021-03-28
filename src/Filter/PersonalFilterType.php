@@ -12,7 +12,7 @@ class PersonalFilterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('ci', Filters\TextFilterType::class);
-        $builder->add('noregistro', Filters\TextFilterType::class);
+        $builder->add('hc', Filters\TextFilterType::class);
         $builder->add('nombre', Filters\TextFilterType::class);
         $builder->add('apellidos', Filters\TextFilterType::class);
     }

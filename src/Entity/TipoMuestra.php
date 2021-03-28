@@ -2,11 +2,19 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use DH\DoctrineAuditBundle\Annotation as Audit;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TipoMuestraRepository")
+ * @UniqueEntity(fields={"nombre"}, message="Ya existe este Tipo de Muestra")
+ * @Audit\Auditable
  */
+
 class TipoMuestra
 {
     /**
@@ -17,9 +25,32 @@ class TipoMuestra
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string
+     * @ORM\Column(name="nombretipomuestra", type="string",  nullable=false, length=100, unique=true)
+     * @Assert\NotBlank(message="No debe estar vacío")
+     * @Assert\Regex(
+     *     pattern="/^[a-zA-ZÑñÓÚáéÍÁÉíóúü0-9 ]*$/",
+     *     message="Debe de contener solo letras"
+     * )
+     * @Assert\Length(min=2, max=100, minMessage="Debe contener al menos {{ limit }} letras", maxMessage="Debe contener a lo sumo {{ limit }} letras")
      */
     private $nombre;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Personal", mappedBy="tipomuestra")
+     */
+    protected $personal;
+
+    public function __construct()
+    {
+        $this->personal = new ArrayCollection();
+    }
+
+    public function __toString() {
+
+        return $this->getNombre();
+
+    }
 
     public function getId(): ?int
     {
@@ -37,4 +68,36 @@ class TipoMuestra
 
         return $this;
     }
+
+    /**
+     * @return Collection|Personal[]
+     */
+    public function getPersonal(): Collection
+    {
+        return $this->personal;
+    }
+
+    public function addPersonal(Personal $personal): self
+    {
+        if (!$this->personal->contains($personal)) {
+            $this->personal[] = $personal;
+            $personal->setTipomuestra($this);
+        }
+
+        return $this;
+    }
+
+    public function removePersonal(Personal $personal): self
+    {
+        if ($this->personal->contains($personal)) {
+            $this->personal->removeElement($personal);
+            // set the owning side to null (unless already changed)
+            if ($personal->getTipomuestra() === $this) {
+                $personal->setTipomuestra(null);
+            }
+        }
+
+        return $this;
+    }
 }
+

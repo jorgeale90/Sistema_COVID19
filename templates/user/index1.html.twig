@@ -23,59 +23,25 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-3">
-
                         <!-- Profile Image -->
                         <div class="card card-primary card-outline">
                             <div class="card-body box-profile">
                                 <div class="text-center">
-                                    {% for user in usuario %}
-                                        {% if user.username == app.user.username and user.image != null %}
-                                            <img src="{{ vich_uploader_asset(user, 'imageFile', 'App\\Entity\\User') }}" alt="{{ user.username }}" class="profile-user-img img-fluid img-circle">
-                                        {% elseif user.username == app.user.username and user.image == null %}
-                                            <img src="{{ asset('page/images/user.png') }}" class="profile-user-img img-fluid img-circle" alt="User-Profile-Image">
-                                        {% endif %}
-                                    {% endfor %}
+                                    <img src="{{ asset('page/images/user.png') }}" class="profile-user-img img-fluid img-circle" alt="User-Profile-Image">
                                 </div>
-
-                                <h3 class="profile-username text-center">{{ app.user.username }}</h3>
-
+                                <h3 class="profile-username text-center">Admin</h3>
                                 <p class="text-muted text-center">
-                                    {% if is_granted('ROLE_SUPER_ADMIN') %}
-                                        (Super Admin)
-                                    {% elseif is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN') %}
-                                        (Super Admin)
-                                    {% elseif is_granted('ROLE_ADMIN') %}
-                                        (Admin)
-                                    {% elseif is_granted('ROLE_DOCTOR') %}
-                                        (Doctor)
-                                    {% elseif is_granted('ROLE_ESTADISTICO') %}
-                                        (Estadistico)
-                                    {% elseif is_granted('ROLE_USER') %}
-                                        (Usuario)
-                                    {% endif %}
                                 </p>
-
                                 <ul class="list-group list-group-unbordered mb-3">
                                     <li class="list-group-item">
                                         <b>Email</b> <a class="float-right">
-                                            {% for user in users %}
-                                                {% if user.username == app.user.username %}
-                                                    {{ user.email }}
-                                                {% else %}
-                                                    <span class="badge badge-danger right">None</span>
-                                                {% endif %}
-                                            {% endfor %}
+{#                                            {{ users['blame_user'] }}#}
+                                            <span class="badge badge-danger right">None</span>
                                         </a>
                                     </li>
                                     <li class="list-group-item">
                                         <b>Ultima entrada</b> <a class="float-right">
-                                            {% for user in users %}
-                                                {% if user.username == app.user.username %}
-                                                    {{ user.lastlogin | date('Y-m-d') }}
-                                                {% else %}
-                                                    <span class="badge badge-danger right">None</span>
-                                                {% endif %}
-                                            {% endfor %}
+                                            <span class="badge badge-danger right">None</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -84,7 +50,6 @@
                             <!-- /.card-body -->
                         </div>
                         <!-- /.card -->
-
                         <!-- About Me Box -->
 {#                        <div class="card card-primary">#}
 {#                            <div class="card-header">#}
@@ -409,5 +374,4 @@
             </div><!-- /.container-fluid -->
         </section>
         <!-- /.content -->
-
 {% endblock %}

@@ -22,28 +22,23 @@ class Personal
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
      * @var string
-     * @Assert\Regex(pattern="/\w/", match=true, message="Debe contener solo números")
-     * @ORM\Column(name="ci", type="string",  nullable=false, length=80, unique=true)
-     * @Assert\NotBlank(message="No debe estar vacío")
-     * @Assert\Length(min=11, max=11, minMessage="Debe contener al menos {{ limit }} letras", maxMessage="Debe contener a lo sumo {{ limit }} letras")
+     * @ORM\Column(name="numero", type="string",  nullable=false, length=80)
      */
-    private $ci;
+    private $numero;
 
     /**
      * @var string
      * @Assert\Regex(pattern="/\w/", match=true, message="Debe contener solo números")
-     * @ORM\Column(name="noregistro", type="string",  nullable=false, length=80)
-     * @Assert\NotBlank(message="No debe estar vacío")
-     * @Assert\Length(min=2, max=30, minMessage="Debe contener al menos {{ limit }} letras", maxMessage="Debe contener a lo sumo {{ limit }} letras")
+     * @ORM\Column(name="ci", type="string",  nullable=true, length=80, unique=true)
      */
-    private $noregistro;
+    private $ci;
 
     /**
      * @var string
@@ -82,154 +77,205 @@ class Personal
     private $updatedAt;
 
     /**
-     * @ORM\Column(type = "text", nullable=true)
-     * @Assert\Length(min=1, max=1000, minMessage="Debe contener al menos {{ limit }} letras", maxMessage="Debe contener a lo sumo {{ limit }} letras")
-     */
-    private $direccionparticular;
-
-    /**
-     * @var integer
-     * @ORM\Column(name="telefonofijo", type="integer",  nullable=true)
-     * @Assert\Regex(pattern="/\w/", match=true, message="Debe contener solo números")
-     * @Assert\Length(min=6, max=10, minMessage="Debe contener al menos {{ limit }} números", maxMessage="Debe contener a lo sumo {{ limit }} números")
-     */
-    private $telefonofijo;
-
-    /**
-     * @var integer
-     * @ORM\Column(name="movil", type="integer",  nullable=true)
-     * @Assert\Regex(pattern="/\w/", match=true, message="Debe contener solo números")
-     * @Assert\Length(min=8, max=8, minMessage="Debe contener al menos {{ limit }} números", maxMessage="Debe contener a lo sumo {{ limit }} números")
-     */
-    private $movil;
-
-    /**
      * @var string
-     * @ORM\Column(name="email", type="string", length=255, nullable=true)
+     * @Assert\Regex(pattern="/\w/", match=true, message="Debe contener solo números")
+     * @ORM\Column(name="edad", type="string",  nullable=true, length=80)
+     * @Assert\Length(min=1, max=3, minMessage="Debe contener al menos {{ limit }} dígito", maxMessage="Debe contener a lo sumo {{ limit }} dígitos")
      */
-    private $email;
-
-    /**
-     * @ORM\Column(type = "text", nullable=true)
-     * @Assert\Length(min=1, max=1000, minMessage="Debe contener al menos {{ limit }} letras", maxMessage="Debe contener a lo sumo {{ limit }} letras")
-     */
-    private $autobliografia;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="OrganizacionPolitica")
-     * @ORM\JoinTable(name="organizacionp_personal",
-     *           joinColumns={@ORM\JoinColumn(name="personal_id", referencedColumnName="id")},
-     *           inverseJoinColumns={@ORM\JoinColumn(name="organizacionp_id",referencedColumnName="id")})
-     * @Assert\Count(min=1, max=10, minMessage="Debe seleccionar al menos {{ limit }} Organización", maxMessage="Debe  seleccionar a lo sumo {{ limit }} Organizaciones")*
-     */
-    protected $organizacionpolitica;
+    private $edad;
 
     /**
      * @ORM\ManyToOne(targetEntity = "Sexo", inversedBy = "personal")
-     * @ORM\JoinColumn(name="sexo_id", referencedColumnName="id", onDelete = "CASCADE")
+     * @ORM\JoinColumn(name="sexo_id", referencedColumnName="id", onDelete = "CASCADE", nullable=false)
      * @Assert\NotBlank(message="Debe seleccionar un Sexo")
      */
     protected $sexo;
 
     /**
-     * @ORM\ManyToOne(targetEntity = "Cargo", inversedBy = "personal")
-     * @ORM\JoinColumn(name="cargo_id", referencedColumnName="id", onDelete = "CASCADE")
-     * @Assert\NotBlank(message="Debe seleccionar un Cargo")
+     * @var string
+     * @Assert\Regex(pattern="/\w/", match=true, message="Debe contener solo números")
+     * @ORM\Column(name="hc", type="string",  nullable=true, length=80)
+     * @Assert\Length(min=1, max=11, minMessage="Debe contener al menos {{ limit }} dígito", maxMessage="Debe contener a lo sumo {{ limit }} dígitos")
      */
-    protected $cargo;
+    private $hc;
+
+    /**
+     * @ORM\ManyToOne(targetEntity = "AreaSalud", inversedBy = "personal")
+     * @ORM\JoinColumn(name="areasalud_id", referencedColumnName="id", onDelete = "CASCADE", nullable=true)
+     */
+    protected $areasalud;
+
+    /**
+     * @ORM\ManyToOne(targetEntity = "Municipio", inversedBy = "personal")
+     * @ORM\JoinColumn(name="municipio_id", referencedColumnName="id", onDelete = "CASCADE")
+     * @Assert\NotBlank(message="Debe seleccionar un Municipio")
+     */
+    protected $municipio;
+
+    /**
+     * @ORM\ManyToOne(targetEntity = "Provincia", inversedBy = "personal")
+     * @ORM\JoinColumn(name="provincia_id", referencedColumnName="id", onDelete = "CASCADE")
+     * @Assert\NotBlank(message="Debe seleccionar una Provincia")
+     */
+    protected $provincia;
+
+    /**
+     * @ORM\ManyToOne(targetEntity = "CategoriaViajero", inversedBy = "personal")
+     * @ORM\JoinColumn(name="categoriaviajero_id", referencedColumnName="id", onDelete = "CASCADE", nullable=true)
+     */
+    protected $categoriaviajero;
+
+    /**
+     * @ORM\ManyToOne(targetEntity = "Pais", inversedBy = "personalprecedencia")
+     * @ORM\JoinColumn(name="paisprocedencia_id", referencedColumnName="id", onDelete = "CASCADE", nullable=true)
+     */
+    protected $paisprocedencia;
 
     /**
      * @ORM\ManyToOne(targetEntity = "Nacionalidad", inversedBy = "personal")
-     * @ORM\JoinColumn(name="nacionalidad_id", referencedColumnName="id", onDelete = "CASCADE")
-     * @Assert\NotBlank(message="Debe seleccionar una Nacionalidad")
+     * @ORM\JoinColumn(name="nacionalidad_id", referencedColumnName="id", onDelete = "CASCADE", nullable=true)
      */
     protected $nacionalidad;
 
     /**
-     * @ORM\ManyToOne(targetEntity = "Especialidad", inversedBy = "personal")
-     * @ORM\JoinColumn(name="especialidad_id", referencedColumnName="id", onDelete = "CASCADE")
-     * @Assert\NotBlank(message="Debe seleccionar una Especialidad")
+     * @ORM\Column(name="fechaentrada", type="date",  nullable=true)
      */
-    protected $especialidad;
+    private $fechaentrada;
 
     /**
-     * @ORM\ManyToOne(targetEntity = "CategoriaDocente", inversedBy = "personal")
-     * @ORM\JoinColumn(name="categoriadocente_id", referencedColumnName="id", onDelete = "CASCADE")
-     * @Assert\NotBlank(message="Debe seleccionar una Categoría Docente")
+     * @ORM\ManyToOne(targetEntity = "Provincia", inversedBy = "personalprovinciaentrada")
+     * @ORM\JoinColumn(name="provinciaentrada_id", referencedColumnName="id", onDelete = "CASCADE", nullable=true)
      */
-    protected $categoriadocente;
+    protected $provinciaentrada;
 
     /**
-     * @ORM\ManyToOne(targetEntity = "CategoriaCientifica", inversedBy = "personal")
-     * @ORM\JoinColumn(name="categoriacientifica_id", referencedColumnName="id", onDelete = "CASCADE")
-     * @Assert\NotBlank(message="Debe seleccionar una Categoría Cientifica")
+     * @ORM\Column(type = "text", nullable=true)
+     * @Assert\Length(min=1, max=1000, minMessage="Debe contener al menos {{ limit }} letras", maxMessage="Debe contener a lo sumo {{ limit }} letras")
      */
-    protected $categoriacientifica;
+    private $observaciones;
 
     /**
-     * @var string $mision
-     * @ORM\Column(name="mision", type="string", nullable=false, length=30)
-     * @Assert\Choice(choices={"Si","No","None"},  message="Debe seleccionar una Opción")
+     * @ORM\Column(type = "text", nullable=true)
+     * @Assert\Length(min=1, max=1000, minMessage="Debe contener al menos {{ limit }} letras", maxMessage="Debe contener a lo sumo {{ limit }} letras")
      */
-    protected $mision;
+    private $direccioncarnet;
 
     /**
-     * @ORM\OneToMany(targetEntity="SistemaContable", mappedBy="personal")
+     * @ORM\ManyToOne(targetEntity = "ConsejoPopular", inversedBy = "personal")
+     * @ORM\JoinColumn(name="consejopopular_id", referencedColumnName="id", onDelete = "CASCADE", nullable=true)
      */
-    protected $sistemacontable;
+    protected $consejopopular;
 
     /**
-     * @ORM\OneToMany(targetEntity="MedioTecnologico", mappedBy="personal1")
+     * @ORM\Column(name="fis", type="date",  nullable=true)
      */
-    protected $mediotecnologico1;
+    private $fis;
 
     /**
-     * @ORM\OneToMany(targetEntity="MedioTecnologico", mappedBy="personal2")
+     * @ORM\Column(name="fechaconsulta", type="date",  nullable=true)
      */
-    protected $mediotecnologico2;
+    private $fechaconsulta;
 
     /**
-     * @ORM\OneToMany(targetEntity="ContratoCorreo", mappedBy="personal1")
+     * @ORM\ManyToMany(targetEntity="SintomasIngreso", inversedBy="personales")
+     * @ORM\JoinTable(name="sintomasingreso_personal",
+     *           joinColumns={@ORM\JoinColumn(name="personal_id", referencedColumnName="id")},
+     *           inverseJoinColumns={@ORM\JoinColumn(name="sintomasingreso_id",referencedColumnName="id")})
+     * @Assert\Count(min=1, max=30, minMessage="Debe seleccionar al menos {{ limit }} Síntomas", maxMessage="Debe  seleccionar a lo sumo {{ limit }} Síntomas")*
      */
-    protected $contratocorreo1;
+    protected $sintomaingreso;
 
     /**
-     * @ORM\OneToMany(targetEntity="ContratoCorreo", mappedBy="personal2")
+     * @ORM\Column(name="fechaingreso", type="date",  nullable=true)
      */
-    protected $contratocorreo2;
+    private $fechaingreso;
 
     /**
-     * @ORM\OneToMany(targetEntity="ContratoAnclaje", mappedBy="personal")
+     * @ORM\ManyToOne(targetEntity = "EstadoIngreso", inversedBy = "personal")
+     * @ORM\JoinColumn(name="estadoingreso_id", referencedColumnName="id", onDelete = "CASCADE")
      */
-    protected $contratoanclaje;
+    protected $estadoingreso;
 
     /**
-     * @ORM\OneToMany(targetEntity="ContratoAnclaje", mappedBy="personal2")
+     * @ORM\ManyToOne(targetEntity = "HospitalIngreso", inversedBy = "personal")
+     * @ORM\JoinColumn(name="hospitalingreso_id", referencedColumnName="id", onDelete = "CASCADE", nullable=true)
      */
-    protected $contratoanclaje2;
+    protected $hospitalingreso;
 
     /**
-     * @ORM\OneToMany(targetEntity="ContratoInternet", mappedBy="personal1")
+     * @ORM\ManyToOne(targetEntity = "CategoriaPaciente", inversedBy = "personal")
+     * @ORM\JoinColumn(name="categoriapaciente_id", referencedColumnName="id", onDelete = "CASCADE", nullable=true)
      */
-    protected $contratointernet1;
+    protected $categoriapaciente;
 
     /**
-     * @ORM\OneToMany(targetEntity="ContratoInternet", mappedBy="personal2")
+     * @ORM\Column(name="fechatomamuestra", type="date",  nullable=true)
      */
-    protected $contratointernet2;
+    private $fechatomamuestra;
+
+    /**
+     * @ORM\Column(name="fechaenviomuestra", type="date",  nullable=true)
+     */
+    private $fechaenviomuestra;
+
+    /**
+     * @ORM\Column(name="fecharesultado", type="date",  nullable=true)
+     */
+    private $fecharesultado;
+
+    /**
+     * @ORM\ManyToOne(targetEntity = "Resultado", inversedBy = "personal")
+     * @ORM\JoinColumn(name="resultado_id", referencedColumnName="id", onDelete = "CASCADE", nullable=true)
+     */
+    protected $resultado;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="activo", type="boolean", nullable=true)
+     */
+    private $activo;
+
+    /**
+     * @ORM\Column(name="fechaalta", type="date",  nullable=true)
+     */
+    private $fechaalta;
+
+    /**
+     * @ORM\ManyToOne(targetEntity = "TipoMuestra", inversedBy = "personal")
+     * @ORM\JoinColumn(name="tipomuestra_id", referencedColumnName="id", onDelete = "CASCADE")
+     */
+    protected $tipomuestra;
+
+    /**
+     * @ORM\ManyToOne(targetEntity = "Provincia", inversedBy = "personalprocedenmuestra")
+     * @ORM\JoinColumn(name="provinciaprocedenmuestra_id", referencedColumnName="id", onDelete = "CASCADE")
+     */
+    protected $provinciaprocedenmuestra;
+
+    /**
+     * @ORM\ManyToOne(targetEntity = "AreaSalud", inversedBy = "personalcentromuestra")
+     * @ORM\JoinColumn(name="centroprocemuestra_id", referencedColumnName="id", onDelete = "CASCADE")
+     */
+    protected $centroprocemuestra;
+
+    /**
+     * @var string
+     * @ORM\Column(name="color_piel", type="string", nullable=true, length=30)
+     * @Assert\Choice(choices={"Blanca","Mestiza","Negra","Amarilla"},  message="Debe seleccionar una Opción")
+     */
+    protected $color_piel;
+
+    /**
+     * @var string
+     * @ORM\Column(name="tiempo", type="string", nullable=true, length=30)
+     * @Assert\Choice(choices={"día(s)","mes(es)","año(s)"},  message="Debe seleccionar una Opción")
+     */
+    protected $tiempo;
 
     public function __construct()
     {
-        $this->organizacionpolitica = new ArrayCollection();
-        $this->sistemacontable = new ArrayCollection();
-        $this->mediotecnologico1 = new ArrayCollection();
-        $this->mediotecnologico2 = new ArrayCollection();
-        $this->contratocorreo1 = new ArrayCollection();
-        $this->contratocorreo2 = new ArrayCollection();
-        $this->contratoanclaje = new ArrayCollection();
-        $this->contratointernet1 = new ArrayCollection();
-        $this->contratoanclaje2 = new ArrayCollection();
-        $this->contratointernet2 = new ArrayCollection();
+        $this->sintomaingreso = new ArrayCollection();
     }
 
     public function getNombreCompleto() {
@@ -244,9 +290,63 @@ class Personal
 
     }
 
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($image) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getNumero(): ?string
+    {
+        return $this->numero;
+    }
+
+    public function setNumero(string $numero): self
+    {
+        $this->numero = $numero;
+
+        return $this;
     }
 
     public function getCi(): ?string
@@ -254,21 +354,9 @@ class Personal
         return $this->ci;
     }
 
-    public function setCi(string $ci): self
+    public function setCi(?string $ci): self
     {
         $this->ci = $ci;
-
-        return $this;
-    }
-
-    public function getNoregistro(): ?string
-    {
-        return $this->noregistro;
-    }
-
-    public function setNoregistro(string $noregistro): self
-    {
-        $this->noregistro = $noregistro;
 
         return $this;
     }
@@ -297,124 +385,170 @@ class Personal
         return $this;
     }
 
-    public function getImage(): ?string
+    public function getEdad(): ?string
     {
-        return $this->image;
+        return $this->edad;
     }
 
-    public function setImage(?string $image): self
+    public function setEdad(?string $edad): self
     {
-        $this->image = $image;
+        $this->edad = $edad;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getHc(): ?string
     {
-        return $this->updatedAt;
+        return $this->hc;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    public function setHc(?string $hc): self
     {
-        $this->updatedAt = $updatedAt;
+        $this->hc = $hc;
 
         return $this;
     }
 
-    public function getDireccionparticular(): ?string
+    public function getFechaentrada(): ?\DateTimeInterface
     {
-        return $this->direccionparticular;
+        return $this->fechaentrada;
     }
 
-    public function setDireccionparticular(?string $direccionparticular): self
+    public function setFechaentrada(?\DateTimeInterface $fechaentrada): self
     {
-        $this->direccionparticular = $direccionparticular;
+        $this->fechaentrada = $fechaentrada;
 
         return $this;
     }
 
-    public function getTelefonofijo(): ?int
+    public function getObservaciones(): ?string
     {
-        return $this->telefonofijo;
+        return $this->observaciones;
     }
 
-    public function setTelefonofijo(?int $telefonofijo): self
+    public function setObservaciones(?string $observaciones): self
     {
-        $this->telefonofijo = $telefonofijo;
+        $this->observaciones = $observaciones;
 
         return $this;
     }
 
-    public function getMovil(): ?int
+    public function getDireccioncarnet(): ?string
     {
-        return $this->movil;
+        return $this->direccioncarnet;
     }
 
-    public function setMovil(?int $movil): self
+    public function setDireccioncarnet(?string $direccioncarnet): self
     {
-        $this->movil = $movil;
+        $this->direccioncarnet = $direccioncarnet;
 
         return $this;
     }
 
-    public function getEmail(): ?string
+    public function getFis(): ?\DateTimeInterface
     {
-        return $this->email;
+        return $this->fis;
     }
 
-    public function setEmail(?string $email): self
+    public function setFis(?\DateTimeInterface $fis): self
     {
-        $this->email = $email;
+        $this->fis = $fis;
 
         return $this;
     }
 
-    public function getAutobliografia(): ?string
+    public function getFechaconsulta(): ?\DateTimeInterface
     {
-        return $this->autobliografia;
+        return $this->fechaconsulta;
     }
 
-    public function setAutobliografia(?string $autobliografia): self
+    public function setFechaconsulta(?\DateTimeInterface $fechaconsulta): self
     {
-        $this->autobliografia = $autobliografia;
+        $this->fechaconsulta = $fechaconsulta;
 
         return $this;
     }
 
-    public function getMision(): ?string
+    public function getFechaingreso(): ?\DateTimeInterface
     {
-        return $this->mision;
+        return $this->fechaingreso;
     }
 
-    public function setMision(string $mision): self
+    public function setFechaingreso(?\DateTimeInterface $fechaingreso): self
     {
-        $this->mision = $mision;
+        $this->fechaingreso = $fechaingreso;
 
         return $this;
     }
 
-    /**
-     * @return Collection|OrganizacionPolitica[]
-     */
-    public function getOrganizacionpolitica(): Collection
+    public function getFechatomamuestra(): ?\DateTimeInterface
     {
-        return $this->organizacionpolitica;
+        return $this->fechatomamuestra;
     }
 
-    public function addOrganizacionpolitica(OrganizacionPolitica $organizacionpolitica): self
+    public function setFechatomamuestra(?\DateTimeInterface $fechatomamuestra): self
     {
-        if (!$this->organizacionpolitica->contains($organizacionpolitica)) {
-            $this->organizacionpolitica[] = $organizacionpolitica;
-        }
+        $this->fechatomamuestra = $fechatomamuestra;
 
         return $this;
     }
 
-    public function removeOrganizacionpolitica(OrganizacionPolitica $organizacionpolitica): self
+    public function getFechaenviomuestra(): ?\DateTimeInterface
     {
-        if ($this->organizacionpolitica->contains($organizacionpolitica)) {
-            $this->organizacionpolitica->removeElement($organizacionpolitica);
-        }
+        return $this->fechaenviomuestra;
+    }
+
+    public function setFechaenviomuestra(?\DateTimeInterface $fechaenviomuestra): self
+    {
+        $this->fechaenviomuestra = $fechaenviomuestra;
+
+        return $this;
+    }
+
+    public function getFecharesultado(): ?\DateTimeInterface
+    {
+        return $this->fecharesultado;
+    }
+
+    public function setFecharesultado(?\DateTimeInterface $fecharesultado): self
+    {
+        $this->fecharesultado = $fecharesultado;
+
+        return $this;
+    }
+
+    public function getActivo(): ?bool
+    {
+        return $this->activo;
+    }
+
+    public function setActivo(?bool $activo): self
+    {
+        $this->activo = $activo;
+
+        return $this;
+    }
+
+    public function getFechaalta(): ?\DateTimeInterface
+    {
+        return $this->fechaalta;
+    }
+
+    public function setFechaalta(?\DateTimeInterface $fechaalta): self
+    {
+        $this->fechaalta = $fechaalta;
+
+        return $this;
+    }
+
+    public function getColorPiel(): ?string
+    {
+        return $this->color_piel;
+    }
+
+    public function setColorPiel(?string $color_piel): self
+    {
+        $this->color_piel = $color_piel;
 
         return $this;
     }
@@ -431,14 +565,62 @@ class Personal
         return $this;
     }
 
-    public function getCargo(): ?Cargo
+    public function getAreasalud(): ?AreaSalud
     {
-        return $this->cargo;
+        return $this->areasalud;
     }
 
-    public function setCargo(?Cargo $cargo): self
+    public function setAreasalud(?AreaSalud $areasalud): self
     {
-        $this->cargo = $cargo;
+        $this->areasalud = $areasalud;
+
+        return $this;
+    }
+
+    public function getMunicipio(): ?Municipio
+    {
+        return $this->municipio;
+    }
+
+    public function setMunicipio(?Municipio $municipio): self
+    {
+        $this->municipio = $municipio;
+
+        return $this;
+    }
+
+    public function getProvincia(): ?Provincia
+    {
+        return $this->provincia;
+    }
+
+    public function setProvincia(?Provincia $provincia): self
+    {
+        $this->provincia = $provincia;
+
+        return $this;
+    }
+
+    public function getCategoriaviajero(): ?CategoriaViajero
+    {
+        return $this->categoriaviajero;
+    }
+
+    public function setCategoriaviajero(?CategoriaViajero $categoriaviajero): self
+    {
+        $this->categoriaviajero = $categoriaviajero;
+
+        return $this;
+    }
+
+    public function getPaisprocedencia(): ?Pais
+    {
+        return $this->paisprocedencia;
+    }
+
+    public function setPaisprocedencia(?Pais $paisprocedencia): self
+    {
+        $this->paisprocedencia = $paisprocedencia;
 
         return $this;
     }
@@ -455,337 +637,149 @@ class Personal
         return $this;
     }
 
-    public function getEspecialidad(): ?Especialidad
+    public function getProvinciaentrada(): ?Provincia
     {
-        return $this->especialidad;
+        return $this->provinciaentrada;
     }
 
-    public function setEspecialidad(?Especialidad $especialidad): self
+    public function setProvinciaentrada(?Provincia $provinciaentrada): self
     {
-        $this->especialidad = $especialidad;
+        $this->provinciaentrada = $provinciaentrada;
 
         return $this;
     }
 
-    public function getCategoriadocente(): ?CategoriaDocente
+    public function getConsejopopular(): ?ConsejoPopular
     {
-        return $this->categoriadocente;
+        return $this->consejopopular;
     }
 
-    public function setCategoriadocente(?CategoriaDocente $categoriadocente): self
+    public function setConsejopopular(?ConsejoPopular $consejopopular): self
     {
-        $this->categoriadocente = $categoriadocente;
-
-        return $this;
-    }
-
-    public function getCategoriacientifica(): ?CategoriaCientifica
-    {
-        return $this->categoriacientifica;
-    }
-
-    public function setCategoriacientifica(?CategoriaCientifica $categoriacientifica): self
-    {
-        $this->categoriacientifica = $categoriacientifica;
+        $this->consejopopular = $consejopopular;
 
         return $this;
     }
 
     /**
-     * @return Collection|SistemaContable[]
+     * @return Collection|SintomasIngreso[]
      */
-    public function getSistemacontable(): Collection
+    public function getSintomaingreso(): Collection
     {
-        return $this->sistemacontable;
+        return $this->sintomaingreso;
     }
 
-    public function addSistemacontable(SistemaContable $sistemacontable): self
+    public function addSintomaingreso(SintomasIngreso $sintomaingreso): self
     {
-        if (!$this->sistemacontable->contains($sistemacontable)) {
-            $this->sistemacontable[] = $sistemacontable;
-            $sistemacontable->setPersonal($this);
+        if (!$this->sintomaingreso->contains($sintomaingreso)) {
+            $this->sintomaingreso[] = $sintomaingreso;
         }
 
         return $this;
     }
 
-    public function removeSistemacontable(SistemaContable $sistemacontable): self
+    public function removeSintomaingreso(SintomasIngreso $sintomaingreso): self
     {
-        if ($this->sistemacontable->contains($sistemacontable)) {
-            $this->sistemacontable->removeElement($sistemacontable);
-            // set the owning side to null (unless already changed)
-            if ($sistemacontable->getPersonal() === $this) {
-                $sistemacontable->setPersonal(null);
-            }
+        if ($this->sintomaingreso->contains($sintomaingreso)) {
+            $this->sintomaingreso->removeElement($sintomaingreso);
         }
 
         return $this;
     }
 
-    /**
-     * @return Collection|MedioTecnologico[]
-     */
-    public function getMediotecnologico1(): Collection
+    public function getEstadoingreso(): ?EstadoIngreso
     {
-        return $this->mediotecnologico1;
+        return $this->estadoingreso;
     }
 
-    public function addMediotecnologico1(MedioTecnologico $mediotecnologico1): self
+    public function setEstadoingreso(?EstadoIngreso $estadoingreso): self
     {
-        if (!$this->mediotecnologico1->contains($mediotecnologico1)) {
-            $this->mediotecnologico1[] = $mediotecnologico1;
-            $mediotecnologico1->setPersonal1($this);
-        }
+        $this->estadoingreso = $estadoingreso;
 
         return $this;
     }
 
-    public function removeMediotecnologico1(MedioTecnologico $mediotecnologico1): self
+    public function getHospitalingreso(): ?HospitalIngreso
     {
-        if ($this->mediotecnologico1->contains($mediotecnologico1)) {
-            $this->mediotecnologico1->removeElement($mediotecnologico1);
-            // set the owning side to null (unless already changed)
-            if ($mediotecnologico1->getPersonal1() === $this) {
-                $mediotecnologico1->setPersonal1(null);
-            }
-        }
+        return $this->hospitalingreso;
+    }
+
+    public function setHospitalingreso(?HospitalIngreso $hospitalingreso): self
+    {
+        $this->hospitalingreso = $hospitalingreso;
 
         return $this;
     }
 
-    /**
-     * @return Collection|MedioTecnologico[]
-     */
-    public function getMediotecnologico2(): Collection
+    public function getCategoriapaciente(): ?CategoriaPaciente
     {
-        return $this->mediotecnologico2;
+        return $this->categoriapaciente;
     }
 
-    public function addMediotecnologico2(MedioTecnologico $mediotecnologico2): self
+    public function setCategoriapaciente(?CategoriaPaciente $categoriapaciente): self
     {
-        if (!$this->mediotecnologico2->contains($mediotecnologico2)) {
-            $this->mediotecnologico2[] = $mediotecnologico2;
-            $mediotecnologico2->setPersonal2($this);
-        }
+        $this->categoriapaciente = $categoriapaciente;
 
         return $this;
     }
 
-    public function removeMediotecnologico2(MedioTecnologico $mediotecnologico2): self
+    public function getResultado(): ?Resultado
     {
-        if ($this->mediotecnologico2->contains($mediotecnologico2)) {
-            $this->mediotecnologico2->removeElement($mediotecnologico2);
-            // set the owning side to null (unless already changed)
-            if ($mediotecnologico2->getPersonal2() === $this) {
-                $mediotecnologico2->setPersonal2(null);
-            }
-        }
+        return $this->resultado;
+    }
+
+    public function setResultado(?Resultado $resultado): self
+    {
+        $this->resultado = $resultado;
 
         return $this;
     }
 
-    /**
-     * @return Collection|ContratoCorreo[]
-     */
-    public function getContratocorreo1(): Collection
+    public function getTipomuestra(): ?TipoMuestra
     {
-        return $this->contratocorreo1;
+        return $this->tipomuestra;
     }
 
-    public function addContratocorreo1(ContratoCorreo $contratocorreo1): self
+    public function setTipomuestra(?TipoMuestra $tipomuestra): self
     {
-        if (!$this->contratocorreo1->contains($contratocorreo1)) {
-            $this->contratocorreo1[] = $contratocorreo1;
-            $contratocorreo1->setPersonal1($this);
-        }
+        $this->tipomuestra = $tipomuestra;
 
         return $this;
     }
 
-    public function removeContratocorreo1(ContratoCorreo $contratocorreo1): self
+    public function getProvinciaprocedenmuestra(): ?Provincia
     {
-        if ($this->contratocorreo1->contains($contratocorreo1)) {
-            $this->contratocorreo1->removeElement($contratocorreo1);
-            // set the owning side to null (unless already changed)
-            if ($contratocorreo1->getPersonal1() === $this) {
-                $contratocorreo1->setPersonal1(null);
-            }
-        }
+        return $this->provinciaprocedenmuestra;
+    }
+
+    public function setProvinciaprocedenmuestra(?Provincia $provinciaprocedenmuestra): self
+    {
+        $this->provinciaprocedenmuestra = $provinciaprocedenmuestra;
 
         return $this;
     }
 
-    /**
-     * @return Collection|ContratoCorreo[]
-     */
-    public function getContratocorreo2(): Collection
+    public function getCentroprocemuestra(): ?AreaSalud
     {
-        return $this->contratocorreo2;
+        return $this->centroprocemuestra;
     }
 
-    public function addContratocorreo2(ContratoCorreo $contratocorreo2): self
+    public function setCentroprocemuestra(?AreaSalud $centroprocemuestra): self
     {
-        if (!$this->contratocorreo2->contains($contratocorreo2)) {
-            $this->contratocorreo2[] = $contratocorreo2;
-            $contratocorreo2->setPersonal2($this);
-        }
+        $this->centroprocemuestra = $centroprocemuestra;
 
         return $this;
     }
 
-    public function removeContratocorreo2(ContratoCorreo $contratocorreo2): self
+    public function getTiempo(): ?string
     {
-        if ($this->contratocorreo2->contains($contratocorreo2)) {
-            $this->contratocorreo2->removeElement($contratocorreo2);
-            // set the owning side to null (unless already changed)
-            if ($contratocorreo2->getPersonal2() === $this) {
-                $contratocorreo2->setPersonal2(null);
-            }
-        }
+        return $this->tiempo;
+    }
+
+    public function setTiempo(?string $tiempo): self
+    {
+        $this->tiempo = $tiempo;
 
         return $this;
     }
-
-    /**
-     * @return Collection|ContratoAnclaje[]
-     */
-    public function getContratoanclaje(): Collection
-    {
-        return $this->contratoanclaje;
-    }
-
-    public function addContratoanclaje(ContratoAnclaje $contratoanclaje): self
-    {
-        if (!$this->contratoanclaje->contains($contratoanclaje)) {
-            $this->contratoanclaje[] = $contratoanclaje;
-            $contratoanclaje->setPersonal($this);
-        }
-
-        return $this;
-    }
-
-    public function removeContratoanclaje(ContratoAnclaje $contratoanclaje): self
-    {
-        if ($this->contratoanclaje->contains($contratoanclaje)) {
-            $this->contratoanclaje->removeElement($contratoanclaje);
-            // set the owning side to null (unless already changed)
-            if ($contratoanclaje->getPersonal() === $this) {
-                $contratoanclaje->setPersonal(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|ContratoInternet[]
-     */
-    public function getContratointernet1(): Collection
-    {
-        return $this->contratointernet1;
-    }
-
-    public function addContratointernet1(ContratoInternet $contratointernet1): self
-    {
-        if (!$this->contratointernet1->contains($contratointernet1)) {
-            $this->contratointernet1[] = $contratointernet1;
-            $contratointernet1->setPersonal1($this);
-        }
-
-        return $this;
-    }
-
-    public function removeContratointernet1(ContratoInternet $contratointernet1): self
-    {
-        if ($this->contratointernet1->contains($contratointernet1)) {
-            $this->contratointernet1->removeElement($contratointernet1);
-            // set the owning side to null (unless already changed)
-            if ($contratointernet1->getPersonal1() === $this) {
-                $contratointernet1->setPersonal1(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function setImageFile(File $image = null)
-    {
-        $this->imageFile = $image;
-
-        // VERY IMPORTANT:
-        // It is required that at least one field changes if you are using Doctrine,
-        // otherwise the event listeners won't be called and the file is lost
-        if ($image) {
-            // if 'updatedAt' is not defined in your entity, use another property
-            $this->updatedAt = new \DateTime('now');
-        }
-    }
-
-    public function getImageFile()
-    {
-        return $this->imageFile;
-    }
-
-    /**
-     * @return Collection|ContratoAnclaje[]
-     */
-    public function getContratoanclaje2(): Collection
-    {
-        return $this->contratoanclaje2;
-    }
-
-    public function addContratoanclaje2(ContratoAnclaje $contratoanclaje2): self
-    {
-        if (!$this->contratoanclaje2->contains($contratoanclaje2)) {
-            $this->contratoanclaje2[] = $contratoanclaje2;
-            $contratoanclaje2->setPersonal2($this);
-        }
-
-        return $this;
-    }
-
-    public function removeContratoanclaje2(ContratoAnclaje $contratoanclaje2): self
-    {
-        if ($this->contratoanclaje2->contains($contratoanclaje2)) {
-            $this->contratoanclaje2->removeElement($contratoanclaje2);
-            // set the owning side to null (unless already changed)
-            if ($contratoanclaje2->getPersonal2() === $this) {
-                $contratoanclaje2->setPersonal2(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|ContratoInternet[]
-     */
-    public function getContratointernet2(): Collection
-    {
-        return $this->contratointernet2;
-    }
-
-    public function addContratointernet2(ContratoInternet $contratointernet2): self
-    {
-        if (!$this->contratointernet2->contains($contratointernet2)) {
-            $this->contratointernet2[] = $contratointernet2;
-            $contratointernet2->setPersonal2($this);
-        }
-
-        return $this;
-    }
-
-    public function removeContratointernet2(ContratoInternet $contratointernet2): self
-    {
-        if ($this->contratointernet2->contains($contratointernet2)) {
-            $this->contratointernet2->removeElement($contratointernet2);
-            // set the owning side to null (unless already changed)
-            if ($contratointernet2->getPersonal2() === $this) {
-                $contratointernet2->setPersonal2(null);
-            }
-        }
-
-        return $this;
-    }
-
 }

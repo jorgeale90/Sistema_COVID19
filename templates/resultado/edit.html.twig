@@ -1,17 +1,18 @@
 {% extends 'base.html.twig' %}
-{% block titlepage %}Editar País{% endblock %}
+{% block titlepage %}Editar Resultado{% endblock %}
 {% block page_header %}
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>LOCALIZACION</h1>
+                    <h1>CENTRO SALUD</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item">Localización</li>
-                        <li class="breadcrumb-item">Listado País</li>
-                        <li class="breadcrumb-item active">Editar País</li>
+                        <li class="breadcrumb-item">Centro Salud</li>
+                        <li class="breadcrumb-item">Clínico</li>
+                        <li class="breadcrumb-item">Listado Resultado</li>
+                        <li class="breadcrumb-item active">Editar Resultado</li>
                     </ol>
                 </div>
             </div>
@@ -23,9 +24,9 @@
         <!-- SELECT2 EXAMPLE -->
         <div class="card card-default">
             <div class="card-header">
-                <h3 class="card-title"><strong>Actualizar</strong> País</h3>
+                <h3 class="card-title"><strong>Actualizar</strong> Resultado</h3>
             </div>
-            {{ include('pais/_form.html.twig', {'button_label': 'Actualizar País'}) }}
+            {{ include('resultado/_form.html.twig', {'button_label': 'Actualizar Resultado'}) }}
         </div>
     </div>
 {% endblock %}

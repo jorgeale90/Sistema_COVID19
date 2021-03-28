@@ -9,27 +9,14 @@
                         <strong>{{ form_errors(form.nombre) }}</strong>
                     </div>
                 {% endif %}
-                <label>{{ form_label(form.nombre, 'Municipio (*):') }}</label>
+                <label>{{ form_label(form.nombre, 'Síntoma de Ingreso (*):') }}</label>
                 {{ form_widget(form.nombre, { 'attr': { 'class': 'form-control' } }) }}
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="form-group">
-                {% if(form_errors(form.provincia)) %}
-                    <div class="alert alert-danger">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <strong>{{ form_errors(form.provincia) }}</strong>
-                    </div>
-                {% endif %}
-                <label>{{ form_label(form.provincia, 'Provincia (*):') }}</label>
-                {{ form_widget(form.provincia, { 'attr': { 'class': 'form-control select2' } }) }}
             </div>
         </div>
     </div>
 </div>
 <ul>
-    <button class="btn btn-success"><i class="fa fa-plus"></i> {{ button_label|default('Añadir Municipio') }}</button>
-    <button class="btn btn-outline-info"><i class="icofont icofont-exchange"></i><a href="{{ path('municipio_index') }}">Volver al Listado</a></button>
+    <button class="btn btn-success"><i class="fa fa-plus"></i> {{ button_label|default('Añadir Síntoma Ingreso') }}</button>
+    <button class="btn btn-outline-info"><i class="icofont icofont-exchange"></i><a href="{{ path('sintomaingreso_index') }}">Volver al Listado</a></button>
 </ul>
 {{ form_end(form) }}

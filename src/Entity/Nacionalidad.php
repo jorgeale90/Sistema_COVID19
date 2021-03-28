@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\ManyToMany;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use DH\DoctrineAuditBundle\Annotation as Audit;
@@ -19,20 +20,20 @@ class Nacionalidad
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
      * @var string
-     * @ORM\Column(name="nombre", type="string",  nullable=false, length=30, unique=true)
+     * @ORM\Column(name="nombrenacional", type="string",  nullable=false, length=50, unique=true)
      * @Assert\NotBlank(message="No debe estar vacío")
      * @Assert\Regex(
-     *     pattern="/^[a-zA-Z ]*$/",
+     *     pattern="/^[a-zA-ZÑñÓÚáéÍÁÉíóúü ]*$/",
      *     message="Debe de contener solo letras"
      * )
-     * @Assert\Length(min=2, max=30, minMessage="Debe contener al menos {{ limit }} letras", maxMessage="Debe contener a lo sumo {{ limit }} letras")
+     * @Assert\Length(min=2, max=50, minMessage="Debe contener al menos {{ limit }} letras", maxMessage="Debe contener a lo sumo {{ limit }} letras")
      */
     private $nombre;
 

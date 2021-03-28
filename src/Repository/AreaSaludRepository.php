@@ -19,6 +19,22 @@ class AreaSaludRepository extends ServiceEntityRepository
         parent::__construct($registry, AreaSalud::class);
     }
 
+    public function findByMunicipio($municipio_id)
+    {
+        $em = $this->getEntityManager();
+        $consulta = $em->createQuery('SELECT m FROM App:AreaSalud m WHERE m.municipio = :municipio_id');
+        $consulta->setParameter('municipio_id', $municipio_id);
+        return $consulta->getArrayResult();
+    }
+
+    public function findByMunicipiocon($municipiocon_id)
+    {
+        $em = $this->getEntityManager();
+        $consulta = $em->createQuery('SELECT m FROM App:AreaSalud m WHERE m.municipio = :municipio_id');
+        $consulta->setParameter('municipio_id', $municipiocon_id);
+        return $consulta->getArrayResult();
+    }
+
     // /**
     //  * @return AreaSalud[] Returns an array of AreaSalud objects
     //  */

@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
-{% block titlepage %}Editar Personal{% endblock %}
+{% block titlepage %}Editar Paciente{% endblock %}
 {% block page_header %}
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>ADMIN - PERSONAL</h1>
+                    <h1>ADMIN - PACIENTE</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item">Personal</li>
-                        <li class="breadcrumb-item">Listado Personal</li>
-                        <li class="breadcrumb-item active">Editar Personal</li>
+                        <li class="breadcrumb-item">Paciente</li>
+                        <li class="breadcrumb-item">Listado Paciente</li>
+                        <li class="breadcrumb-item active">Editar Paciente</li>
                     </ol>
                 </div>
             </div>
@@ -23,35 +23,318 @@
         <!-- SELECT2 EXAMPLE -->
         <div class="card card-default">
             <div class="card-header">
-                <h3 class="card-title"><strong>Editar</strong> Personal</h3>
+                <h3 class="card-title"><strong>Editar</strong> Paciente</h3>
             </div>
-            {{ include('personal/_form.html.twig', {'button_label': 'Actualizar Personal'}) }}
+            <div class="card-header p-2">
+                <ul class="nav nav-pills">
+                    <li class="nav-item"><a class="nav-link active" href="#informacion" data-toggle="tab">Información Personal</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#localizacion" data-toggle="tab">Localización Personal</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#viajero" data-toggle="tab">Datos Viajeros</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#consulta" data-toggle="tab">Consulta Medica</a></li>
+                </ul>
+            </div>
+            <div class="card-body">
+                {{ include('personal/_form.html.twig', {'button_label': 'Actualizar Paciente'}) }}
+            </div>
         </div>
     </div>
 {% endblock %}
 {% block javascript %}
-<script>
-$('#{{ form.cargo.vars.id }}').on('change', function (e) {
+    <script>
+        $('#{{ form.provincia.vars.id }}').on('change', function (e) {
             var data = {
-                cargo_id: $(this).val()
+                provincia_id: $(this).val()
             };
+            $('#{{ form.municipio.vars.id }}').html('<option>Cargando...</option>');
+            $('#{{ form.municipio.vars.id }}').attr('disabled', 'disabled');
             $.ajax({
-                type: 'post',
-                url: '{{ path('especialidad_x_cargo') }}',
+                type: 'POST',
+                url: '{{ path('municipio_x_provincia') }}',
+                async: true,
                 data: data,
                 success: function (response) {
                     if (response.length != 0){
-                        var option = '<option>Seleccione la Especialidad</option>';
-                        $.each(response, function (i, especialidad) {
-                            option += '<option value='+ especialidad.id +'>'+ especialidad.nombre +'</option>'
+                        var option = '<option>Seleccione el Municipio</option>';
+                        $.each(response, function (i, municipio) {
+                            option += '<option value='+ municipio.id +'>'+ municipio.nombre +'</option>'
                         });
-                        $('#{{ form.especialidad.vars.id }}').html(option);
-                        $('#{{ form.especialidad.vars.id }}').removeAttr('disabled');
+                        $('#{{ form.municipio.vars.id }}').html(option);
+                        $('#{{ form.municipio.vars.id }}').removeAttr('disabled');
                     } else {
+                        var option = '<option>No hay Municipios en esta Provincia.</option>';
+                        $('#{{ form.municipio.vars.id }}').html(option);
+                        $('#{{ form.municipio.vars.id }}').attr('disabled', 'disabled');
+                        var option1 = '<option>No hay Municipios en esta Provincia.</option>';
+                        $('#{{ form.areasalud.vars.id }}').html(option1);
+                        $('#{{ form.areasalud.vars.id }}').attr('disabled', 'disabled');
+                        {#var option2 = '<option>No hay Municipios en esta Provincia.</option>';#}
+                        {#$('#{{ form.alojamiento.vars.id }}').html(option2);#}
+                        {#$('#{{ form.alojamiento.vars.id }}').attr('disabled', 'disabled');#}
                         noty({
-                            text: 'No se encontraron Especialidades del Cargo seleccionado.',
+                            text: 'No se encontraron Municipios de la Provincia seleccionada.',
                             layout: 'topRight', type: 'error', timeout: 5000,
                         });
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+
+        $('#{{ form.municipio.vars.id }}').on('change', function (e) {
+            var data = {
+                municipio_id: $(this).val()
+            };
+            $('#{{ form.areasalud.vars.id }}').html('<option>Cargando...</option>');
+            $('#{{ form.areasalud.vars.id }}').attr('disabled', 'disabled');
+            $.ajax({
+                type: 'POST',
+                url: '{{ path('areasalud_x_municipio') }}',
+                async: true,
+                data: data,
+                success: function (response) {
+                    if (response.length != 0){
+                        var option = '<option>Seleccione el Area de Salud</option>';
+                        $.each(response, function (i, areasalud) {
+                            option += '<option value='+ areasalud.id +'>'+ areasalud.nombre +'</option>'
+                        });
+                        $('#{{ form.areasalud.vars.id }}').html(option);
+                        $('#{{ form.areasalud.vars.id }}').removeAttr('disabled');
+                    } else {
+                        var option = '<option>No hay Areas de Salud en este Municipio.</option>';
+                        $('#{{ form.areasalud.vars.id }}').html(option);
+                        $('#{{ form.areasalud.vars.id }}').attr('disabled', 'disabled');
+                        noty({
+                            text: 'No se encontraron Areas de Salud del Municipio seleccionado.',
+                            layout: 'topRight', type: 'error', timeout: 5000,
+                        });
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+
+        {#$('#{{ form.paisprocedencia.vars.id }}').on('change', function (e) {#}
+        {#        var data = {#}
+        {#            paisprocedencia_id: $(this).val()#}
+        {#        };#}
+        {#        $('#{{ form.ciudadresidencia.vars.id }}').html('<option>Cargando...</option>');#}
+        {#        $('#{{ form.ciudadresidencia.vars.id }}').attr('disabled', 'disabled');#}
+        {#        $.ajax({#}
+        {#            type: 'POST',#}
+        {#            url: '{{ path('ciudadresidencia_x_paisprocedencia') }}',#}
+        {#            async: true,#}
+        {#            data: data,#}
+        {#            success: function (response) {#}
+        {#                if (response.length != 0){#}
+        {#                    var option = '<option>Seleccione la Ciudad de Residencia</option>';#}
+        {#                    $.each(response, function (i, ciudadresidencia) {#}
+        {#                        option += '<option value='+ ciudadresidencia.id +'>'+ ciudadresidencia.nombre +'</option>'#}
+        {#                    });#}
+        {#                    $('#{{ form.ciudadresidencia.vars.id }}').html(option);#}
+        {#                    $('#{{ form.ciudadresidencia.vars.id }}').removeAttr('disabled');#}
+        {#                } else {#}
+        {#                    var option = '<option>No hay Ciudad de Residencia en este País.</option>';#}
+        {#                    $('#{{ form.ciudadresidencia.vars.id }}').html(option);#}
+        {#                    $('#{{ form.ciudadresidencia.vars.id }}').attr('disabled', 'disabled');#}
+        {#                    noty({#}
+        {#                        text: 'No se encontraron Ciudad de Residencia en el País seleccionado.',#}
+        {#                        layout: 'topRight', type: 'error', timeout: 5000,#}
+        {#                    });#}
+        {#                }#}
+        {#            },#}
+        {#            error: function (error) {#}
+        {#                console.log(error);#}
+        {#            }#}
+        {#        });#}
+        {#});#}
+
+        {#$('#{{ form.provinciaentrada.vars.id }}').on('change', function (e) {#}
+        {#        var data = {#}
+        {#            provinciaentrada_id: $(this).val()#}
+        {#        };#}
+        {#        $('#{{ form.lugarentrada.vars.id }}').html('<option>Cargando...</option>');#}
+        {#        $('#{{ form.lugarentrada.vars.id }}').attr('disabled', 'disabled');#}
+        {#        $.ajax({#}
+        {#            type: 'POST',#}
+        {#            url: '{{ path('lugarentrada_x_provinciaentrada') }}',#}
+        {#            async: true,#}
+        {#            data: data,#}
+        {#            success: function (response) {#}
+        {#                if (response.length != 0){#}
+        {#                    var option = '<option>Seleccione la Ciudad de Residencia</option>';#}
+        {#                    $.each(response, function (i, lugarentrada) {#}
+        {#                        option += '<option value='+ lugarentrada.id +'>'+ lugarentrada.nombre +'</option>'#}
+        {#                    });#}
+        {#                    $('#{{ form.lugarentrada.vars.id }}').html(option);#}
+        {#                    $('#{{ form.lugarentrada.vars.id }}').removeAttr('disabled');#}
+        {#                } else {#}
+        {#                    var option = '<option>No hay Lugares de Entrada en esta Provincia.</option>';#}
+        {#                    $('#{{ form.lugarentrada.vars.id }}').html(option);#}
+        {#                    $('#{{ form.lugarentrada.vars.id }}').attr('disabled', 'disabled');#}
+        {#                    noty({#}
+        {#                        text: 'No se encontraron Lugares de Entrada en la Provincia seleccionada.',#}
+        {#                        layout: 'topRight', type: 'error', timeout: 5000,#}
+        {#                    });#}
+        {#                }#}
+        {#            },#}
+        {#            error: function (error) {#}
+        {#                console.log(error);#}
+        {#            }#}
+        {#        });#}
+        {#});#}
+
+        {#$('#{{ form.municipio.vars.id }}').on('change', function (e) {#}
+        {#        var data = {#}
+        {#            municipio_id: $(this).val()#}
+        {#        };#}
+        {#        $('#{{ form.alojamiento.vars.id }}').html('<option>Cargando...</option>');#}
+        {#        $('#{{ form.alojamiento.vars.id }}').attr('disabled', 'disabled');#}
+        {#        $.ajax({#}
+        {#            type: 'POST',#}
+        {#            url: '{{ path('alojamiento_x_municipio') }}',#}
+        {#            async: true,#}
+        {#            data: data,#}
+        {#            success: function (response) {#}
+        {#                if (response.length != 0){#}
+        {#                    var option = '<option>Seleccione el Hotel o Villa de Alojamiento</option>';#}
+        {#                    $.each(response, function (i, alojamiento) {#}
+        {#                        option += '<option value='+ alojamiento.id +'>'+ alojamiento.nombre +'</option>'#}
+        {#                    });#}
+        {#                    $('#{{ form.alojamiento.vars.id }}').html(option);#}
+        {#                    $('#{{ form.alojamiento.vars.id }}').removeAttr('disabled');#}
+        {#                } else {#}
+        {#                    var option = '<option>No hay Alojamiento en este Municipio.</option>';#}
+        {#                    $('#{{ form.alojamiento.vars.id }}').html(option);#}
+        {#                    $('#{{ form.alojamiento.vars.id }}').attr('disabled', 'disabled');#}
+        {#                    noty({#}
+        {#                        text: 'No se encontraron Alojamiento en el Municipio seleccionado.',#}
+        {#                        layout: 'topRight', type: 'error', timeout: 5000,#}
+        {#                    });#}
+        {#                }#}
+        {#            },#}
+        {#            error: function (error) {#}
+        {#                console.log(error);#}
+        {#            }#}
+        {#        });#}
+        {#});#}
+
+        {#$('#{{ form.areasalud.vars.id }}').on('change', function (e) {#}
+        {#        var data = {#}
+        {#            areasalud_id: $(this).val()#}
+        {#        };#}
+        {#        $.ajax({#}
+        {#            type: 'post',#}
+        {#            url: '{{ path('cmf_x_areasalud') }}',#}
+        {#            data: data,#}
+        {#            success: function (response) {#}
+        {#                if (response.length != 0){#}
+        {#                    var option = '<option>Seleccione el Consultorio Médico</option>';#}
+        {#                    $.each(response, function (i, consultoriomedico) {#}
+        {#                        option += '<option value='+ consultoriomedico.id +'>'+ consultoriomedico.nombre +'</option>'#}
+        {#                    });#}
+        {#                    $('#{{ form.consultoriomedico.vars.id }}').html(option);#}
+        {#                    $('#{{ form.consultoriomedico.vars.id }}').removeAttr('disabled');#}
+        {#                } else {#}
+        {#                    var option = '<option>No hay CMF en esta Area de Salud.</option>';#}
+        {#                    $('#{{ form.consultoriomedico.vars.id }}').html(option);#}
+        {#                    $('#{{ form.consultoriomedico.vars.id }}').attr('disabled', 'disabled');#}
+        {#                    noty({#}
+        {#                        text: 'No se encontraron CMF en la Area de Salud seleccionada.',#}
+        {#                        layout: 'topRight', type: 'error', timeout: 5000,#}
+        {#                    });#}
+        {#                }#}
+        {#            },#}
+        {#            error: function (error) {#}
+        {#                console.log(error);#}
+        {#            }#}
+        {#        });#}
+        {#});#}
+
+        $('#{{ form.municipio.vars.id }}').on('change', function (e) {
+            var data = {
+                municipio_id: $(this).val()
+            };
+            $('#{{ form.consejopopular.vars.id }}').html('<option>Cargando...</option>');
+            $('#{{ form.consejopopular.vars.id }}').attr('disabled', 'disabled');
+            $.ajax({
+                type: 'POST',
+                url: '{{ path('consejopopular_x_municipio') }}',
+                async: true,
+                data: data,
+                success: function (response) {
+                    if (response.length != 0){
+                        var option = '<option>Seleccione el Consejo Popular</option>';
+                        $.each(response, function (i, consejopopular) {
+                            option += '<option value='+ consejopopular.id +'>'+ consejopopular.nombre +'</option>'
+                        });
+                        $('#{{ form.consejopopular.vars.id }}').html(option);
+                        $('#{{ form.consejopopular.vars.id }}').removeAttr('disabled');
+                    } else {
+                        var option = '<option>No hay Consejo Popular en este Municipio.</option>';
+                        $('#{{ form.consejopopular.vars.id }}').html(option);
+                        $('#{{ form.consejopopular.vars.id }}').attr('disabled', 'disabled');
+                        noty({
+                            text: 'No se encontraron Consejo Popular en el Municipio seleccionado.',
+                            layout: 'topRight', type: 'error', timeout: 5000,
+                        });
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+
+        {#$("#id_categoria").change( function() {#}
+        {#    if ($(this).val() === "NONE")#}
+        {#        $('#{{ form.fechaentrada.vars.id }}').prop("disabled", true);#}
+        {#    }else {#}
+        {#     $('#{{ form.fechaentrada.vars.id }}').prop("disabled", false);#}
+        {#     }#}
+        {#    )};#}
+        {#});#}
+
+        {#function desactivar() {#}
+        {#  if ($("#{{ form.categoriaviajero.vars.id }}:checked").val()==="NONE")#}
+        {#  {#}
+        {#      $('#{{ form.fechaentrada.vars.id }}').attr('disabled', 'disabled');#}
+        {#  }else {#}
+        {#      $('#{{ form.fechaentrada.vars.id }}').removeAttr("disabled");#}
+        {#  }#}
+        {#}#}
+
+        {#$('#{{ form.categoriaviajero.vars.id }}').on('change', function () {#}
+        {#    if ($(this).val() == 'NONE'){#}
+        {#        var option = '<option>No es viajero.</option>';#}
+        {#        $('#{{ form.fechaentrada.vars.id }}').html(option);#}
+        {#        $('#{{ form.fechaentrada.vars.id }}').attr('disabled', 'disabled');#}
+        {#    } else {#}
+        {#        $('#{{ form.fechaentrada.vars.id }}').removeAttr('disabled');#}
+        {#    }#}
+        {#})#}
+
+        $('.activar').on('click', function () {
+            var data = {
+                personal_id: $(this).find('span').text()
+            };
+            var button = $(this);
+            $.ajax({
+                type: 'post',
+                url: '{{ path('activarXpaciente') }}',
+                data: data,
+                success: function (msg) {
+                    if (msg == 1) {
+                        button.removeClass('btn-dark');
+                        button.find('i').removeClass('fa-eye-slash').addClass('fa-eye');
+                        console.log(msg);
+                    } else {
+                        button.addClass('btn-dark');
+                        button.find('i').removeClass('fa-eye').addClass('fa-eye-slash');
+                        console.log(msg);
                     }
                 },
                 error: function (error) {

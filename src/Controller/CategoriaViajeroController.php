@@ -2,99 +2,99 @@
 
 namespace App\Controller;
 
-use App\Entity\Provincia;
-use App\Form\ProvinciaType;
-use App\Repository\ProvinciaRepository;
+use App\Entity\CategoriaViajero;
+use App\Form\CategoriaViajeroType;
+use App\Repository\CategoriaViajeroRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/user/provincia")
+ * @Route("/user/categoriaviajero")
  */
-class ProvinciaController extends AbstractController
+class CategoriaViajeroController extends AbstractController
 {
     /**
-     * @Route("/", name="provincia_index", methods={"GET"})
+     * @Route("/", name="categoriaviajero_index", methods={"GET"})
      */
-    public function index(ProvinciaRepository $provinciaRepository): Response
+    public function index(CategoriaViajeroRepository $categoriaViajeroRepository): Response
     {
-        return $this->render('provincia/index.html.twig', [
-            'provincias' => $provinciaRepository->findAll(),
+        return $this->render('categoriaviajero/index.html.twig', [
+            'categoriaviajero' => $categoriaViajeroRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/new", name="provincia_new", methods={"GET","POST"})
+     * @Route("/new", name="categoriaviajero_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
-        $provincium = new Provincia();
-        $form = $this->createForm(ProvinciaType::class, $provincium);
+        $categoriaviajero = new CategoriaViajero();
+        $form = $this->createForm(CategoriaViajeroType::class, $categoriaviajero);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($provincium);
+            $entityManager->persist($categoriaviajero);
             $entityManager->flush();
 
             $flashBag = $this->get('session')->getFlashBag();
-            $flashBag->add('app_success','Se ha creado una Provincia satisfactoriamente!!!');
-            $flashBag->add('app_success', sprintf('Provincia: %s', $provincium->getNombre()));
+            $flashBag->add('app_success','Se ha creado una Categoría de Viajero satisfactoriamente!!!');
+            $flashBag->add('app_success', sprintf('Categoría de Viajero: %s', $categoriaviajero->getNombre()));
 
-            return $this->redirectToRoute('provincia_index');
+            return $this->redirectToRoute('categoriaviajero_index');
         }
 
-        return $this->render('provincia/new.html.twig', [
-            'provincium' => $provincium,
+        return $this->render('categoriaviajero/new.html.twig', [
+            'categoriaviajero' => $categoriaviajero,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="provincia_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="categoriaviajero_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Provincia $provincium): Response
+    public function edit(Request $request, CategoriaViajero $categoriaViajero): Response
     {
-        $form = $this->createForm(ProvinciaType::class, $provincium);
+        $form = $this->createForm(CategoriaViajeroType::class, $categoriaViajero);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
             $flashBag = $this->get('session')->getFlashBag();
-            $flashBag->add('app_warning','Se ha actualizado una Provincia satisfactoriamente!!!');
-            $flashBag->add('app_warning', sprintf('Provincia: %s', $provincium->getNombre()));
+            $flashBag->add('app_warning','Se ha actualizado una Categoría de Viajero satisfactoriamente!!!');
+            $flashBag->add('app_warning', sprintf('Categoría de Viajero: %s', $categoriaViajero->getNombre()));
 
-            return $this->redirectToRoute('provincia_index');
+            return $this->redirectToRoute('categoriaviajero_index');
         }
 
-        return $this->render('provincia/edit.html.twig', [
-            'provincium' => $provincium,
+        return $this->render('categoriaviajero/edit.html.twig', [
+            'categoriaviajero' => $categoriaViajero,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("provincia/remove/{id}", name="removerprovincia")
+     * @Route("categoriaviajero/remove/{id}", name="removercategoriaviajero")
      */
     public function remove(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository(Provincia::class)->find($id);
+        $entity = $em->getRepository(CategoriaViajero::class)->find($id);
 
         if (!$entity) {
             $flashBag = $this->get('session')->getFlashBag();
-            $flashBag->add('app_warning','No se encuentra esta Provincia!!!');
+            $flashBag->add('app_warning','No se encuentra esta Categoría de Viajero!!!');
         } else {
             $em->remove($entity);
             $em->flush();
 
             $flashBag = $this->get('session')->getFlashBag();
-            $flashBag->add('app_error','Se ha eliminado una Provincia satisfactoriamente!!!');
+            $flashBag->add('app_error','Se ha eliminado una Categoría de Viajero satisfactoriamente!!!');
         }
 
-        return $this->redirectToRoute('provincia_index');
+        return $this->redirectToRoute('categoriaviajero_index');
     }
 }

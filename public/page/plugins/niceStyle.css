@@ -1,0 +1,83 @@
+/*ESTILOS GENERALES*/
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: 'Oswald', sans-serif;
+}
+
+/*body {*/
+    /*background-color: #233142;*/
+    /*color: #ffffff;*/
+/*}*/
+
+/*h1 {*/
+    /*text-transform: uppercase;*/
+    /*font-size: 90px;*/
+    /*color: #f95959;*/
+    /*text-align: center;*/
+    /*margin-bottom: 40px;*/
+/*}*/
+
+p {
+    margin-bottom: 25px;
+}
+
+label.datos {
+    margin-left: 25px;
+}
+
+label.datos:first-child {
+    margin-left: 0;
+}
+
+input[type="text"].texto {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 5px;
+    width: 35px;
+    height: 35px;
+    font-size: 15px;
+    text-align: center;
+    background-color: #E0E0E0;
+    border: solid #E0E0E0;
+    border-radius: 3px;
+}
+
+input[type="checkbox"] {
+    background-color: #E0E0E0;
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    vertical-align: middle;
+}
+
+input[type="text"].pass-input {
+    margin-top: 30px;
+    text-align: center;
+    color: #455d7a;
+    font-size: 40px;
+    padding: 5px;
+    width: 100%;
+}
+
+.boton {
+    width: 100%;
+    padding: 10px;
+    font-size: 20px;
+    text-transform: uppercase;
+    background-color: #f9195c;
+    border: none;
+    margin-top: 20px;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+.contenido {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}

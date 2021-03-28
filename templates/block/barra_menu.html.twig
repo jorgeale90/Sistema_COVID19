@@ -3,7 +3,7 @@
     <a href="{{ path('app_home') }}" class="brand-link">
         <img src="{{ asset('page/images/icono.png') }}" alt="AdminLTE Logo" class="brand-image img-fluid elevation-3"
              style="opacity: .8">
-        <span class="brand-text font-weight-light"><strong>SabioLTE ~ NODO</strong></span>
+        <span class="brand-text font-weight-light"><strong>Sistema ~ COVID19</strong></span>
     </a>
     <!-- Sidebar -->
     <div class="sidebar">
@@ -27,24 +27,6 @@
             <ul class="nav nav-pills nav-sidebar flex-column text-sm" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
-                <li class="nav-header">CALENDARIO</li>
-                <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-desktop"></i>
-                        <p>
-                            Calendario
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ path('calendario_index') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Calendario</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
                 <li class="nav-header">ADMIN - PERSONAL</li>
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
@@ -55,12 +37,6 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        {#<li class="nav-item">#}
-                            {#<a href="{{ path('generador_pass') }}" class="nav-link">#}
-                                {#<i class="far fa-circle nav-icon"></i>#}
-                                {#<p>Usuarios</p>#}
-                            {#</a>#}
-                        {#</li>#}
                         <li class="nav-item">
                             <a href="{{ path('easyadmin') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
@@ -87,7 +63,7 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-users"></i>
                         <p>
-                            Personal
+                            Paciente
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
@@ -95,7 +71,7 @@
                         <li class="nav-item">
                             <a href="{{ path('personal_index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Listado Personal</p>
+                                <p>Listado Panciente</p>
                                 <span class="badge badge-info right">
                                     {% set contador = 0 %}
                                     {% for per in personales  %}
@@ -130,9 +106,28 @@
                                 </span>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ path('categoriapaciente_index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Categoría Paciente</p>
+                                <span class="badge badge-info right">
+                                    {% set contador = 0 %}
+                                    {% for categpac in categoriapaciente  %}
+
+                                        {% if categpac.id == null %}
+                                            {% set contador = 0 %}
+                                        {% else %}
+                                            {% set contador = contador + 1 %}
+                                        {% endif %}
+
+                                    {% endfor %}
+                                    {{ contador }}
+                                </span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
-                <li class="nav-header">LOCALIZACIÓN</li>
+                <li class="nav-header">LOCALIZACIÓN - GENERAL</li>
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-map-marked"></i>
@@ -218,31 +213,11 @@
                                 </span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ path('institucion_index') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Listado Institución</p>
-                                <span class="badge badge-info right">
-                                    {% set contador = 0 %}
-                                    {% for inst in institucion  %}
-
-                                        {% if inst.id == null %}
-                                            {% set contador = 0 %}
-                                        {% else %}
-                                            {% set contador = contador + 1 %}
-                                        {% endif %}
-
-                                    {% endfor %}
-                                    {{ contador }}
-                                </span>
-                            </a>
-                        </li>
                     </ul>
                 </li>
-                <li class="nav-header">GENERAL - CATEGORIAS</li>
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-copy"></i>
+                        <i class="nav-icon fas fa-portrait"></i>
                         <p>
                             General
                             <i class="fas fa-angle-left right"></i>
@@ -250,52 +225,14 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ path('cargo_index') }}" class="nav-link">
+                            <a href="{{ path('consejopopular_index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Cargo u Ocupación</p>
+                                <p>Consejo Popular</p>
                                 <span class="badge badge-info right">
                                     {% set contador = 0 %}
-                                    {% for car in cargo  %}
+                                    {% for conse in consejopopular  %}
 
-                                        {% if car.id == null %}
-                                            {% set contador = 0 %}
-                                        {% else %}
-                                            {% set contador = contador + 1 %}
-                                        {% endif %}
-
-                                    {% endfor %}
-                                    {{ contador }}
-                                </span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ path('especialidad_index') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Listado Especialidad</p>
-                                <span class="badge badge-info right">
-                                    {% set contador = 0 %}
-                                    {% for esp in especialidad  %}
-
-                                        {% if esp.id == null %}
-                                            {% set contador = 0 %}
-                                        {% else %}
-                                            {% set contador = contador + 1 %}
-                                        {% endif %}
-
-                                    {% endfor %}
-                                    {{ contador }}
-                                </span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ path('organizacionpolitica_index') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Listado Político</p>
-                                <span class="badge badge-info right">
-                                    {% set contador = 0 %}
-                                    {% for pol in politica  %}
-
-                                        {% if pol.id == null %}
+                                        {% if conse.id == null %}
                                             {% set contador = 0 %}
                                         {% else %}
                                             {% set contador = contador + 1 %}
@@ -308,43 +245,25 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-header">CENTRO SALUD</li>
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-bookmark"></i>
+                        <i class="nav-icon fas fa-hospital"></i>
                         <p>
-                            Categorías
+                            Centro Salud
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ path('hospital_index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Listado Docente</p>
+                                <p>Listado Hospital</p>
                                 <span class="badge badge-info right">
                                     {% set contador = 0 %}
-                                    {% for doce in docente  %}
+                                    {% for hosp in hospital  %}
 
-                                        {% if doce.id == null %}
-                                            {% set contador = 0 %}
-                                        {% else %}
-                                            {% set contador = contador + 1 %}
-                                        {% endif %}
-
-                                    {% endfor %}
-                                    {{ contador }}
-                                </span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Listado Científica</p>
-                                <span class="badge badge-info right">
-                                    {% set contador = 0 %}
-                                    {% for cien in cientifica  %}
-
-                                        {% if cien.id == null %}
+                                        {% if hosp.id == null %}
                                             {% set contador = 0 %}
                                         {% else %}
                                             {% set contador = contador + 1 %}
@@ -356,45 +275,16 @@
                             </a>
                         </li>
                     </ul>
-                </li>
-                <li class="nav-header">CONTABILIDAD - MEDIOS</li>
-                <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-database"></i>
-                        <p>
-                            Sistema Contabilidad
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ path('areasalud_index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Sistema Contable</p>
+                                <p>Listado Area Salud</p>
                                 <span class="badge badge-info right">
                                     {% set contador = 0 %}
-                                    {% for cont in contable  %}
+                                    {% for areas in areasalud  %}
 
-                                        {% if cont.id == null %}
-                                            {% set contador = 0 %}
-                                        {% else %}
-                                            {% set contador = contador + 1 %}
-                                        {% endif %}
-
-                                    {% endfor %}
-                                    {{ contador }}
-                                </span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Sistema Módulos</p>
-                                <span class="badge badge-info right">
-                                    {% set contador = 0 %}
-                                    {% for modu in modulo  %}
-
-                                        {% if modu.id == null %}
+                                        {% if areas.id == null %}
                                             {% set contador = 0 %}
                                         {% else %}
                                             {% set contador = contador + 1 %}
@@ -406,151 +296,97 @@
                             </a>
                         </li>
                     </ul>
-                </li>
-                <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-laptop-code"></i>
-                        <p>
-                            Medios Tecnológicos
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item">
+                        <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Listado Marca</p>
-                                <span class="badge badge-info right">
-                                    {% set contador = 0 %}
-                                    {% for mar in marca  %}
-
-                                        {% if mar.id == null %}
-                                            {% set contador = 0 %}
-                                        {% else %}
-                                            {% set contador = contador + 1 %}
-                                        {% endif %}
-
-                                    {% endfor %}
-                                    {{ contador }}
-                                </span>
+                                <p>
+                                    Clínico
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
                             </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Listado Modelo</p>
-                                <span class="badge badge-info right">
-                                    {% set contador = 0 %}
-                                    {% for mode in modelo  %}
-
-                                        {% if mode.id == null %}
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ path('estadoingreso_index') }}" class="nav-link">
+                                        <i class="far fa-dot-circle nav-icon"></i>
+                                        <p>Listado Estado Ingreso</p>
+                                        <span class="badge badge-info right">
                                             {% set contador = 0 %}
-                                        {% else %}
-                                            {% set contador = contador + 1 %}
-                                        {% endif %}
+                                            {% for estadosing in estadoingreso  %}
 
-                                    {% endfor %}
-                                    {{ contador }}
-                                </span>
-                            </a>
+                                                {% if estadosing.id == null %}
+                                                    {% set contador = 0 %}
+                                                {% else %}
+                                                    {% set contador = contador + 1 %}
+                                                {% endif %}
+
+                                            {% endfor %}
+                                            {{ contador }}
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ path('sintomaingreso_index') }}" class="nav-link">
+                                        <i class="far fa-dot-circle nav-icon"></i>
+                                        <p>Síntoma Ingreso</p>
+                                        <span class="badge badge-info right">
+                                        {% set contador = 0 %}
+                                            {% for sintomaing in sintomasingreso  %}
+
+                                                {% if sintomaing.id == null %}
+                                                    {% set contador = 0 %}
+                                                {% else %}
+                                                    {% set contador = contador + 1 %}
+                                                {% endif %}
+
+                                            {% endfor %}
+                                        {{ contador }}
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ path('resultado_index') }}" class="nav-link">
+                                        <i class="far fa-dot-circle nav-icon"></i>
+                                        <p>Resultados</p>
+                                        <span class="badge badge-info right">
+                                        {% set contador = 0 %}
+                                            {% for result in resultado  %}
+
+                                                {% if result.id == null %}
+                                                    {% set contador = 0 %}
+                                                {% else %}
+                                                    {% set contador = contador + 1 %}
+                                                {% endif %}
+
+                                            {% endfor %}
+                                            {{ contador }}
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Tipo Medio</p>
-                                <span class="badge badge-info right">
-                                    {% set contador = 0 %}
-                                    {% for tipo in tipomedio  %}
 
-                                        {% if tipo.id == null %}
-                                            {% set contador = 0 %}
-                                        {% else %}
-                                            {% set contador = contador + 1 %}
-                                        {% endif %}
-
-                                    {% endfor %}
-                                    {{ contador }}
-                                </span>
-                            </a>
-                        </li>
                     </ul>
                 </li>
-                <li class="nav-header">CONTRATO</li>
+                <li class="nav-header">VIAJERO</li>
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-folder-open"></i>
+                        <i class="nav-icon fas fa-plane-departure"></i>
                         <p>
-                            Contratos
+                            Categoría Viajero
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ path('contratocorreo_index') }}" class="nav-link">
+                            <a href="{{ path('categoriaviajero_index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Contrato Correo</p>
+                                <p>Categoría Viajero</p>
                                 <span class="badge badge-info right">
                                     {% set contador = 0 %}
-                                    {% for contratocor in contratocorreo  %}
+                                    {% for cat in categoriaviajero  %}
 
-                                        {% if contratocor.id == null %}
-                                            {% set contador = 0 %}
-                                        {% else %}
-                                            {% set contador = contador + 1 %}
-                                        {% endif %}
-
-                                    {% endfor %}
-                                    {{ contador }}
-                                </span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ path('contratoanclaje_index') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Contrato Anclaje</p>
-                                <span class="badge badge-info right">
-                                    {% set contador = 0 %}
-                                    {% for contratoanc in contratoanclaje  %}
-
-                                        {% if contratoanc.id == null %}
-                                            {% set contador = 0 %}
-                                        {% else %}
-                                            {% set contador = contador + 1 %}
-                                        {% endif %}
-
-                                    {% endfor %}
-                                    {{ contador }}
-                                </span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ path('contratointernet_index') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Contrato Internet</p>
-                                <span class="badge badge-info right">
-                                    {% set contador = 0 %}
-                                    {% for contratoint in contratointernet  %}
-
-                                        {% if contratoint.id == null %}
-                                            {% set contador = 0 %}
-                                        {% else %}
-                                            {% set contador = contador + 1 %}
-                                        {% endif %}
-
-                                    {% endfor %}
-                                    {{ contador }}
-                                </span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Contrato Tecnología</p>
-                                <span class="badge badge-info right">
-                                    {% set contador = 0 %}
-                                    {% for contratotec in contratotecnologia  %}
-
-                                        {% if contratotec.id == null %}
+                                        {% if cat.id == null %}
                                             {% set contador = 0 %}
                                         {% else %}
                                             {% set contador = contador + 1 %}

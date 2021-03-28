@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block titlepage %}Home{% endblock %}
+{% block titlepage %}Consultas{% endblock %}
 {% block page_header %}
     <div class="content-header">
         <div class="container-fluid">
@@ -9,8 +9,9 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Dashboard</li>
+                        <li class="breadcrumb-item">Home</li>
+                        <li class="breadcrumb-item">Dashboard</li>
+                        <li class="breadcrumb-item active">Consultas</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -18,88 +19,167 @@
     </div>
 {% endblock %}
 {% block contenido %}
-    <div class="row">
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-                <div class="inner">
-                    <h3>
-                        {% set contador = 0 %}
-                        {% for use in usuario  %}
+        <div class="row">
+            <div class="col-md-3 col-sm-6 col-12">
+                <div class="info-box bg-gradient-info">
+                    <span class="info-box-icon"><i class="far fa-bookmark"></i></span>
 
-                            {% if use.id == null %}
-                                {% set contador = 0 %}
-                            {% else %}
-                                {% set contador = contador + 1 %}
-                            {% endif %}
+                    <div class="info-box-content">
+                        <span class="info-box-text">Indicación 1</span>
+                        <span class="info-box-number">1</span>
 
-                        {% endfor %}
-                        {{ contador }}
-                    </h3>
-                    <p>Usuario</p>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 70%"></div>
+                        </div>
+                        <span class="progress-description">
+                  70% Increase in 30 Days
+                </span>
+                    </div>
+                    <!-- /.info-box-content -->
                 </div>
-                <div class="icon">
-                    <i class="fas fa-user"></i>
-                </div>
-                <a href="{{ path('easyadmin') }}" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
+                <!-- /.info-box -->
             </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-                <div class="inner">
-                    <h3>
-                        {% set contador = 0 %}
-                        {% for pers in personales  %}
+            <!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-12">
+                <div class="info-box bg-gradient-success">
+                    <span class="info-box-icon"><i class="far fa-thumbs-up"></i></span>
 
-                            {% if pers.id == null %}
-                                {% set contador = 0 %}
-                            {% else %}
-                                {% set contador = contador + 1 %}
-                            {% endif %}
+                    <div class="info-box-content">
+                        <span class="info-box-text">Indicación 2</span>
+                        <span class="info-box-number">2</span>
 
-                        {% endfor %}
-                        {{ contador }}
-                    </h3>
-                    <p>Pacientes</p>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 70%"></div>
+                        </div>
+                        <span class="progress-description">
+                  70% Increase in 30 Days
+                </span>
+                    </div>
+                    <!-- /.info-box-content -->
                 </div>
-                <div class="icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                <a href="{{ path('personal_index') }}" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
+                <!-- /.info-box -->
             </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-                <div class="inner">
-                    <h3>44</h3>
+            <!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-12">
+                <div class="info-box bg-gradient-warning">
+                    <span class="info-box-icon"><i class="far fa-calendar-alt"></i></span>
 
-                    <p>Analítica</p>
-                </div>
-                <div class="icon">
-                    <i class="fa fa-chart-bar"></i>
-                </div>
-                <a href="#" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-                <div class="inner">
-                    <h3>65</h3>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Indicación 3</span>
+                        <span class="info-box-number">3</span>
 
-                    <p>Auditoría</p>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 70%"></div>
+                        </div>
+                        <span class="progress-description">
+                  70% Increase in 30 Days
+                </span>
+                    </div>
+                    <!-- /.info-box-content -->
                 </div>
-                <div class="icon">
-                    <i class="fa fa-archive"></i>
-                </div>
-                <a href="{{ path('dh_doctrine_audit_list_audits') }}" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
+                <!-- /.info-box -->
             </div>
+            <!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-12">
+                <div class="info-box bg-gradient-danger">
+                    <span class="info-box-icon"><i class="fas fa-comments"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Indicación 4</span>
+                        <span class="info-box-number">4</span>
+
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 70%"></div>
+                        </div>
+                        <span class="progress-description">
+                  70% Increase in 30 Days
+                </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-12">
+                <div class="info-box bg-gradient-info">
+                    <span class="info-box-icon"><i class="fas fa-comments"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Indicación 5</span>
+                        <span class="info-box-number">4</span>
+
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 70%"></div>
+                        </div>
+                        <span class="progress-description">
+                  70% Increase in 30 Days
+                </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-12">
+                <div class="info-box bg-gradient-success">
+                    <span class="info-box-icon"><i class="fas fa-comments"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Indicación 6</span>
+                        <span class="info-box-number">4</span>
+
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 70%"></div>
+                        </div>
+                        <span class="progress-description">
+                  70% Increase in 30 Days
+                </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-12">
+                <div class="info-box bg-gradient-warning">
+                    <span class="info-box-icon"><i class="fas fa-comments"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Indicación 7</span>
+                        <span class="info-box-number">4</span>
+
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 70%"></div>
+                        </div>
+                        <span class="progress-description">
+                  70% Increase in 30 Days
+                </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-12">
+                <div class="info-box bg-gradient-danger">
+                    <span class="info-box-icon"><i class="fas fa-comments"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Indicación 8</span>
+                        <span class="info-box-number">4</span>
+
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 70%"></div>
+                        </div>
+                        <span class="progress-description">
+                  70% Increase in 30 Days
+                </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
         </div>
-        <!-- ./col -->
-    </div>
+        <!-- /.row -->
 {% endblock %}

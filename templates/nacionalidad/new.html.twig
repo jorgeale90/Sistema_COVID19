@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>LOCALIZACIÓN</h1>
+                    <h1>LOCALIZACIÓN - GENERAL</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -28,4 +28,55 @@
             {{ include('nacionalidad/_form.html.twig') }}
         </div>
     </div>
+{% endblock %}
+{% block javascript %}
+<script>
+$('#crearentidad').on('click', function (e) {
+    e.preventDefault();
+    var button = $(this).html();
+    var form = $('form[name="app_nacionalidad"]');
+    $('#crearentidad').html("<i class='fa fa-spinner fa-spin'></i> Cargando...");
+    $.ajax({
+        type: 'POST',
+        url: '{{ path('nacionalidad_new') }}',
+                dataType: 'json',
+                data: new FormData(form[0]),
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data.length != 0){
+                        $.each(data, function (i, messages) {
+                            var incremento = i * 1000;
+                            noty({
+                                    text: messages,
+                                    progressBar : true,
+                                    layout      : 'topRight',
+                                    dismissQueue: true,
+                                    timeout     : 5000 + incremento,
+                                    closeWith   : ['click'],
+                                    theme       : 'relax',
+                                    type        : 'error',
+                                    maxVisible  : 10,
+                                    animation   : {
+                                                open  : 'animated bounceInLeft',
+                                                close : 'animated bounceOutLeft',
+                                                easing: 'swing',
+                                                speed : 500
+                                            }
+                            });
+                        });
+                        $('#crearentidad').html(button);
+                    } else {
+                        form.submit();
+                    }
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            });
+        });
+        $('form[name="app_nacionalidad"]').validationEngine({
+            promptPosition: 'centerRight'
+        });
+</script>
 {% endblock %}

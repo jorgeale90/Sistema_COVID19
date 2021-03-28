@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
-{% block titlepage %}Municipio{% endblock %}
+{% block titlepage %}CMF{% endblock %}
 {% block page_header %}
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>LOCALIZACIÓN</h1>
+                    <h1>CENTRO SALUD</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item">Localización</li>
-                        <li class="breadcrumb-item active">Listado Municipio</li>
+                        <li class="breadcrumb-item">Centro Salud</li>
+                        <li class="breadcrumb-item active">Listado CMF</li>
                     </ol>
                 </div>
             </div>
@@ -22,44 +22,47 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h5><strong>Listado</strong> de Municipios</h5>
+                    <h5><strong>Listado</strong> de Consultorios Medicos de Familia</h5>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table id="example1" class="table table-bordered table-striped">
+                    <table id="example2" class="table table-bordered table-striped">
                         <thead>
                         <tr>
                             <th>#</th>
+                            <th>CMF</th>
+                            <th>Area de Salud</th>
                             <th>Municipio</th>
                             <th>Provincia</th>
-                            <th>País</th>
                             <th>Acción</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for municipios in municipio %}
+                        {% for consultorios in consultoriomedico %}
                             <tr>
-                                <td>{{ municipios.id }}</td>
-                                <td>{{ municipios.nombre }}</td>
-                                <td>{{ municipios.provincia }}</td>
-                                <td>{{ municipios.provincia.pais }}</td>
+                                <td>{{ consultorios.id }}</td>
+                                <td>{{ consultorios.nombre }}</td>
+                                <td>{{ consultorios.areasalud }}</td>
+                                <td>{{ consultorios.municipio }}</td>
+                                <td>{{ consultorios.provincia }}</td>
                                 <td>
-                                    <a class="btn btn-small btn-warning" href="{{ path('municipio_edit', {'id': municipios.id}) }}">Editar</a>
-                                    <a class="btn btn-small btn-danger btn-delete-entity" href="{{ path('removermunicipio', {'id' : municipios.id}) }}">Eliminar</a>
+                                    <a class="btn btn-small btn-warning" href="{{ path('consultoriomedico_edit', {'id': consultorios.id}) }}">Editar</a>
+                                    <a class="btn btn-small btn-danger btn-delete-entity" href="{{ path('removerconsultoriomedico', {'id' : consultorios.id}) }}">Eliminar</a>
                                 </td>
                             </tr>
                         {% else %}
                             <tr>
-                                <td colspan="3"><center>No hay Municipios almacenados</center></td>
+                                <td colspan="3"><center>No hay CMF almacenados</center></td>
                             </tr>
                         {% endfor %}
                         </tbody>
                         <tfoot>
                         <tr>
                             <th>#</th>
+                            <th>CMF</th>
+                            <th>Area de Salud</th>
                             <th>Municipio</th>
                             <th>Provincia</th>
-                            <th>País</th>
                             <th>Acción</th>
                         </tr>
                         </tfoot>
@@ -72,18 +75,18 @@
     </div>
 
     <ul>
-        <a class="btn btn-small btn-success" href="{{ path('municipio_new') }}">
-            <i class="fa fa-plus"></i> <strong>Añadir</strong> Municipio
+        <a class="btn btn-small btn-success" href="{{ path('consultoriomedico_new') }}">
+            <i class="fa fa-plus"></i> <strong>Añadir</strong> CMF
         </a>
 
-        <a href="{{ path('municipio_index') }}">
+        <a href="{{ path('consultoriomedico_index') }}">
             <button type="button" name="reset-filter" id="btn-reset-filtros" class="btn btn-warning"><i
                         class="fa fa-database"></i> Refrescar
             </button>
         </a>
 
         <a class="btn btn-small btn-primary" href="#"><i
-                    class="fa fa-archive"></i> <strong>Exportar</strong> Municipio
+                    class="fa fa-archive"></i> <strong>Exportar</strong> CMF
         </a>
     </ul>
 {% endblock %}
@@ -94,7 +97,7 @@ $(function () {
     {% set session_var = 'app_' ~ notice_level %}
     {% if app.session.flashbag.has(session_var) %}
     {% for flash in app.session.flashbag.get(session_var) %}
-    var n = noty({
+    noty({
         text: '{{ flash }}',
         progressBar : true,
         layout      : 'topRight',
@@ -121,7 +124,7 @@ $(document).ready(function(){
 
         e.preventDefault();
         var url = $(this).prop('href');
-        if(confirm('Estas seguro de eliminar este Municipio?')){
+        if(confirm('Estas seguro de eliminar este Consultorio Medico?')){
             window.location = url;
         }
     })

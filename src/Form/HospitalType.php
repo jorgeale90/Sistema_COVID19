@@ -2,13 +2,13 @@
 
 namespace App\Form;
 
-use App\Entity\Municipio;
+use App\Entity\HospitalIngreso;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class MunicipioType extends AbstractType
+class HospitalType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -19,14 +19,33 @@ class MunicipioType extends AbstractType
                 'placeholder' => 'Seleccione una opción',
                 'class' => 'App\Entity\Provincia',
                 'attr' => array('class' => 'validate[required] form-control select2', 'style' => 'width: 100%;')
-            ))
-        ;
+            ));
+        if (true === $options['editar']) {
+            $builder
+                ->add('municipio', EntityType::class, array(
+                    'label' => 'Municipio:',
+                    'placeholder' => 'Seleccione una opción',
+                    'class' => 'App\Entity\Municipio',
+                    'attr' => array('class' => 'validate[required] form-control select2', 'style' => 'width: 100%;', 'required' => 'true')
+                ));
+            }
+        else
+            {
+                $builder
+                    ->add('municipio', EntityType::class, array(
+                    'label' => 'Municipio:',
+                    'placeholder' => 'Seleccione una opción',
+                    'class' => 'App\Entity\Municipio',
+                    'attr' => array('class' => 'validate[required] form-control select2', 'style' => 'width: 100%;', 'required' => 'true', 'disabled' => 'true')
+                     ));
+            }
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Municipio::class,
+            'data_class' => HospitalIngreso::class,
+            'editar' => false
         ]);
     }
 
@@ -35,6 +54,6 @@ class MunicipioType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'app_municipio';
+        return 'app_hospitalingreso';
     }
 }

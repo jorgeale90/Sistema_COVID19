@@ -1,16 +1,20 @@
 {% extends 'base.html.twig' %}
-{% block titlepage %}Personal{% endblock %}
+{% block titlepage %}Paciente{% endblock %}
+{% block head %}
+    <!-- modal efect css -->
+    <link href="{{ asset('page/modal/css/component.css') }}" rel="stylesheet">
+{% endblock %}
 {% block page_header %}
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>ADMIN - PERSONAL</h1>
+                    <h1>ADMIN - PACIENTE</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item">Personal</li>
-                        <li class="breadcrumb-item active">Listado Personal</li>
+                        <li class="breadcrumb-item">Paciente</li>
+                        <li class="breadcrumb-item active">Listado Paciente</li>
                     </ol>
                 </div>
             </div>
@@ -19,114 +23,393 @@
 {% endblock %}
 {% block contenido %}
     <div class="container-fluid">
-    <!-- SELECT2 EXAMPLE -->
-    <div class="card card-default">
-    <div class="card-header">
-        <h3 class="card-title"><strong>Buscar</strong> Personal</h3>
-    </div>
-    <form method="get" action=".">
-    <div class="card-body">
-        <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                            {{ form_widget(form.ci, { 'attr': { 'class': 'form-control', 'placeholder': 'Carnet Identidad' } }) }}
-                    </div>
+        <!-- SELECT2 EXAMPLE -->
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title"><strong>Buscar</strong> Paciente</h3>
+            </div>
+            <form method="get" action=".">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_widget(form.ci, { 'attr': { 'class': 'form-control', 'placeholder': 'Carnet Identidad' } }) }}
+                            </div>
 
-                    <div class="form-group">
-                            {{ form_widget(form.noregistro, { 'attr': { 'class': 'form-control', 'placeholder': 'No. Registro' } }) }}
+                            <div class="form-group">
+                                {{ form_widget(form.hc, { 'attr': { 'class': 'form-control', 'placeholder': 'Historia Clínica' } }) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_widget(form.nombre, { 'attr': { 'class': 'form-control', 'placeholder': 'Nombre' } }) }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_widget(form.apellidos, { 'attr': { 'class': 'form-control', 'placeholder': 'Apellidos' } }) }}
+                            </div>
+                        </div>
+
+                        <div class="footer">
+                            <a href="{{ path('personal_index') }}">
+                                <button type="button" name="reset-filter" id="btn-reset-filtros" class="btn btn-warning">
+                                    <i class="fa fa-database"></i> Reset
+                                </button>
+                            </a>
+                            <button type="submit" name="submit-filter" value="filter" class="btn btn-primary">
+                                <i class="fa fa-search"></i> Buscar
+                            </button>
+                            <a class="btn btn-small btn-success" href="{{ path('personal_new') }}">
+                                <i class="fa fa-plus"></i> <strong>Añadir</strong> Paciente
+                            </a>
+                        </div>
                     </div>
                 </div>
-
-                <div class="col-md-6">
-                    <div class="form-group">
-                            {{ form_widget(form.nombre, { 'attr': { 'class': 'form-control', 'placeholder': 'Nombre' } }) }}
-                    </div>
-
-                    <div class="form-group">
-                            {{ form_widget(form.apellidos, { 'attr': { 'class': 'form-control', 'placeholder': 'Apellidos' } }) }}
-                    </div>
-                </div>
-
-                <div class="footer">
-                    <a href="{{ path('personal_index') }}">
-                        <button type="button" name="reset-filter" id="btn-reset-filtros" class="btn btn-warning">
-                            <i class="fa fa-database"></i> Reset
-                        </button>
-                    </a>
-                    <button type="submit" name="submit-filter" value="filter" class="btn btn-primary">
-                        <i class="fa fa-search"></i> Buscar
-                    </button>
-                    <a class="btn btn-small btn-success" href="{{ path('personal_new') }}">
-                        <i class="fa fa-plus"></i> <strong>Añadir</strong> Personal
-                    </a>
-                </div>
+            </form>
         </div>
     </div>
-    </form>
-    </div>
-    </div>
-
     <div class="card card-solid">
         <div class="card-body pb-0">
             <div class="row d-flex align-items-stretch">
                 {% for personal in pagination %}
-                <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
-                    <div class="card bg-light">
-                        <div class="card-header text-muted border-bottom-0">
-                            {{ personal.cargo }} - {{ personal.especialidad }}
-                        </div>
-                        <div class="card-body pt-0">
-                            <div class="row">
-                                <div class="col-7">
-                                    <h2 class="lead"><b>{{ personal.nombrecompleto }}</b></h2>
-                                    <p class="text-muted text-sm"><b>Email: </b>
-                                        {% if personal.email != null %}
-                                            {{ personal.email }}
-                                        {% elseif personal.email == null %}
-                                            None
+                    <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
+                        <div class="card bg-light">
+                            <div class="card-header text-muted border-bottom-0">
+                                {{ personal.provincia }} - {{ personal.municipio }}
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="lead"><b>{{ personal.nombrecompleto }}</b></h2>
+                                        {#                                    <p class="text-muted text-sm"><b>Sexo: </b>#}
+                                        {#                                        {% if personal.sexo != null %}#}
+                                        {#                                            {{ personal.sexo }}#}
+                                        {#                                        {% elseif personal.sexo == null %}#}
+                                        {#                                            None#}
+                                        {#                                        {% endif %}#}
+                                        {#                                    </p>#}
+                                        <p class="text-muted text-sm">
+                                            {% if personal.activo == true %}
+                                                <button type="button" title="Ingresado el Paciente"
+                                                        class="btn btn-sm btn-icon btn-rounded activar">
+                                                    <i class="fa fa-eye"></i><span id="{{ personal.activo }}" hidden>{{ personal.id }}</span> Paciente Ingresado</button>
+                                            {% else %}
+                                                <button type="button" title="Paciente de Alta"
+                                                        class="btn btn-sm btn-icon btn-rounded btn-dark activar">
+                                                    <i class="fa fa-eye-slash"></i><span id="0" hidden>{{ personal.id }}</span> Paciente de Alta</button>
+                                            {% endif %}
+                                        </p>
+                                        <ul class="ml-4 mb-0 fa-ul text-muted">
+                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-archive"></i></span> Historia Clínica:
+                                                {% if personal.hc != null %}
+                                                    {{ personal.hc }}
+                                                {% elseif personal.hc == null %}
+                                                    None
+                                                {% endif %}
+                                            </li>
+                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-passport"></i></span> CI - Pasaporte:
+                                                {% if personal.ci != null %}
+                                                    {{ personal.ci }}
+                                                {% elseif personal.ci == null %}
+                                                    None
+                                                {% endif %}
+                                            </li>
+                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-chart-bar"></i></span> Semana Estadística:
+                                                {% if personal.fechaconsulta | date('U') == '2021-01-01' | date('U') %}
+                                                    Semana 1
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-02' | date('U') %}
+                                                    Semana 1
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-03' | date('U') %}
+                                                    Semana 1
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-04' | date('U') %}
+                                                    Semana 1
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-05' | date('U') %}
+                                                    Semana 2
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-06' | date('U') %}
+                                                    Semana 2
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-07' | date('U') %}
+                                                    Semana 2
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-08' | date('U') %}
+                                                    Semana 2
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-09' | date('U') %}
+                                                    Semana 2
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-10' | date('U') %}
+                                                    Semana 2
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-11' | date('U') %}
+                                                    Semana 2
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-12' | date('U') %}
+                                                    Semana 3
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-13' | date('U') %}
+                                                    Semana 3
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-14' | date('U') %}
+                                                    Semana 3
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-15' | date('U') %}
+                                                    Semana 3
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-16' | date('U') %}
+                                                    Semana 3
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-17' | date('U') %}
+                                                    Semana 3
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-18' | date('U') %}
+                                                    Semana 3
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-19' | date('U') %}
+                                                    Semana 4
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-20' | date('U') %}
+                                                    Semana 4
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-21' | date('U') %}
+                                                    Semana 4
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-22' | date('U') %}
+                                                    Semana 4
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-23' | date('U') %}
+                                                    Semana 4
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-24' | date('U') %}
+                                                    Semana 4
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-25' | date('U') %}
+                                                    Semana 4
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-26' | date('U') %}
+                                                    Semana 5
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-27' | date('U') %}
+                                                    Semana 5
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-27' | date('U') %}
+                                                    Semana 5
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-28' | date('U') %}
+                                                    Semana 5
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-29' | date('U') %}
+                                                    Semana 5
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-30' | date('U') %}
+                                                    Semana 5
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-01-31' | date('U') %}
+                                                    Semana 5
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-02-01' | date('U') %}
+                                                    Semana 5
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-02-02' | date('U') %}
+                                                    Semana 6
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-02-03' | date('U') %}
+                                                    Semana 6
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-02-04' | date('U') %}
+                                                    Semana 6
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-02-05' | date('U') %}
+                                                    Semana 6
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-02-06' | date('U') %}
+                                                    Semana 6
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-02-07' | date('U') %}
+                                                    Semana 6
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-02-08' | date('U') %}
+                                                    Semana 6
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-02-09' | date('U') %}
+                                                    Semana 7
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-02-10' | date('U') %}
+                                                    Semana 7
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-02-11' | date('U') %}
+                                                    Semana 7
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-02-12' | date('U') %}
+                                                    Semana 7
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-02-13' | date('U') %}
+                                                    Semana 7
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-02-14' | date('U') %}
+                                                    Semana 7
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-02-15' | date('U') %}
+                                                    Semana 7
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-02-16' | date('U') %}
+                                                    Semana 8
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-02-17' | date('U') %}
+                                                    Semana 8
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-02-18' | date('U') %}
+                                                    Semana 8
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-02-19' | date('U') %}
+                                                    Semana 8
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-02-20' | date('U') %}
+                                                    Semana 8
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-02-21' | date('U') %}
+                                                    Semana 8
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-02-22' | date('U') %}
+                                                    Semana 8
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-02-23' | date('U') %}
+                                                    Semana 9
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-02-24' | date('U') %}
+                                                    Semana 9
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-02-25' | date('U') %}
+                                                    Semana 9
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-02-26' | date('U') %}
+                                                    Semana 9
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-02-27' | date('U') %}
+                                                    Semana 9
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-02-28' | date('U') %}
+                                                    Semana 9
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-02-29' | date('U') %}
+                                                    Semana 9
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-01' | date('U') %}
+                                                    Semana 10
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-02' | date('U') %}
+                                                    Semana 10
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-03' | date('U') %}
+                                                    Semana 10
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-04' | date('U') %}
+                                                    Semana 10
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-05' | date('U') %}
+                                                    Semana 10
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-06' | date('U') %}
+                                                    Semana 10
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-07' | date('U') %}
+                                                    Semana 10
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-08' | date('U') %}
+                                                    Semana 11
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-09' | date('U') %}
+                                                    Semana 11
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-10' | date('U') %}
+                                                    Semana 11
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-11' | date('U') %}
+                                                    Semana 11
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-12' | date('U') %}
+                                                    Semana 11
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-13' | date('U') %}
+                                                    Semana 11
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-14' | date('U') %}
+                                                    Semana 11
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-15' | date('U') %}
+                                                    Semana 12
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-16' | date('U') %}
+                                                    Semana 12
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-17' | date('U') %}
+                                                    Semana 12
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-18' | date('U') %}
+                                                    Semana 12
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-19' | date('U') %}
+                                                    Semana 12
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-20' | date('U') %}
+                                                    Semana 12
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-21' | date('U') %}
+                                                    Semana 12
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-22' | date('U') %}
+                                                    Semana 13
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-23' | date('U') %}
+                                                    Semana 13
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-24' | date('U') %}
+                                                    Semana 13
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-25' | date('U') %}
+                                                    Semana 13
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-26' | date('U') %}
+                                                    Semana 13
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-27' | date('U') %}
+                                                    Semana 13
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-28' | date('U') %}
+                                                    Semana 13
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-29' | date('U') %}
+                                                    Semana 14
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-30' | date('U') %}
+                                                    Semana 14
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-03-31' | date('U') %}
+                                                    Semana 14
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-01' | date('U') %}
+                                                    Semana 14
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-02' | date('U') %}
+                                                    Semana 14
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-03' | date('U') %}
+                                                    Semana 14
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-04' | date('U') %}
+                                                    Semana 14
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-05' | date('U') %}
+                                                    Semana 15
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-06' | date('U') %}
+                                                    Semana 15
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-07' | date('U') %}
+                                                    Semana 15
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-08' | date('U') %}
+                                                    Semana 15
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-09' | date('U') %}
+                                                    Semana 15
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-10' | date('U') %}
+                                                    Semana 15
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-11' | date('U') %}
+                                                    Semana 15
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-12' | date('U') %}
+                                                    Semana 16
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-13' | date('U') %}
+                                                    Semana 16
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-14' | date('U') %}
+                                                    Semana 16
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-15' | date('U') %}
+                                                    Semana 16
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-16' | date('U') %}
+                                                    Semana 16
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-17' | date('U') %}
+                                                    Semana 16
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-18' | date('U') %}
+                                                    Semana 16
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-19' | date('U') %}
+                                                    Semana 17
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-20' | date('U') %}
+                                                    Semana 17
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-21' | date('U') %}
+                                                    Semana 17
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-22' | date('U') %}
+                                                    Semana 17
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-23' | date('U') %}
+                                                    Semana 17
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-24' | date('U') %}
+                                                    Semana 17
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-25' | date('U') %}
+                                                    Semana 17
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-26' | date('U') %}
+                                                    Semana 18
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-27' | date('U') %}
+                                                    Semana 18
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-28' | date('U') %}
+                                                    Semana 18
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-29' | date('U') %}
+                                                    Semana 18
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-04-30' | date('U') %}
+                                                    Semana 18
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-05-01' | date('U') %}
+                                                    Semana 18
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-05-02' | date('U') %}
+                                                    Semana 18
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-05-03' | date('U') %}
+                                                    Semana 19
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-05-04' | date('U') %}
+                                                    Semana 19
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-05-05' | date('U') %}
+                                                    Semana 19
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-05-06' | date('U') %}
+                                                    Semana 19
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-05-07' | date('U') %}
+                                                    Semana 19
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-05-08' | date('U') %}
+                                                    Semana 19
+                                                {% elseif personal.fechatomamuestra | date('U') == '2021-05-09' | date('U') %}
+                                                    Semana 19
+                                                {% endif %}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-5 text-center">
+                                        {% if personal.image != null %}
+                                            <img src="{{ vich_uploader_asset(personal, 'imageFile', 'App\\Entity\\Personal') }}" alt="{{ personal.nombre }}" class="img-circle img-fluid">
+                                        {% elseif personal.image == null and personal.activo == '1'%}
+                                            <img src="{{ asset('page/images/ingresado.png') }}" class="img-circle img-fluid" alt="User-Profile-Image">
+                                        {% elseif personal.image == null and personal.activo == '0'%}
+                                            <img src="{{ asset('page/images/alta.png') }}" class="img-circle img-fluid" alt="User-Profile-Image">
                                         {% endif %}
-                                    </p>
-                                    <ul class="ml-4 mb-0 fa-ul text-muted">
-                                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-archive"></i></span> No. Registro:
-                                            {% if personal.noregistro != null %}
-                                                {{ personal.noregistro }}
-                                            {% elseif personal.noregistro == null %}
-                                                None
-                                            {% endif %}
-                                        </li>
-                                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Teléfono #:
-                                            {% if personal.telefonofijo != null %}
-                                                {{ personal.telefonofijo }}
-                                            {% elseif personal.telefonofijo == null %}
-                                                None
-                                            {% endif %}
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-5 text-center">
-                                    {% if personal.image != null %}
-                                        <img src="{{ vich_uploader_asset(personal, 'imageFile', 'App\\Entity\\Personal') }}" alt="{{ personal.nombre }}" class="img-circle img-fluid">
-                                    {% elseif personal.image == null %}
-                                        <img src="{{ asset('page/images/user.png') }}" class="img-circle img-fluid" alt="User-Profile-Image">
-                                    {% endif %}
-                                    {{ include('personal/_delete_form.html.twig') }}
+                                        <button value="{{ path('personal_delete', {id: personal.id}) }}" class="btn btn-sm btn-danger eliminar">
+                                            <i class="fas fa-trash"></i> Eliminar
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card-footer">
-                            <div class="text-right">
-                                <a href="{{ path('personal_edit', {id: personal.id}) }}" class="btn btn-sm bg-teal">
-                                    <i class="fas fa-user-edit"></i> Editar Personal
-                                </a>
-                                <a href="{{ path('personal_show', {id: personal.id}) }}" class="btn btn-sm btn-primary">
-                                    <i class="fas fa-eye"></i> Ver Personal
-                                </a>
+                            <div class="card-footer">
+                                <div class="text-right">
+                                    <button value="{{ path('personal_edit', {id: personal.id}) }}" class="btn btn-sm bg-teal editar">
+                                        <i class="fas fa-user-edit"></i> Editar Paciente
+                                    </button>
+                                    <button value="{{ path('personal_show', {id: personal.id}) }}" class="btn btn-sm btn-primary mostrar">
+                                        <i class="fas fa-eye"></i> Ver Paciente
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 {% else %}
-                    <p style=color:#ffbd38;font-size:30px><i class="icofont icofont-warning-alt"></i><strong>Warning!</strong> No existe Personal Almacenado</p>
+                    <p style=color:#ffbd38;font-size:30px><i class="icofont icofont-warning-alt"></i><strong>Warning!</strong> No existe Paciente Almacenado</p>
                 {% endfor %}
             </div>
         </div>
@@ -141,7 +424,7 @@
 
     <ul>
         <a class="btn btn-small btn-success" href="{{ path('personal_new') }}">
-            <i class="fa fa-plus"></i> <strong>Añadir</strong> Personal
+            <i class="fa fa-plus"></i> <strong>Añadir</strong> Paciente
         </a>
 
         <a href="{{ path('personal_index') }}">
@@ -151,37 +434,113 @@
         </a>
 
         <a class="btn btn-small btn-primary" href="{{ path('exportar_personal_pdf') }}"><i
-                    class="fa fa-archive"></i> <strong>Exportar</strong> Personal
+                    class="fa fa-file-pdf"></i> <strong>Exportar</strong> Pacientes (PDF)
+        </a>
+
+        <a class="btn btn-small btn-primary" href="{{ path('exportartoximed_excel') }}"><i
+                    class="fa fa-file-excel"></i> <strong>Exportar</strong> Pacientes (Excel)
         </a>
     </ul>
+
+    <div class="md-modal md-effect-1" id="modal-19">
+        <div class="md-content md-content-white">
+            <h3><i class="icofont icofont-warning"></i> Advertencia</h3>
+            <div>
+                <h5 id="mensaje"></h5>
+            </div>
+            <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-3">
+                    <button class="btn btn-primary aceptar">Aceptar</button>
+                </div>
+                <div class="col-sm-3">
+                    <button class="btn btn-danger cancelar" onclick="$('#modal-19').removeClass('md-show')">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="md-overlay"></div>
 {% endblock %}
 {% block javascript %}
-<script>
-$(function () {
-    {% for notice_level in ['success','error','info', 'warning'] %}
-    {% set session_var = 'app_' ~ notice_level %}
-    {% if app.session.flashbag.has(session_var) %}
-    {% for flash in app.session.flashbag.get(session_var) %}
-    var n = noty({
-        text: '{{ flash }}',
-        progressBar : true,
-        layout      : 'topRight',
-        dismissQueue: true,
-        timeout     : 5000,
-        closeWith   : ['click'],
-        theme       : 'relax',
-        type        : '{{ notice_level }}',
-        maxVisible  : 10,
-        animation   : {
+    <!-- modal efect js -->
+    <script src="{{ asset('page/modal/js/modalEffects.js') }}"></script>
+    <script src="{{ asset('page/modal/js/classie.js') }}"></script>
+    <script>
+        $(function () {
+            {% for notice_level in ['success','error','info', 'warning'] %}
+            {% set session_var = 'app_' ~ notice_level %}
+            {% if app.session.flashbag.has(session_var) %}
+            {% for flash in app.session.flashbag.get(session_var) %}
+            noty({
+                text: '{{ flash }}',
+                progressBar : true,
+                layout      : 'topRight',
+                dismissQueue: true,
+                timeout     : 5000,
+                closeWith   : ['click'],
+                theme       : 'relax',
+                type        : '{{ notice_level }}',
+                maxVisible  : 10,
+                animation   : {
                     open  : 'animated bounceInLeft',
                     close : 'animated bounceOutLeft',
                     easing: 'swing',
                     speed : 500
                 }
             });
-    {% endfor %}
-    {% endif %}
-    {% endfor %}
-});
-</script>
+            {% endfor %}
+            {% endif %}
+            {% endfor %}
+        });
+
+        $('.activar').on('click', function () {
+            var data = {
+                personal_id: $(this).find('span').text()
+            };
+            var button = $(this);
+            $.ajax({
+                type: 'post',
+                url: '{{ path('activarXpaciente') }}',
+                data: data,
+                success: function (msg) {
+                    if (msg == 1) {
+                        button.removeClass('btn-dark');
+                        button.find('i').removeClass('fa-eye-slash').addClass('fa-eye');
+                        console.log(msg);
+                    } else {
+                        button.addClass('btn-dark');
+                        button.find('i').removeClass('fa-eye').addClass('fa-eye-slash');
+                        console.log(msg);
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+
+        $('.editar').on('click', function () {
+            var link = $(this).val();
+            $('#modal-19').addClass('md-show');
+            $('#mensaje').text('Estas seguro que quieres editar este Paciente?');
+            $('.aceptar').on('click', function () {
+                window.location = link;
+            });
+        });
+
+        $('.eliminar').on('click', function () {
+            var link = $(this).val();
+            $('#modal-19').addClass('md-show');
+            $('#mensaje').text('Estas seguro que quieres eliminar este Paciente?');
+            $('.aceptar').on('click', function () {
+                window.location = link;
+            });
+        });
+
+        $('.mostrar').on('click', function () {
+            window.location = $(this).val();
+        });
+    </script>
 {% endblock %}

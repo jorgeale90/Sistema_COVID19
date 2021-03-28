@@ -9,31 +9,6 @@ parameters:
     app.path.user_images: /Sabio/public/uploads/images/user
     # Imagen del Personal
     app.path.personal_images: /Sabio/public/uploads/images/personal
-    # Variables de las entidades - EasyAdmin
-    permisos:
-        ESCRITURA: ESCRITURA
-        LECTURA: LECTURA
-        CONTROL TOTAL: CONTROL TOTAL
-    internet:
-        SI: Si
-        NO: No
-    salidainternacional:
-        SI: Si
-        NO: No
-    accesotelefonico:
-        SI: Si
-        NO: No
-    serviciocorreo:
-        SI: Si
-        NO: No
-    accesoredes:
-        SI: S1
-        NO: No
-    mision:
-        SI: Si
-        NO: No
-        NONE: None
-
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -65,19 +40,6 @@ services:
 
     custom_service:
         class: App\Service\CustomService
-        public: true
-
-    app.controller.register:
-        class: App\Controller\Bundle\FOSUserBundle\RegistrationController
-        arguments:
-            $eventDispatcher: '@event_dispatcher'
-            $formFactory: '@fos_user.registration.form.factory'
-            $userManager: '@fos_user.user_manager'
-            $tokenStorage: 'security.token_storage'
-        calls:
-        - method: setContainer
-          arguments:
-          - '@service_container'
         public: true
 
     FOS\UserBundle\Form\Factory\FactoryInterface:
