@@ -1,0 +1,117 @@
+{% extends 'base.html.twig' %}
+{% block titlepage %}Usuario{% endblock %}
+{% block page_header %}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>ADMIN - PERSONAL</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item">Usuario</li>
+                        <li class="breadcrumb-item active">Listado Usuario</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+{% endblock %}
+{% block contenido %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5><strong>Listado</strong> de Usuarios</h5>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Imagen</th>
+                            <th>Nombre Usuario</th>
+                            <th>Email</th>
+                            <th>Roles</th>
+                            <th>Activo</th>
+                            <th>Acción</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ user.id }}</td>
+                                <td>
+                                    {% if user.image != null %}
+                                        <img src="{{ vich_uploader_asset(user, 'imageFile', 'App\\Entity\\User') }}" alt="{{ user.username }}" class="img-size-50 mr-3 img-circle">
+                                    {% elseif user.image == null %}
+                                        <img src="{{ asset('page/images/user.png') }}" class="img-size-50 mr-3 img-circle">
+                                    {% endif %}
+                                </td>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
+                                <td>{{ user.enabled ? 'Si' : 'No' }}</td>
+                                <td>
+                                    <a class="btn btn-small btn-primary" href="{{ path('user_show', {'id': user.id}) }}">Mostrar</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="3"><center>No hay Usuarios almacenados</center></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th>#</th>
+                            <th>Imagen</th>
+                            <th>Nombre Ususario</th>
+                            <th>Email</th>
+                            <th>Roles</th>
+                            <th>Activo</th>
+                            <th>Acción</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+
+    <ul>
+        <a class="btn btn-small btn-success" href="{{ path('user_new') }}">
+            <i class="fa fa-plus"></i> <strong>Añadir</strong> Usuario
+        </a>
+
+        <a href="{{ path('user_index') }}">
+            <button type="button" name="reset-filter" id="btn-reset-filtros" class="btn btn-warning"><i
+                        class="fa fa-database"></i> Refrescar
+            </button>
+        </a>
+
+        <a class="btn btn-small btn-primary" href="#"><i
+                    class="fa fa-archive"></i> <strong>Exportar</strong> Usuarios
+        </a>
+    </ul>
+{% endblock %}
+{% block javascript %}
+<script>
+    $(function () {
+        {% for notice_level in ['success','error','info', 'warning'] %}
+        {% set session_var = 'app_' ~ notice_level %}
+        {% if app.session.flashbag.has(session_var) %}
+        {% for flash in app.session.flashbag.get(session_var) %}
+        noty({
+            text: '{{ flash }}',
+            layout: 'topRight', type: '{{ notice_level }}', timeout: 5000
+        });
+        {% endfor %}
+        {% endif %}
+        {% endfor %}
+    });
+</script>
+{% endblock %}

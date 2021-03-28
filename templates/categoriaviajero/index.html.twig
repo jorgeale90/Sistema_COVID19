@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+{% block titlepage %}Provincia{% endblock %}
+{% block page_header %}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>LOCALIZACIÓN</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item">Localización</li>
+                        <li class="breadcrumb-item active">Listado Provincia</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+{% endblock %}
+{% block contenido %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5><strong>Listado</strong> de Provincias</h5>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Provincia</th>
+                            <th>País</th>
+                            <th>Acción</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for provincium in provincias %}
+                            <tr>
+                                <td>{{ provincium.id }}</td>
+                                <td>{{ provincium.nombre }}</td>
+                                <td>{{ provincium.pais }}</td>
+                                <td>
+                                    <a class="btn btn-small btn-warning" href="{{ path('provincia_edit', {'id': provincium.id}) }}">Editar</a>
+                                    <a class="btn btn-small btn-danger btn-delete-entity" href="{{ path('removerprovincia', {'id' : provincium.id}) }}">Eliminar</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="3"><center>No hay Provincias almacenadas</center></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th>#</th>
+                            <th>Provincia</th>
+                            <th>País</th>
+                            <th>Acción</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+
+    <ul>
+        <a class="btn btn-small btn-success" href="{{ path('provincia_new') }}">
+            <i class="fa fa-plus"></i> <strong>Añadir</strong> Provincia
+        </a>
+
+        <a href="{{ path('provincia_index') }}">
+            <button type="button" name="reset-filter" id="btn-reset-filtros" class="btn btn-warning"><i
+                        class="fa fa-database"></i> Refrescar
+            </button>
+        </a>
+
+        <a class="btn btn-small btn-primary" href="#"><i
+                    class="fa fa-archive"></i> <strong>Exportar</strong> Provincia
+        </a>
+    </ul>
+{% endblock %}
+{% block javascript %}
+<script>
+$(function () {
+    {% for notice_level in ['success','error','info', 'warning'] %}
+    {% set session_var = 'app_' ~ notice_level %}
+    {% if app.session.flashbag.has(session_var) %}
+    {% for flash in app.session.flashbag.get(session_var) %}
+    var n = noty({
+        text: '{{ flash }}',
+        progressBar : true,
+        layout      : 'topRight',
+        dismissQueue: true,
+        timeout     : 5000,
+        closeWith   : ['click'],
+        theme       : 'relax',
+        type        : '{{ notice_level }}',
+        maxVisible  : 10,
+        animation   : {
+                    open  : 'animated bounceInLeft',
+                    close : 'animated bounceOutLeft',
+                    easing: 'swing',
+                    speed : 500
+                }
+            });
+    {% endfor %}
+    {% endif %}
+    {% endfor %}
+});
+
+$(document).ready(function(){
+    $('.btn-delete-entity').click(function(e){
+
+        e.preventDefault();
+        var url = $(this).prop('href');
+        if(confirm('Estas seguro de eliminar esta Provincia?')){
+            window.location = url;
+        }
+    })
+});
+</script>
+{% endblock %}

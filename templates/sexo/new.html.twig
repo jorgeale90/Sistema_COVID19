@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% block titlepage %}Añadir Sexo{% endblock %}
+{% block page_header %}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>ADMIN - PERSONAL</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item">Personal</li>
+                        <li class="breadcrumb-item">Listado Sexo</li>
+                        <li class="breadcrumb-item active">Añadir Sexo</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+{% endblock %}
+{% block contenido %}
+    <div class="container-fluid">
+        <!-- SELECT2 EXAMPLE -->
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title"><strong>Añadir</strong> Sexo</h3>
+            </div>
+            {{ include('sexo/_form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

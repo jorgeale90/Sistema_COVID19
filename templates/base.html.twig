@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Sabio | {% block titlepage %} Home {% endblock %}</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <link rel="icon" type="image/png" href="{{ asset('login/img/icono.png') }}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ asset('page/plugins/fontawesome-free/css/all.min.css') }}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ asset('page/plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{ asset('page/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('page/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('page/dist/css/adminlte.min.css') }}">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="{{ asset('page/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+    <!-- Notifications -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('page/noty/animate/animate.css') }}"/>
+    <!-- daterange picker -->
+    <link rel="stylesheet" href="{{ asset('page/plugins/daterangepicker/daterangepicker.css') }}">
+    <!-- generador de password -->
+    {#<link rel="stylesheet" href="{{ asset('page/plugins/niceStyle.css') }}">#}
+    <!-- fullCalendar -->
+    <link rel="stylesheet" href="{{ asset('page/plugins/fullcalendar/main.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('page/plugins/fullcalendar-daygrid/main.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('page/plugins/fullcalendar-timegrid/main.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('page/plugins/fullcalendar-bootstrap/main.min.css') }}">
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+    <!-- Navbar -->
+    {% block barra_nav %}
+        {{ include ('block/barra_nav.html.twig') }}
+    {% endblock %}
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    {% block barra_menu %}
+        {{ include ('block/barra_menu.html.twig') }}
+    {% endblock %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        {% block page_header %}
+
+        {% endblock %}
+
+        <!-- Main content -->
+        <section class="content">
+            {% block contenido %}
+
+            {% endblock %}
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+        <div class="float-right d-none d-sm-block">
+            <b>Versión</b> 1.2.5.4
+        </div>
+        <strong>Copyright &copy; 2019-2020 <a href="#">SabioLTE ~ NODO</a>.</strong> All rights
+        reserved.
+    </footer>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+    <!-- jQuery -->
+    <script src="{{ asset('page/plugins/jquery/jquery.min.js') }}"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="{{ asset('page/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>
+    <!-- Bootstrap 4 -->
+    <script src="{{ asset('page/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <!-- DataTables -->
+    <script src="{{ asset('page/plugins/datatables/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('page/plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
+    <!-- overlayScrollbars -->
+    <script src="{{ asset('page/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+    <!-- Select2 -->
+    <script src="{{ asset('page/plugins/select2/js/select2.full.min.js') }}"></script>
+    <!-- AdminLTE App -->
+    <script src="{{ asset('page/dist/js/adminlte.min.js') }}"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="{{ asset('page/dist/js/demo.js') }}"></script>
+    <!-- Moment calculo de fecha -->
+    <script src="{{ asset('page/plugins/moment.min.js') }}"></script>
+    <!-- jQuery Notification Plugin 2.2.7 -->
+    <script type="text/javascript" src="{{ asset('page/noty/animate/jquery.noty.packaged.js') }}"></script>
+    <!-- date-range-picker -->
+    <script src="{{ asset('page/plugins/daterangepicker/daterangepicker.js') }}"></script>
+    <script src="{{ asset('page/plugins/inputmask/min/jquery.inputmask.bundle.min.js') }}"></script>
+    <script src="{{ asset('page/memory-stas/memory-stats.js') }}"></script>
+    <!-- fullCalendar 2.2.5 -->
+    <script src="{{ asset('page/plugins/moment/moment.min.js') }}"></script>
+    <script src="{{ asset('page/plugins/fullcalendar/main.min.js') }}"></script>
+    <script src="{{ asset('page/plugins/fullcalendar-daygrid/main.min.js') }}"></script>
+    <script src="{{ asset('page/plugins/fullcalendar-timegrid/main.min.js') }}"></script>
+    <script src="{{ asset('page/plugins/fullcalendar-interaction/main.min.js') }}"></script>
+    <script src="{{ asset('page/plugins/fullcalendar-bootstrap/main.min.js') }}"></script>
+{% if is_granted('ROLE_SUPER_ADMIN') %}
+    <script>
+
+        // add the monitor into our page and update it on a rAF loop
+
+        var stats = new MemoryStats();
+        stats.domElement.style.position	= 'fixed';
+        stats.domElement.style.right		= '0px';
+        stats.domElement.style.bottom		= '0px';
+        document.body.appendChild( stats.domElement );
+
+
+        requestAnimationFrame(function rAFloop(){
+            stats.update();
+            requestAnimationFrame(rAFloop);
+        });
+        //# sourceURL=updateStats.js
+
+    </script>
+{% endif %}
+<script>
+    $(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2();
+
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        });
+
+        $("#example1").DataTable();
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+        });
+
+        {% for n in usuario %}
+        $('#fecha-' + {{ n.id }}).html('<i class="fa fa-clock"></i> ' + moment('{{ n.lastLogin | date('Y-m-d H:i:s') }}', 'YYYY-MM-DD HH:mm:ss').fromNow());
+        {% endfor %}
+
+        // generate plenty of objects
+        // from in generational GC demo from firefox
+        // https://people.mozilla.org/~wmccloskey/incremental-blog/example-pause.html
+        var garbage 	= [];
+        var garbageSize	= 1024 * 1024 * 6;
+        var garbageIdx	= 0;
+
+        // call GC() from console to test a GC
+        function GC(){
+            garbage 	= [];
+            garbageIdx	= 0;
+        }
+
+        function makeGarbage(amount){
+            for(var i = 0; i < amount; i++){
+                garbage[garbageIdx]	= {};
+                garbageIdx	= (garbageIdx+1) % garbageSize;
+            }
+        }
+        requestAnimationFrame(function rAFloop(){
+            makeGarbage(1024);
+            requestAnimationFrame(rAFloop);
+        });
+
+        //# sourceURL=generateGarbage.js
+    });
+</script>
+{% block javascript %}
+
+{% endblock %}
+</body>
+</html>

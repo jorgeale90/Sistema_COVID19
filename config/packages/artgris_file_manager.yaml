@@ -1,0 +1,12 @@
+artgris_file_manager:
+  conf:
+    default:
+      dir: "../public/uploads/"
+    private_user:
+      dir: "../public/uploads/images/user/"
+      type: image
+    private_personal:
+      dir: "../public/uploads/images/personal/"
+      type: image
+    perso:
+      service: "custom_service"

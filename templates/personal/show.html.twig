@@ -1,0 +1,139 @@
+{% extends 'base.html.twig' %}
+{% block titlepage %}Mostrar Personal{% endblock %}
+{% block page_header %}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>ADMIN - PERSONAL</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item">Personal</li>
+                        <li class="breadcrumb-item">Listado Personal</li>
+                        <li class="breadcrumb-item active">Mostrar Personal</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+{% endblock %}
+{% block contenido %}
+    <div class="container-fluid">
+        <!-- SELECT2 EXAMPLE -->
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title"><strong>Mostrar</strong> Personal</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>{{ form_label(form.ci, 'CI (*):') }}</label>
+                            {{ form_widget(form.ci, { 'attr': { 'class': 'form-control', 'disabled':'disabled' } }) }}
+                        </div>
+
+                        <div class="form-group">
+                            <label>{{ form_label(form.nombre, 'Nombre (*):') }}</label>
+                            {{ form_widget(form.nombre, { 'attr': { 'class': 'form-control', 'disabled':'disabled' } }) }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>{{ form_label(form.noregistro, 'No. Registro (*):') }}</label>
+                            {{ form_widget(form.noregistro, { 'attr': { 'class': 'form-control', 'disabled':'disabled' } }) }}
+                        </div>
+
+                        <div class="form-group">
+                            <label>{{ form_label(form.apellidos, 'Apellidos (*):') }}</label>
+                            {{ form_widget(form.apellidos, { 'attr': { 'class': 'form-control', 'disabled':'disabled' } }) }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>{{ form_label(form.sexo, 'Sexo (*):') }}</label>
+                            {{ form_widget(form.sexo, { 'attr': { 'class': 'form-control select2', 'disabled':'disabled' } }) }}
+                        </div>
+
+                        <div class="form-group">
+                            <label>{{ form_label(form.autobliografia, 'Autobiografía:') }}</label>
+                            {{ form_widget(form.autobliografia, { 'attr': { 'class': 'form-control', 'disabled':'disabled' } }) }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>{{ form_label(form.telefonofijo, 'Telefono Fijo:') }}</label>
+                            {{ form_widget(form.telefonofijo, { 'attr': { 'class': 'form-control', 'disabled':'disabled' } }) }}
+                        </div>
+
+                        <div class="form-group">
+                            <label>{{ form_label(form.direccionparticular, 'Dirección Particular:') }}</label>
+                            {{ form_widget(form.direccionparticular, { 'attr': { 'class': 'form-control', 'disabled':'disabled' } }) }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>{{ form_label(form.movil, 'Móvil:') }}</label>
+                            {{ form_widget(form.movil, { 'attr': { 'class': 'form-control', 'disabled':'disabled' } }) }}
+                        </div>
+
+                        <div class="form-group">
+                            <label>{{ form_label(form.email, 'Email:') }}</label>
+                            {{ form_widget(form.email, { 'attr': { 'class': 'form-control', 'disabled':'disabled' } }) }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>{{ form_label(form.nacionalidad, 'Nacionalidad (*):') }}</label>
+                            {{ form_widget(form.nacionalidad, { 'attr': { 'class': 'form-control select2', 'disabled':'disabled' } }) }}
+                        </div>
+
+                        <div class="form-group">
+                            <label>{{ form_label(form.cargo, 'Cargo (*):') }}</label>
+                            {{ form_widget(form.cargo, { 'attr': { 'class': 'form-control select2', 'disabled':'disabled' } }) }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>{{ form_label(form.especialidad, 'Especialidad (*):') }}</label>
+                            {{ form_widget(form.especialidad, { 'attr': { 'class': 'form-control select2', 'disabled':'disabled' } }) }}
+                        </div>
+
+                        <div class="form-group">
+                            <label>{{ form_label(form.organizacionpolitica, 'Organización Política (*):') }}</label>
+                            {{ form_widget(form.organizacionpolitica, { 'attr': { 'class': 'form-control select2', 'multiple': 'multiple', 'disabled':'disabled' } }) }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>{{ form_label(form.categoriadocente, 'Categoría Docente (*):') }}</label>
+                            {{ form_widget(form.categoriadocente, { 'attr': { 'class': 'form-control select2', 'disabled':'disabled' } }) }}
+                        </div>
+
+                        <div class="form-group">
+                            <label>{{ form_label(form.categoriacientifica, 'Categoría Científica (*):') }}</label>
+                            {{ form_widget(form.categoriacientifica, { 'attr': { 'class': 'form-control select2', 'disabled':'disabled' } }) }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>{{ form_label(form.mision, 'Misión (*):') }}</label>
+                            {{ form_widget(form.mision, { 'attr': { 'class': 'form-control icheck-success d-inline', 'disabled':'disabled' } }) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul>
+        <button class="btn btn-outline-info"><i class="icofont icofont-exchange"></i><a href="{{ path('personal_index') }}">Volver al Listado</a></button>
+    </ul>
+{% endblock %}

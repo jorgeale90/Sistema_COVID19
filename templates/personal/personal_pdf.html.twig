@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <title>Hello, world!</title>
+</head>
+<body>
+        <table>
+            <tr>
+                <th>#</th>
+                <th>C.I.</th>
+                <th>No. Registro</th>
+                <th>Nombre y Apellidos</th>
+                <th>Cargo u Ocupación</th>
+                <th>Especialidad</th>
+            </tr>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ entity.ci }}</td>
+                    <td>{{ entity.noregistro }}</td>
+                    <td>{{ entity.nombrecompleto }}</td>
+                    <td>{{ entity.cargo }}</td>
+                    <td>{{ entity.especialidad }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+</body>
+</html>

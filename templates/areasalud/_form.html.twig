@@ -1,0 +1,35 @@
+{{ form_start(form) }}
+<div class="card-body">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                {% if(form_errors(form.nombre)) %}
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>{{ form_errors(form.nombre) }}</strong>
+                    </div>
+                {% endif %}
+                <label>{{ form_label(form.nombre, 'Hospital (*):') }}</label>
+                {{ form_widget(form.nombre, { 'attr': { 'class': 'form-control' } }) }}
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                {% if(form_errors(form.municipio)) %}
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>{{ form_errors(form.municipio) }}</strong>
+                    </div>
+                {% endif %}
+                <label>{{ form_label(form.municipio, 'Municipio (*):') }}</label>
+                {{ form_widget(form.municipio, { 'attr': { 'class': 'form-control select2' } }) }}
+            </div>
+        </div>
+    </div>
+</div>
+<ul>
+    <button class="btn btn-success"><i class="fa fa-plus"></i> {{ button_label|default('Añadir Hospital') }}</button>
+    <button class="btn btn-outline-info"><i class="icofont icofont-exchange"></i><a href="{{ path('hospital_index') }}">Volver al Listado</a></button>
+</ul>
+{{ form_end(form) }}

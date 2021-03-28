@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+{% block titlepage %}Editar Personal{% endblock %}
+{% block page_header %}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>ADMIN - PERSONAL</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item">Personal</li>
+                        <li class="breadcrumb-item">Listado Personal</li>
+                        <li class="breadcrumb-item active">Editar Personal</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+{% endblock %}
+{% block contenido %}
+    <div class="container-fluid">
+        <!-- SELECT2 EXAMPLE -->
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title"><strong>Editar</strong> Personal</h3>
+            </div>
+            {{ include('personal/_form.html.twig', {'button_label': 'Actualizar Personal'}) }}
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+<script>
+$('#{{ form.cargo.vars.id }}').on('change', function (e) {
+            var data = {
+                cargo_id: $(this).val()
+            };
+            $.ajax({
+                type: 'post',
+                url: '{{ path('especialidad_x_cargo') }}',
+                data: data,
+                success: function (response) {
+                    if (response.length != 0){
+                        var option = '<option>Seleccione la Especialidad</option>';
+                        $.each(response, function (i, especialidad) {
+                            option += '<option value='+ especialidad.id +'>'+ especialidad.nombre +'</option>'
+                        });
+                        $('#{{ form.especialidad.vars.id }}').html(option);
+                        $('#{{ form.especialidad.vars.id }}').removeAttr('disabled');
+                    } else {
+                        noty({
+                            text: 'No se encontraron Especialidades del Cargo seleccionado.',
+                            layout: 'topRight', type: 'error', timeout: 5000,
+                        });
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+    </script>
+{% endblock %}

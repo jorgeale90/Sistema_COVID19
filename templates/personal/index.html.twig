@@ -1,0 +1,187 @@
+{% extends 'base.html.twig' %}
+{% block titlepage %}Personal{% endblock %}
+{% block page_header %}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>ADMIN - PERSONAL</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item">Personal</li>
+                        <li class="breadcrumb-item active">Listado Personal</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+{% endblock %}
+{% block contenido %}
+    <div class="container-fluid">
+    <!-- SELECT2 EXAMPLE -->
+    <div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title"><strong>Buscar</strong> Personal</h3>
+    </div>
+    <form method="get" action=".">
+    <div class="card-body">
+        <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                            {{ form_widget(form.ci, { 'attr': { 'class': 'form-control', 'placeholder': 'Carnet Identidad' } }) }}
+                    </div>
+
+                    <div class="form-group">
+                            {{ form_widget(form.noregistro, { 'attr': { 'class': 'form-control', 'placeholder': 'No. Registro' } }) }}
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                            {{ form_widget(form.nombre, { 'attr': { 'class': 'form-control', 'placeholder': 'Nombre' } }) }}
+                    </div>
+
+                    <div class="form-group">
+                            {{ form_widget(form.apellidos, { 'attr': { 'class': 'form-control', 'placeholder': 'Apellidos' } }) }}
+                    </div>
+                </div>
+
+                <div class="footer">
+                    <a href="{{ path('personal_index') }}">
+                        <button type="button" name="reset-filter" id="btn-reset-filtros" class="btn btn-warning">
+                            <i class="fa fa-database"></i> Reset
+                        </button>
+                    </a>
+                    <button type="submit" name="submit-filter" value="filter" class="btn btn-primary">
+                        <i class="fa fa-search"></i> Buscar
+                    </button>
+                    <a class="btn btn-small btn-success" href="{{ path('personal_new') }}">
+                        <i class="fa fa-plus"></i> <strong>Añadir</strong> Personal
+                    </a>
+                </div>
+        </div>
+    </div>
+    </form>
+    </div>
+    </div>
+
+    <div class="card card-solid">
+        <div class="card-body pb-0">
+            <div class="row d-flex align-items-stretch">
+                {% for personal in pagination %}
+                <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
+                    <div class="card bg-light">
+                        <div class="card-header text-muted border-bottom-0">
+                            {{ personal.cargo }} - {{ personal.especialidad }}
+                        </div>
+                        <div class="card-body pt-0">
+                            <div class="row">
+                                <div class="col-7">
+                                    <h2 class="lead"><b>{{ personal.nombrecompleto }}</b></h2>
+                                    <p class="text-muted text-sm"><b>Email: </b>
+                                        {% if personal.email != null %}
+                                            {{ personal.email }}
+                                        {% elseif personal.email == null %}
+                                            None
+                                        {% endif %}
+                                    </p>
+                                    <ul class="ml-4 mb-0 fa-ul text-muted">
+                                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-archive"></i></span> No. Registro:
+                                            {% if personal.noregistro != null %}
+                                                {{ personal.noregistro }}
+                                            {% elseif personal.noregistro == null %}
+                                                None
+                                            {% endif %}
+                                        </li>
+                                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Teléfono #:
+                                            {% if personal.telefonofijo != null %}
+                                                {{ personal.telefonofijo }}
+                                            {% elseif personal.telefonofijo == null %}
+                                                None
+                                            {% endif %}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-5 text-center">
+                                    {% if personal.image != null %}
+                                        <img src="{{ vich_uploader_asset(personal, 'imageFile', 'App\\Entity\\Personal') }}" alt="{{ personal.nombre }}" class="img-circle img-fluid">
+                                    {% elseif personal.image == null %}
+                                        <img src="{{ asset('page/images/user.png') }}" class="img-circle img-fluid" alt="User-Profile-Image">
+                                    {% endif %}
+                                    {{ include('personal/_delete_form.html.twig') }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="text-right">
+                                <a href="{{ path('personal_edit', {id: personal.id}) }}" class="btn btn-sm bg-teal">
+                                    <i class="fas fa-user-edit"></i> Editar Personal
+                                </a>
+                                <a href="{{ path('personal_show', {id: personal.id}) }}" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-eye"></i> Ver Personal
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                    <p style=color:#ffbd38;font-size:30px><i class="icofont icofont-warning-alt"></i><strong>Warning!</strong> No existe Personal Almacenado</p>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="navigation">
+                <ul class="pagination justify-content-center m-0">
+                    {{ knp_pagination_render(pagination) }}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <ul>
+        <a class="btn btn-small btn-success" href="{{ path('personal_new') }}">
+            <i class="fa fa-plus"></i> <strong>Añadir</strong> Personal
+        </a>
+
+        <a href="{{ path('personal_index') }}">
+            <button type="button" name="reset-filter" id="btn-reset-filtros" class="btn btn-warning"><i
+                        class="fa fa-database"></i> Refrescar
+            </button>
+        </a>
+
+        <a class="btn btn-small btn-primary" href="{{ path('exportar_personal_pdf') }}"><i
+                    class="fa fa-archive"></i> <strong>Exportar</strong> Personal
+        </a>
+    </ul>
+{% endblock %}
+{% block javascript %}
+<script>
+$(function () {
+    {% for notice_level in ['success','error','info', 'warning'] %}
+    {% set session_var = 'app_' ~ notice_level %}
+    {% if app.session.flashbag.has(session_var) %}
+    {% for flash in app.session.flashbag.get(session_var) %}
+    var n = noty({
+        text: '{{ flash }}',
+        progressBar : true,
+        layout      : 'topRight',
+        dismissQueue: true,
+        timeout     : 5000,
+        closeWith   : ['click'],
+        theme       : 'relax',
+        type        : '{{ notice_level }}',
+        maxVisible  : 10,
+        animation   : {
+                    open  : 'animated bounceInLeft',
+                    close : 'animated bounceOutLeft',
+                    easing: 'swing',
+                    speed : 500
+                }
+            });
+    {% endfor %}
+    {% endif %}
+    {% endfor %}
+});
+</script>
+{% endblock %}

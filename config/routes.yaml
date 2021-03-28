@@ -1,0 +1,12 @@
+homepage:
+    path: /
+    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
+    requirements:
+    #    _locale: '%app_locales%'
+    defaults:
+        template: home/index.html.twig
+    #    _locale: '%locale%'
+
+dh_doctrine_audit:
+    resource: "@DHDoctrineAuditBundle/Controller/"
+    type: annotation
