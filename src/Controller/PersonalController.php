@@ -475,11 +475,12 @@ class PersonalController extends Controller
      */
     public function exportarExcelToximed()
     {
-        $con = mysqli_connect("localhost", "root", "", "covid_19");
+        $con = mysqli_connect("localhost", "root", "", "covid_bd");
         if (!$con){
             echo mysqli_error($con);
             exit;
         }
+
         $spreadsheet = new Spreadsheet();
         $spreadsheet->setActiveSheetIndex(0);
         $query = mysqli_query($con, "
@@ -532,6 +533,8 @@ class PersonalController extends Controller
                 ->setCellValue('O'.$row , $data->fis)
                 ->setCellValue('P'.$row , $data->fechatomamuestra)
                 ->setCellValue('X'.$row , $data->nombretipomuestra)
+                ->setCellValue('Y'.$row , $data->nombrearea)
+                ->setCellValue('Z'.$row , $data->nombreprovincia)
             ;
             $row++;
         }
