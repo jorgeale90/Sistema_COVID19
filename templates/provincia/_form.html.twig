@@ -1,7 +1,7 @@
 {{ form_start(form) }}
 <div class="card-body">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="form-group">
                 {% if(form_errors(form.nombre)) %}
                     <div class="alert alert-danger">
@@ -12,9 +12,7 @@
                 <label>{{ form_label(form.nombre, 'Provincia (*):') }}</label>
                 {{ form_widget(form.nombre, { 'attr': { 'class': 'form-control' } }) }}
             </div>
-        </div>
 
-        <div class="col-md-6">
             <div class="form-group">
                 {% if(form_errors(form.pais)) %}
                     <div class="alert alert-danger">
@@ -27,9 +25,7 @@
             </div>
         </div>
     </div>
-</div>
-<ul>
     <button class="btn btn-success"><i class="fa fa-plus"></i> {{ button_label|default('Añadir Provincia') }}</button>
     <button class="btn btn-outline-info"><i class="icofont icofont-exchange"></i><a href="{{ path('provincia_index') }}">Volver al Listado</a></button>
-</ul>
+</div>
 {{ form_end(form) }}

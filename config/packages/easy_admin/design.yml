@@ -1,6 +1,2 @@
 easy_admin:
-    site_name: '<strong>Sabio</strong>'
-#    design:
-#        assets:
-#            css:
-#                - '/bundles/app/stylesheets/demo.css'
+    site_name: '<strong>Sistema ~ Covid-19</strong>'

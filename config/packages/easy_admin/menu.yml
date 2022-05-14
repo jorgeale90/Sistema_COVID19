@@ -3,61 +3,8 @@ easy_admin:
       menu:
         - { label: 'HOME - USUARIO' }
         # Pagina Principal
-        - { label: 'Home', url: 'http://localhost/Sabio/public/index.php/user/home', icon: 'home' }
-        # Datos Admin, Auditoria, Registro Usuario
-        #        - { label: 'USUARIO - PERSONAL' }
-        - label: 'Util Admin'
+        - { label: 'Home', url: 'http://127.0.0.1:8000/user/home', icon: 'home' }
+        - label: 'Admin'
           icon: 'user'
           children:
           - { label: 'Listado Usuarios', icon: 'user', entity: 'User', permission: ['ROLE_SUPER_ADMIN', 'ROLE_ADMIN'] }
-  #        - label: 'Datos Personal'
-  #          icon: 'users'
-  #          children:
-  #          - { label: 'Listado Personal', icon: 'users', entity: 'Personal', permission: 'ROLE_SUPER_ADMIN' }
-  #          - { label: 'Listado Sexo', icon: 'users', entity: 'Sexo', permission: 'ROLE_SUPER_ADMIN' }
-  #        # Datos Localización
-  #        - { label: 'LOCALIZACION' }
-  #        - label: 'Localización'
-  #          icon: 'map'
-  #          children:
-  #          - { label: 'Listado País', icon: 'map', entity: 'Pais', permission: ['ROLE_SUPER_ADMIN'] }
-  #          - { label: 'Listado Provincia', icon: 'map', entity: 'Provincia', permission: ['ROLE_SUPER_ADMIN'] }
-  #          - { label: 'Listado Municipio', icon: 'map', entity: 'Municipio', permission: ['ROLE_SUPER_ADMIN'] }
-  #          - { label: 'Listado Nacionalidad', icon: 'map', entity: 'Nacionalidad', permission: 'ROLE_SUPER_ADMIN' }
-  #          - { label: 'Listado Institución', icon: 'map', entity: 'Institucion', permission: 'ROLE_SUPER_ADMIN' }
-  #        # Datos General
-  #        - { label: 'GENERAL - CATEGORIAS' }
-  #        - label: 'General'
-  #          icon: 'file'
-  #          children:
-  #          - { label: 'Cargo u Ocupación', icon: 'file', entity: 'Cargo', permission: 'ROLE_SUPER_ADMIN' }
-  #          - { label: 'Listado Especialidad', icon: 'file', entity: 'Especialidad', permission: 'ROLE_SUPER_ADMIN' }
-  #          - { label: 'Listado Política', icon: 'file', entity: 'OrganizacionPolitica', permission: 'ROLE_SUPER_ADMIN' }
-  #        - label: 'Categorías'
-  #          icon: 'file'
-  #          children:
-  #          - { label: 'Listado Docente', icon: 'file', entity: 'CategoriaDocente', permission: 'ROLE_SUPER_ADMIN' }
-  #          - { label: 'Listado Científica', icon: 'file', entity: 'CategoriaCientifica', permission: 'ROLE_SUPER_ADMIN' }
-  #        # Datos Contabilidad
-  #        - { label: 'CONTABILIDAD - MEDIOS' }
-  #        - label: 'Sistema Contabilidad'
-  #          icon: 'database'
-  #          children:
-  #          - { label: 'Sistema Contable', icon: 'database', entity: 'SistemaContable', permission: 'ROLE_SUPER_ADMIN' }
-  #          - { label: 'Sistema Mòdulo', icon: 'database', entity: 'SistemaModulo', permission: 'ROLE_SUPER_ADMIN' }
-  #        # Datos Medios Tecnológicos
-  #        - label: 'Medios Tecnológicos'
-  #          icon: 'laptop'
-  #          children:
-  #          - { label: 'Listado Marca', icon: 'laptop', entity: 'Marca', permission: 'ROLE_SUPER_ADMIN' }
-  #          - { label: 'Listado Modelo', icon: 'laptop', entity: 'Modelo', permission: 'ROLE_SUPER_ADMIN' }
-  #          - { label: 'Listado Tipo Medio', icon: 'laptop', entity: 'TipoMedio', permission: 'ROLE_SUPER_ADMIN' }
-  #        # Datos Contratos
-  #        - { label: 'CONTRATO' }
-  #        - label: 'Contratos'
-  #          icon: 'folder'
-  #          children:
-  #          - { label: 'Contrato Correo', icon: 'folder', entity: 'ContratoCorreo', permission: 'ROLE_SUPER_ADMIN' }
-  #          - { label: 'Contrato Anclaje', icon: 'folder', entity: 'ContratoAnclaje', permission: 'ROLE_SUPER_ADMIN' }
-  #          - { label: 'Contrato Internet', icon: 'folder', entity: 'ContratoInternet', permission: 'ROLE_SUPER_ADMIN' }
-  #          - { label: 'Contrato Tecnologia', icon: 'folder', entity: 'MedioTecnologico', permission: 'ROLE_SUPER_ADMIN' }

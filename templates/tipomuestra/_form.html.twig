@@ -9,12 +9,12 @@
                         <strong>{{ form_errors(form.nombre) }}</strong>
                     </div>
                 {% endif %}
-                <label>{{ form_label(form.nombre, 'Estado de Ingreso (*):') }}</label>
+                <label>{{ form_label(form.nombre, 'Tipo de Muestra (*):') }}</label>
                 {{ form_widget(form.nombre, { 'attr': { 'class': 'form-control' } }) }}
             </div>
         </div>
     </div>
-    <button class="btn btn-success"><i class="fa fa-plus"></i> {{ button_label|default('Añadir Estado Ingreso') }}</button>
-    <button class="btn btn-outline-info"><i class="icofont icofont-exchange"></i><a href="{{ path('estadoingreso_index') }}">Volver al Listado</a></button>
+    <button class="btn btn-success"><i class="fa fa-plus"></i> {{ button_label|default('Añadir Tipo Muestra') }}</button>
+    <button class="btn btn-outline-info"><i class="icofont icofont-exchange"></i><a href="{{ path('tipomuestra_index') }}">Volver al Listado</a></button>
 </div>
 {{ form_end(form) }}

@@ -326,6 +326,25 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <a href="{{ path('tipomuestra_index') }}" class="nav-link">
+                                        <i class="far fa-dot-circle nav-icon"></i>
+                                        <p>Listado Tipo Muestra</p>
+                                        <span class="badge badge-info right">
+                                            {% set contador = 0 %}
+                                            {% for tipo in tipomuestra  %}
+
+                                                {% if tipo.id == null %}
+                                                    {% set contador = 0 %}
+                                                {% else %}
+                                                    {% set contador = contador + 1 %}
+                                                {% endif %}
+
+                                            {% endfor %}
+                                            {{ contador }}
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="{{ path('sintomaingreso_index') }}" class="nav-link">
                                         <i class="far fa-dot-circle nav-icon"></i>
                                         <p>Síntoma Ingreso</p>

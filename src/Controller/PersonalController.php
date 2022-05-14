@@ -13,6 +13,7 @@ use App\Entity\Personal;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use App\Form\PersonalType;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Doctrine\ORM\EntityManagerInterface;
 // Incluir namespaces requeridos de PhpSpreadsheet
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -36,6 +37,13 @@ use PhpOffice\PhpSpreadsheet\Helper\Sample;
  */
 class PersonalController extends Controller
 {
+    private $knpSnappy;
+
+    public function __construct(\Knp\Snappy\Pdf $knpSnappy)
+    {
+        $this->knpSnappy = $knpSnappy;
+    }
+
     /**
      * @Route("/", name="personal_index", methods={"GET"})
      * @Security("has_role('ROLE_USER') and has_role('ROLE_ADMIN') and is_granted('ROLE_SUPER_ADMIN')")
@@ -84,17 +92,17 @@ class PersonalController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($temp ==  null){
-            $entityManager = $this->getDoctrine()->getManager();
-            $personal->setActivo(true);
-            $entityManager->persist($personal);
-            $entityManager->flush();
+                $entityManager = $this->getDoctrine()->getManager();
+                $personal->setActivo(true);
+                $entityManager->persist($personal);
+                $entityManager->flush();
 
-            $flashBag = $this->get('session')->getFlashBag();
-            $flashBag->add('app_success','Se ha creado un Paciente satisfactoriamente!!!');
-            $flashBag->add('app_success', sprintf('Paciente: %s', $personal->getNombreCompleto()));
+                $flashBag = $this->get('session')->getFlashBag();
+                $flashBag->add('app_success','Se ha creado un Paciente satisfactoriamente!!!');
+                $flashBag->add('app_success', sprintf('Paciente: %s', $personal->getNombreCompleto()));
 
-            return $this->redirectToRoute('personal_index');
-        }
+                return $this->redirectToRoute('personal_index');
+            }
             else
             {
                 $entityManager = $this->getDoctrine()->getManager();
@@ -144,13 +152,13 @@ class PersonalController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($temp ==  null){
-            $this->getDoctrine()->getManager()->flush();
+                $this->getDoctrine()->getManager()->flush();
 
-            $flashBag = $this->get('session')->getFlashBag();
-            $flashBag->add('app_warning','Se ha actualizado un Paciente satisfactoriamente!!!');
-            $flashBag->add('app_warning', sprintf('Paciente: %s', $personal->getNombreCompleto()));
+                $flashBag = $this->get('session')->getFlashBag();
+                $flashBag->add('app_warning','Se ha actualizado un Paciente satisfactoriamente!!!');
+                $flashBag->add('app_warning', sprintf('Paciente: %s', $personal->getNombreCompleto()));
 
-            return $this->redirectToRoute('personal_index');
+                return $this->redirectToRoute('personal_index');
             }
             else
             {
@@ -194,10 +202,6 @@ class PersonalController extends Controller
         return $this->redirectToRoute('personal_index');
     }
 
-    private $knpSnappy;
-
-    public function __construct(\Knp\Snappy\Pdf $knpSnappy) { $this->knpSnappy = $knpSnappy; }
-
     /**
      * @Route("/exportarpdf", name="exportar_personal_pdf", methods={"GET"})
      * @param \Knp\Snappy\Pdf $knpSnappy
@@ -237,50 +241,6 @@ class PersonalController extends Controller
         $municipio_id = $request->get('municipio_id');
         $areas = $em->getRepository('App:AreaSalud')->findByMunicipio($municipio_id);
         return new JsonResponse($areas);
-    }
-
-    /**
-     * @Route("/getciudadresidenciaxpaisprocedencia", name="ciudadresidencia_x_paisprocedencia", methods={"GET","POST"})
-     */
-    public function getCiudadResidenciaxPaisProcedencia(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $paisprocedencia_id = $request->get('paisprocedencia_id');
-        $ciudadres = $em->getRepository('App:Provincia')->findByPaisProcedencia($paisprocedencia_id);
-        return new JsonResponse($ciudadres);
-    }
-
-    /**
-     * @Route("/getlugarentradaxprovinciaentrada", name="lugarentrada_x_provinciaentrada", methods={"GET","POST"})
-     */
-    public function getLugarEntradaxProvinciaEntrada(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $provinciaentrada_id = $request->get('provinciaentrada_id');
-        $lugarent = $em->getRepository('App:LugarEntrada')->findByProvinciaEntrada($provinciaentrada_id);
-        return new JsonResponse($lugarent);
-    }
-
-    /**
-     * @Route("/getalojamientoxmunicipio", name="alojamiento_x_municipio", methods={"GET","POST"})
-     */
-    public function getAlojamientoxMunicipio(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $municipio_id = $request->get('municipio_id');
-        $aloja = $em->getRepository('App:Alojamiento')->findByMunicipioAlojamiento($municipio_id);
-        return new JsonResponse($aloja);
-    }
-
-    /**
-     * @Route("/getcmfxareasalud", name="cmf_x_areasalud", methods={"GET","POST"})
-     */
-    public function getCMFxAreaSalud(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $areasalud_id = $request->get('areasalud_id');
-        $consul = $em->getRepository('App:ConsultorioMedico')->findByAreaS($areasalud_id);
-        return new JsonResponse($consul);
     }
 
     /**
@@ -515,7 +475,7 @@ class PersonalController extends Controller
      */
     public function exportarExcelToximed()
     {
-        $con = mysqli_connect("localhost", "root", "", "covid_bd");
+        $con = mysqli_connect("localhost", "root", "", "covid_19");
         if (!$con){
             echo mysqli_error($con);
             exit;
@@ -551,7 +511,7 @@ class PersonalController extends Controller
             INNER JOIN estado_ingreso ON personal.estadoingreso_id = estado_ingreso.id
             LEFT JOIN pais ON personal.paisprocedencia_id = pais.id AND provincia.pais_id = pais.id
             INNER JOIN tipo_muestra ON personal.tipomuestra_id = tipo_muestra.id    
-");
+        ");
         $row = 2;
         while ($data = mysqli_fetch_object($query)){
             $spreadsheet->getActiveSheet()
@@ -571,16 +531,7 @@ class PersonalController extends Controller
                 ->setCellValue('N'.$row , $data->nombrepais)
                 ->setCellValue('O'.$row , $data->fis)
                 ->setCellValue('P'.$row , $data->fechatomamuestra)
-//                ->setCellValue('Q'.$row , $data->TOS)
-//                ->setCellValue('R'.$row , $data->DOLOR DE GRAGANTA)
-//                ->setCellValue('S'.$row , $data->FIEBRE)
-//                ->setCellValue('T'.$row , $data->RINORREA)
-//                ->setCellValue('U'.$row , $data->MALESTAR GENERAL)
-//                ->setCellValue('V'.$row , $data->DIARREAS)
-//                ->setCellValue('W'.$row , $data->OTROS)
                 ->setCellValue('X'.$row , $data->nombretipomuestra)
-//                ->setCellValue('Y'.$row , $data->CENTRO DE PROCEDENCIA DE LA MUESTRA)
-//                ->setCellValue('Y'.$row , $data->PROVINCIA DE PROCEDENCIA DE LA MUESTRA)
             ;
             $row++;
         }
@@ -674,4 +625,5 @@ class PersonalController extends Controller
         // Return the excel file as an attachment
         return $this->file($temp_file, $fileName, ResponseHeaderBag::DISPOSITION_INLINE);
     }
+
 }

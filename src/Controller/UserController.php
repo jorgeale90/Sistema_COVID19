@@ -32,33 +32,6 @@ class UserController extends AbstractController
 //    }
 
     /**
-     * @Route("/", name="user_inicio", methods={"GET"})
-     */
-    public function inicio(): Response
-    {
-        $conn = mysqli_connect("localhost", "root", "", "covid_bd");
-        if (!$conn){
-            echo mysqli_error($conn);
-            exit;
-        }
-
-        $query = mysqli_query($conn, "
-                                            SELECT
-                                                alojamiento_audit.blame_user
-                                                FROM
-                                                fos_user ,
-                                                alojamiento_audit
-                                                WHERE
-                                                fos_user.username = alojamiento_audit.blame_user");
-
-        $result = mysqli_fetch_array($query);
-
-        return $this->render('user/index1.html.twig', [
-            'users' => $result,
-        ]);
-    }
-
-    /**
      * @Route("/{id}", name="user_show", methods={"GET"})
      */
     public function show(User $user): Response

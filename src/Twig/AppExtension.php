@@ -29,7 +29,8 @@ class AppExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInt
             'consejopopular' => $this->em->getRepository('App:ConsejoPopular')->findAll(),
             'estadoingreso' => $this->em->getRepository('App:EstadoIngreso')->findAll(),
             'sintomasingreso' => $this->em->getRepository('App:SintomasIngreso')->findAll(),
-            'resultado' => $this->em->getRepository('App:Resultado')->findAll()
+            'resultado' => $this->em->getRepository('App:Resultado')->findAll(),
+            'tipomuestra' => $this->em->getRepository('App:TipoMuestra')->findAll()
         );
     }
 
