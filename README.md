@@ -44,3 +44,5 @@ Ejecutar el servidor
 ```bash
   symfony server:start
 ```
+
+https://github.com/jorgeale90/Sistema_COVID19/public/screenshot/1.png
