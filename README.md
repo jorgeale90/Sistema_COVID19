@@ -12,7 +12,7 @@ El proyecto Sistema_COVID19 se centra en el control de pacientes con la enfermed
 Clonar el proyecto
 
 ```bash
-  git clone https://github.com/jorgeale90/mkarestaurante
+  git clone https://github.com/jorgeale90/Sistema_COVID19
 ```
 
 Acceder al directorio de dicho proyecto
