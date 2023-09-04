@@ -45,4 +45,9 @@ Ejecutar el servidor
   symfony server:start
 ```
 
+## Screenshot
+
 ![](https://github.com/jorgeale90/Sistema_COVID19/blob/develop/public/screenshot/1.png)
+![](https://github.com/jorgeale90/Sistema_COVID19/blob/develop/public/screenshot/2.png)
+![](https://github.com/jorgeale90/Sistema_COVID19/blob/develop/public/screenshot/3.png)
+![](https://github.com/jorgeale90/Sistema_COVID19/blob/develop/public/screenshot/4.png)
