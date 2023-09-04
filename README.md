@@ -45,4 +45,4 @@ Ejecutar el servidor
   symfony server:start
 ```
 
-https://github.com/jorgeale90/Sistema_COVID19/public/screenshot/1.png
+https://raw.githubusercontent.com/jorgeale90/Sistema_COVID19/public/screenshot/1.png
